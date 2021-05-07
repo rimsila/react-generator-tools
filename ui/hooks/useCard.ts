@@ -1,26 +1,26 @@
 /*
- * @文件描述: 对表单或者详情页的Card的操作的封装。包含上移、下移、复制
- * @公司: thundersdata
- * @作者: 陈杰
+ * @File Description: Encapsulate the operation of the Card in the form or detail page. Including move up, move down, copy
+
+ * @Author: Chen Jie
  * @Date: 2020-05-11 11:07:24
- * @LastEditors: 陈杰
+
  * @LastEditTime: 2020-05-14 18:28:44
  */
-import { useState } from 'react';
-import { CardItemProps, FormItemProps, FormItemType } from '../../interfaces/common';
-import { Store } from 'antd/lib/form/interface';
-import produce from 'immer';
-import faker from 'faker';
+import {useState} from'react';
+import {CardItemProps, FormItemProps, FormItemType} from'../../interfaces/common';
+import {Store} from'antd/lib/form/interface';
+import produce from'immer';
+import faker from'faker';
 
 export default function useCard() {
-  const [cards, setCards] = useState<CardItemProps[]>([{ title: '自定义Card0', formItems: [] }]);
+  const [cards, setCards] = useState<CardItemProps[]>([{ title:'Custom Card0', formItems: [] }]);
   const [cardIndex, setCardIndex] = useState<number>(0);
   const [currentCard, setCurrentCard] = useState<CardItemProps>();
   const [itemIndex, setItemIndex] = useState<number>();
   const [currentItem, setCurrentItem] = useState<FormItemProps>();
 
   /**
-   * 上移Card
+   * Move Card up
    * @param index
    */
   const moveCardUp = (index: number) => () => {
@@ -29,17 +29,17 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft.splice(index, 1);
-        draft.splice(index - 1, 0, ...card);
+        draft.splice(index-1, 0, ...card);
       }),
     );
   };
 
   /**
-   * 下移Card
+   * Move Card down
    * @param index
    */
   const moveCardDown = (index: number) => () => {
-    if (index === cards.length - 1) return;
+    if (index === cards.length-1) return;
 
     setCards(
       produce(cards, draft => {
@@ -50,7 +50,7 @@ export default function useCard() {
   };
 
   /**
-   * 配置Card
+   * Configure Card
    * @param values
    */
   const configCard = (values: Store) => {
@@ -61,7 +61,7 @@ export default function useCard() {
     );
   };
 
-  /** 往Card中添加表单项 */
+  /** Add form items to Card */
   const addFormItemsToCard = (checkedComponents: FormItemType[]) => {
     const newFormItems = checkedComponents.map(type => ({
       type,
@@ -76,7 +76,7 @@ export default function useCard() {
   };
 
   /**
-   * 删除Card
+   * deleteCard
    * @param index
    */
   const deleteCard = (index: number) => () => {
@@ -88,7 +88,7 @@ export default function useCard() {
   };
 
   /**
-   * 复制card
+   * Copy card
    * @param index
    */
   const copyCard = (index: number) => () => {
@@ -100,7 +100,7 @@ export default function useCard() {
   };
 
   /**
-   * card里面的某个form配置项上移
+   * Move up a form configuration item in the card
    * @param cardIndex
    * @param itemIndex
    */
@@ -108,16 +108,16 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft[cardIndex];
-        const { formItems = [] } = card;
+        const {formItems = []} = card;
         if (itemIndex === 0) return;
         const items = formItems.splice(itemIndex, 1);
-        formItems.splice(itemIndex - 1, 0, ...items);
+        formItems.splice(itemIndex-1, 0, ...items);
       }),
     );
   };
 
   /**
-   * card里面某个form配置项下移
+   * Move down a form configuration item in the card
    * @param cardIndex
    * @param itemIndex
    */
@@ -125,8 +125,8 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft[cardIndex];
-        const { formItems = [] } = card;
-        if (itemIndex === formItems.length - 1) return;
+        const {formItems = []} = card;
+        if (itemIndex === formItems.length-1) return;
         const items = formItems.splice(itemIndex, 1);
         formItems.splice(itemIndex + 1, 0, ...items);
       }),
@@ -134,21 +134,21 @@ export default function useCard() {
   };
 
   /**
-   * 配置某个Card的某个表单项
+   * Configure a certain form item of a certain Card
    * @param itemIndex
    * @param formItem
    */
   const configItem = (itemIndex: number, formItem: FormItemProps) => {
     setCards(
       produce(cards, draft => {
-        const { formItems = [] } = draft[cardIndex];
+        const {formItems = []} = draft[cardIndex];
         formItems[itemIndex] = formItem;
       }),
     );
   };
 
   /**
-   * 删除某个Card的某个表单项
+   * delete a certain form item of a certain Card
    * @param cardIndex
    * @param itemIndex
    */
@@ -156,14 +156,14 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft[cardIndex];
-        const { formItems = [] } = card;
+        const {formItems = []} = card;
         formItems.splice(itemIndex, 1);
       }),
     );
   };
 
   /**
-   * 复制某个card的某个表单项
+   * Copy a certain form item of a certain card
    * @param cardIndex
    * @param itemIndex
    */
@@ -171,7 +171,7 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft[cardIndex];
-        const { formItems = [] } = card;
+        const {formItems = []} = card;
         const formItem = {
           ...formItems[itemIndex],
           name: faker.name.lastName(),

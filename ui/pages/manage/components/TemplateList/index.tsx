@@ -1,9 +1,8 @@
 /*
  * @File description: Templates and thumbnails of the middle and backstage management system
- * @公司: thundersdata
- * @Author: Chen Jie
+
  * @Date: 2020-04-29 11:32:45
- * @LastEditors: Chen Jie
+
  * @LastEditTime: 2020-04-29 22:00:14
  */
 import React, {useState, useContext} from'react';

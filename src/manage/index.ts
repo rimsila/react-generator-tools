@@ -80,7 +80,7 @@ export default function(payload: any, type: string, api: IApi) {
           false,
         );
       }
-      // 生成供table使用的中间组件
+      // Generate intermediate components for table use
       pageName &&
         generateComponent(
           `/${pageName}`,
@@ -147,7 +147,8 @@ export default function(payload: any, type: string, api: IApi) {
           api,
         );
       }
-      // 生成供table使用的中间组件
+
+      // Generate intermediate components for table use
       pageName &&
         generateComponent(
           `/${pageName}`,
@@ -215,7 +216,8 @@ export default function(payload: any, type: string, api: IApi) {
           false,
         );
       }
-      // 生成供table使用的中间组件
+      // Generate intermediate components for table use
+
       pageName &&
         generateComponent(
           `/${pageName}`,
@@ -282,7 +284,7 @@ export default function(payload: any, type: string, api: IApi) {
           api,
         );
       }
-      // 生成供table使用的中间组件
+      // Generate intermediate components for table use
       pageName &&
         generateComponent(
           `/${pageName}`,
@@ -312,7 +314,7 @@ export default function(payload: any, type: string, api: IApi) {
       code = generateLongDetailModalCode(payload);
       break;
     case 'org.umi-plugin-page-creator.table':
-      // 生成供table使用的中间组件，仅在不存在该文件时生成，主要通过表单配置生成，这里为了防止table页面引用报错
+      // Generate intermediate components for table use, only generated when the file does not exist, mainly generated through form configuration, here in order to prevent table page references from reporting errors
       pageName &&
         !existsSync(`${api.paths.absPagesPath}/${pageName}/components/FormActionMethods`) &&
         generateComponent(
@@ -335,7 +337,7 @@ export default function(payload: any, type: string, api: IApi) {
   return true;
 }
 /**
- * 生成文件
+ * Generate file
  * @param code
  * @param payload
  */
@@ -357,7 +359,7 @@ export function generateFile(
 }
 
 /**
- * 生成页面及路由
+ * Generate page and route
  * @param absPagesPath
  * @param path
  * @param code
@@ -365,7 +367,7 @@ export function generateFile(
 export function generatePage(path: string, code: string, api: IApi, menu = '', createMenu = true) {
   const absPagesPath = api.paths.absPagesPath;
   if (!existsSync(absPagesPath + path)) {
-    // 根据传入的路径，创建对应的文件夹以及index.tsx文件
+    // Create the corresponding folder and index.tsx file according to the passed path
     mkdirSync(absPagesPath + path, { recursive: true });
     writeFileSync(absPagesPath + `${path}/index.tsx`, code, 'utf-8');
 
@@ -388,7 +390,7 @@ export function generatePage(path: string, code: string, api: IApi, menu = '', c
       writeNewMenu({ path, menu }, api.paths.cwd + '/mock/route.ts');
     }
   } else {
-    // 如果该页面文件已存在，重新写入
+    // If the page file already exists, rewrite
     const filePath = absPagesPath + `${path}/index.tsx`;
     if (existsSync(filePath)) {
       unlinkSync(filePath);
@@ -398,8 +400,8 @@ export function generatePage(path: string, code: string, api: IApi, menu = '', c
 }
 
 /**
- * 生成页面下的组件。创建的组件应该自动在某个page的components文件夹下
- * 1. 先判断/path下的components文件夹是否存在，如果存在则直接追加，如果不存在则先创建
+ * Generate components under the page. The created component should be automatically under the components folder of a page
+ * 1. First judge whether the components folder under /path exists, if it exists, add it directly, if it does not exist, create it first
  * @param absPagesPath
  * @param path
  * @param dirName
@@ -415,7 +417,7 @@ export function generateComponent(path: string, dirName: string, code: string, a
     mkdirSync(prefixPath + dirName, { recursive: true });
     writeFileSync(prefixPath + `${dirName}/index.tsx`, code, 'utf-8');
   } else {
-    // 如果该组件文件已存在，重新写入
+    // If the component file already exists, rewrite
     const filePath = prefixPath + `${dirName}/index.tsx`;
     if (existsSync(filePath)) {
       unlinkSync(filePath);
@@ -439,7 +441,7 @@ export function prettify(code: string) {
 }
 
 /**
- * 生成表单验证文件
+ * Generate form verification file
  * @param api
  * @param pageName
  * @param tableVerificationRuleList
@@ -458,8 +460,9 @@ export function generateValidatorFile(
     maxLength > 0
       ? `{
           validator: (_: unknown, value: string, callback: (message?: string) => void) => {
-            if (value && value.length > ${maxLength}) {
-              callback('超出最大长度限制');
+            if (value && value.length> ${maxLength}) {
+              callback('Exceeding the maximum length limit');
+
             } else {
               callback();
             }
@@ -470,7 +473,7 @@ export function generateValidatorFile(
       ? `{
           validator: (_: unknown, value: string, callback: (message?: string) => void) => {
             if (value && value.length < ${minLength}) {
-              callback('小于最小长度限制');
+              callback('Less than the minimum length limit');
             } else {
               callback();
             }
@@ -480,7 +483,7 @@ export function generateValidatorFile(
   import { Rule } from 'antd/es/form';
 
   /**
-   * 表单配置的规则
+   * Rules for form configuration
    */
   export const VERIFICATION_RULE = {
     ${tableVerificationRuleList
@@ -506,9 +509,8 @@ export function generateValidatorFile(
       )
       .join('\n')}
   }
-
   /**
-   * 根据字段获取对应的校验内容
+   * Obtain the corresponding verification content according to the field
    */
   export const getVerificationRules = (fileName: string) =>
     (VERIFICATION_RULE[fileName] || {
@@ -519,7 +521,7 @@ export function generateValidatorFile(
       rules: Rule[];
     };
   `;
-  // 如果该page文件还没生成，则先生成一个文件夹
+  // If the page file has not been generated yet, generate a folder first
   if (!existsSync(pagePath)) {
     mkdirSync(pagePath);
   }
@@ -527,7 +529,7 @@ export function generateValidatorFile(
 }
 
 /**
- * 重写file
+ * Rewrite file
  * @param path
  * @param content
  */
@@ -540,7 +542,7 @@ export function reWriteFile(path: string, content: string) {
 }
 
 /**
- * 根据路径获取pageName
+ * Get pageName according to the path
  * @param path
  */
 export function getPageNameByPath(path: string = '') {

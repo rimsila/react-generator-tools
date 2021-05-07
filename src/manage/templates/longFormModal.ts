@@ -1,10 +1,8 @@
 /*
- * @文件描述: 生成大表单页面
- * @公司: thundersdata
- * @作者: 陈杰
- * @Date: 2020-05-08 16:05:30
- * @LastEditors: 廖军
- * @LastEditTime: 2020-10-10 17:40:45
+* @File description: Generate a large form page
+
+  * @Date: 2020-05-08 16:05:30
+  * @LastEditTime: 2020-10-10 17:40:45
  */
 import { createFormComponentsByType, transformFormItemLines, generateRules } from './util';
 import { FormItemProps } from '../../../interfaces/common';
@@ -24,7 +22,7 @@ export default function generateLongFormModalCode(payload: Payload): string {
     const { formConfig, formItems = [], submitFetch, fromTable } = payload;
 
     const cols = 2;
-    // 把formItems分成2列
+    // Divide formItems into 2 columns
     const formItemLines = transformFormItemLines(formItems, cols);
     const item = formItems.find(item => item.type === 'upload');
 
@@ -93,7 +91,7 @@ export default function generateLongFormModalCode(payload: Payload): string {
         };
         console.log('emptyline');
         const submit = (values: Store) => {
-          setTip('数据保存中，请稍候...');
+          setTip('Data saving, please wait...');
           console.log('emptyline');
           const payload = {
             ...values,
@@ -107,7 +105,7 @@ export default function generateLongFormModalCode(payload: Payload): string {
         const { run: handleFinish, loading: submitting } = useRequest(submit, {
           manual: true,
           onSuccess: () => {
-            message.success('保存成功');
+            message.success('Saved successfully');
             form.resetFields();
             ${fromTable ? `reload && reload();` : ''}
           }

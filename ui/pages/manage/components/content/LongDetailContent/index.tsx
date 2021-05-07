@@ -45,12 +45,7 @@ const colLayout = {
 export default () => {
   const { api, impConfigJson } = useContext(Context);
 
-  const {
-    initialFetch,
-    setInitialFetch,
-    submitFetch,
-    setSubmitFetch,
-  } = useConfig();
+  const { initialFetch, setInitialFetch, submitFetch, setSubmitFetch } = useConfig();
 
   const {
     formItemsDrawerVisible,
@@ -107,7 +102,7 @@ export default () => {
   };
 
   /**
-   * 把配置的表单信息和添加的表单项配置传到服务端
+   * Pass the configured form information and the added form item configuration to the server
    */
   const remoteCall = async ({ path, menu }: { path?: string; menu?: string }) => {
     const key = 'message';
@@ -120,7 +115,7 @@ export default () => {
         message.error('你有Card里面没有配置展示项');
         return;
       }
-      message.loading({ content: '正在生成文件，请稍候...', key });
+      message.loading({ content: 'File is being generated, please wait...', key });
       const result = await api.callRemote({
         type: 'org.umi-plugin-page-creator.longDetail',
         payload: {
@@ -138,23 +133,33 @@ export default () => {
     }
   };
 
-  /** 把导入的配置信息进行解析 */
+  /** parse the imported configuration information */
   useEffect(() => {
     if (impConfigJson) {
-      const { cards = [{ title: '自定义Card0', formItems: [] }], initialFetch = [], submitFetch = [] } = JSON.parse(impConfigJson);
+      const {
+        cards = [{ title: '自定义Card0', formItems: [] }],
+        initialFetch = [],
+        submitFetch = [],
+      } = JSON.parse(impConfigJson);
       setCards(cards);
       setInitialFetch(initialFetch);
       setSubmitFetch(submitFetch);
     }
   }, [impConfigJson]);
 
-  /** 导出 */
+  /** Export */
   const handleExport = () => {
-    copy(JSON.stringify({
-      cards,
-      initialFetch,
-      submitFetch
-    }, null, 2));
+    copy(
+      JSON.stringify(
+        {
+          cards,
+          initialFetch,
+          submitFetch,
+        },
+        null,
+        2,
+      ),
+    );
     message.success('Configuration copied to clipboard');
   };
 
@@ -164,7 +169,7 @@ export default () => {
         {cards.map((card, cardIndex) => {
           const { title, formItems = [] } = card;
           const cols = 3;
-          // 把formItems分成3列
+          // Divide formItems into 3 columns
           const formItemLines = transformFormItemLines(formItems, cols);
           return (
             <Card
@@ -210,7 +215,7 @@ export default () => {
                 </Row>
               ))}
               <Button onClick={addDetailItem(cardIndex)} type="dashed" style={{ width: '100%' }}>
-                添加展示项
+                Add display item
               </Button>
             </Card>
           );
@@ -223,7 +228,7 @@ export default () => {
         }
         style={{ margin: 24 }}
       >
-        新增Card
+        Add Card
       </Button>
       <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
         Page interface configuration
@@ -238,7 +243,7 @@ export default () => {
         submitFetch={submitFetch}
       />
 
-      {/**Card编辑的抽屉 */}
+      {/**Card editor drawer */}
       <CardConfigDrawer
         visible={cardDrawerVisible}
         setVisible={setCardDrawerVisible}
@@ -265,7 +270,7 @@ export default () => {
         setModalVisible={setPathModalVisible}
       />
 
-      {/* 导出 */}
+      {/* Export */}
       <ExportActions onClick={handleExport} />
     </>
   );

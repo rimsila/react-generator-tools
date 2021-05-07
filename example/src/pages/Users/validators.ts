@@ -1,12 +1,12 @@
 import { Rule } from 'antd/es/form';
 
 /**
- * 表单配置的规则
+ * Rules for form configuration
  */
 export const VERIFICATION_RULE = {};
 
 /**
- * 根据字段获取对应的校验内容
+ * Obtain the corresponding verification content according to the field
  */
 export const getVerificationRules = (fileName: string) =>
   (VERIFICATION_RULE[fileName] || {

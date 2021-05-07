@@ -1,11 +1,4 @@
-/*
- * @文件描述: 对表单元素操作的封装，包含上移、下移、配置
- * @公司: thundersdata
- * @作者: 陈杰
- * @Date: 2020-04-30 11:31:49
- * @LastEditors: 陈杰
- * @LastEditTime: 2020-05-13 10:32:59
- */
+
 import { useState } from 'react';
 import { FormItemProps } from '../../interfaces/common';
 
@@ -67,7 +60,7 @@ export default function useFormItem() {
   };
 
   /**
-   * 删除配置项
+   * delete配置项
    * @param index
    */
   const deleteItem = (index: number) => () => {

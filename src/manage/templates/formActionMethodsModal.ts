@@ -1,11 +1,10 @@
 /*
- * @文件描述: 生成table与form连接的一些方法组件（modal类型）
- * @公司: thundersdata
- * @作者: 廖军
- * @Date: 2020-10-10 16:26:10
- * @LastEditors: 廖军
- * @LastEditTime: 2020-10-27 14:09:49
- */
+  * @File description: Generate some method components (modal type) connecting table and form
+  * @Author: Liao Jun
+  * @Date: 2020-10-10 16:26:10
+  * @LastEditors: Liao Jun
+  * @LastEditTime: 2020-10-27 14:09:49
+  */
 
 export interface Payload {
   initialFetch?: string[];
@@ -13,7 +12,7 @@ export interface Payload {
 }
 
 export default ({ initialFetch = [], generateDetail }: Payload) => {
-    const apiStr = initialFetch.length === 3 ? 
+    const apiStr = initialFetch.length === 3 ?
       `API.${initialFetch[0]}.${initialFetch[1]}` : 'API.recruitment.person';
     return `
       import React, { forwardRef } from 'react';
@@ -23,7 +22,7 @@ export default ({ initialFetch = [], generateDetail }: Payload) => {
       import { useImmer } from 'use-immer';
       import Edit from '../Edit';
       ${generateDetail ? `import Detail from '../Detail';` : ''}
-      
+
       export interface FormActionMethodsInstance {
         onAdd?: () => void;
         onDelete?: (row: Store) => void;
@@ -31,7 +30,7 @@ export default ({ initialFetch = [], generateDetail }: Payload) => {
         onPreview?: (row: Store) => void;
         onDeleteBatch?: (ids: number[]) => void;
       }
-      
+
       export default forwardRef<FormActionMethodsInstance, { reload?: () => void }>(({ reload }, ref) => {
         const formActionRef = ref as React.MutableRefObject<FormActionMethodsInstance>;
         const [editModalConfig, setEditModalConfig] = useImmer<{
@@ -52,50 +51,50 @@ export default ({ initialFetch = [], generateDetail }: Payload) => {
           formData: {},
           loading: false,
         });` : ''}
-      
+
         const { run: handleDelete } = useRequest(${apiStr}.remove.fetch, {
           manual: true,
           onSuccess: () => {
-            message.success('删除成功');
+            message.success('delete成功');
             reload && reload();
           },
         });
-      
+
         const { run: handleDeleteBatch } = useRequest(${apiStr}.deleteBatch, {
           manual: true,
           onSuccess: () => {
-            message.success('批量删除成功');
+            message.success('Batch delete成功');
             reload && reload();
           },
         });
-      
-        /** 新增 */
+
+        /** Add */
         formActionRef.current.onAdd = () =>
           setEditModalConfig(config => {
             config.visible = true;
             config.formData = {};
           });
-      
-        /** 删除 */
+
+        /** delete */
         formActionRef.current.onDelete = (row: Store) => handleDelete(row.id);
-      
+
         /** 编辑 */
         formActionRef.current.onEdit = (row: Store) =>
           setEditModalConfig(config => {
             config.visible = true;
             config.formData = row;
           });
-      
-        ${generateDetail ? `/** 查看 */
+
+        ${generateDetail ? `/** View */
         formActionRef.current.onPreview = (row: Store) =>
           setDetailModalConfig(config => {
             config.visible = true;
             config.formData = row;
           });` : ''}
-      
-        /** 批量删除 */
+
+        /** Batch delete */
         formActionRef.current.onDeleteBatch = (ids: number[]) => handleDeleteBatch(ids);
-      
+
         return (
           <>
             <Edit
@@ -125,6 +124,6 @@ export default ({ initialFetch = [], generateDetail }: Payload) => {
             />` : ''}
           </>
         );
-      });    
+      });
     `;
 }

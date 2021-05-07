@@ -1,13 +1,13 @@
-import { IApi } from 'umi';
-import { existsSync } from 'fs';
-import { ApiJSON } from '../../interfaces/api';
+import {IApi} from'umi';
+import {existsSync} from'fs';
+import {ApiJSON} from'../../interfaces/api';
 
 /**
- * 根据项目根目录下的services/api-lock.json，生成一个接口和声明的关联文件。
- * 在UI侧选择某个接口，
+ * According to the services/api-lock.json in the root directory of the project, generate an associated file for the interface and declaration.
+ * Select an interface on the UI side,
  */
 export default function(api: IApi) {
-  const jsonPath = api.paths.absSrcPath + '/services/api-lock.json';
+  const jsonPath = api.paths.absSrcPath +'/services/api-lock.json';
   if (!existsSync(jsonPath)) {
     return {
       databases: null,
@@ -24,11 +24,11 @@ export default function(api: IApi) {
       label: mod.description,
       value: mod.name,
       children: mod.interfaces.map(({ name, response, description, method, parameters }) => {
-        // 提交表单数据时的DTO
-        const paramsName = parameters.find(param => param.in === 'body')?.dataType.typeName;
-        // 获取数据时的DTO
+        // DTO when submitting form data
+        const paramsName = parameters.find(param => param.in ==='body')?.dataType.typeName;
+        // DTO when getting data
         let responseName;
-        if (response.typeArgs.length > 0) {
+        if (response.typeArgs.length> 0) {
           responseName = response.typeArgs.find(arg => arg.isDefsType)?.typeName;
         } else {
           if (response.isDefsType) {
@@ -62,7 +62,7 @@ export default function(api: IApi) {
         curr.baseClasses.map(mod => ({
           name: mod.name,
           dbId: curr.name,
-          description: mod.description || '',
+          description: mod.description ||'',
           properties: mod.properties.map(prop => ({
             label: prop.description,
             value: prop.name,

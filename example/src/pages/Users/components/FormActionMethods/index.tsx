@@ -17,28 +17,28 @@ export default forwardRef<FormActionMethodsInstance, { reload?: () => void }>(({
   const { run: handleDelete } = useRequest(API.recruitment.person.remove.fetch, {
     manual: true,
     onSuccess: () => {
-      message.success('删除成功');
+      message.success('delete成功');
       reload && reload();
     },
   });
   const { run: handleDeleteBatch } = useRequest(API.recruitment.person.deleteBatch, {
     manual: true,
     onSuccess: () => {
-      message.success('批量删除成功');
+      message.success('Batch delete成功');
       reload && reload();
     },
   });
 
-  /** 新增 */
+  /** Add */
   formActionRef.current.onAdd = () => history.push('/Users/edit');
 
-  /** 删除 */
+  /** delete */
   formActionRef.current.onDelete = (row: Store) => handleDelete(row.id);
 
   /** 编辑 */
   formActionRef.current.onEdit = (row: Store) => history.push(`/Users/edit?id=${row.id}`);
 
-  /** 批量删除 */
+  /** Batch delete */
   formActionRef.current.onDeleteBatch = (ids: number[]) => handleDeleteBatch(ids);
 
   return <></>;

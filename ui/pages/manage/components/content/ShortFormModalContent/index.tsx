@@ -86,7 +86,7 @@ export default () => {
   };
 
   /**
-   * 把配置的表单信息和添加的表单项配置传到服务端
+   * Pass the configured form information and the added form item configuration to the server
    */
   const remoteCall = async ({
     path,
@@ -103,14 +103,14 @@ export default () => {
     detailPath?: string;
     detailDirName?: string;
   }) => {
-    // 对formItems进行遍历，如果其中有任一项没有配置label/name，则不允许提交
+    // Traverse the formItems, if any of them is not configured with label/name, then submission is not allowed
     if (formItems.length === 0) {
-      message.error('您还没有添加表单项，不能提交！');
+      message.error('You have not added a form item, you cannot submit it!');
       return;
     }
     const key = 'message';
     try {
-      message.loading({ content: '正在生成文件，请稍候...', key });
+      message.loading({ content: 'File is being generated, please wait...', key });
       const result = await api.callRemote({
         type: 'org.umi-plugin-page-creator.shortFormModal',
         payload: {
@@ -134,7 +134,7 @@ export default () => {
     }
   };
 
-  /** 把导入的配置信息进行解析 */
+  /** Analyze the imported configuration information */
   useEffect(() => {
     if (impConfigJson) {
       const { formConfig = { title: 'Single list' }, formItems = [], submitFetch = [] } = JSON.parse(
@@ -146,7 +146,7 @@ export default () => {
     }
   }, [impConfigJson]);
 
-  /** 导出 */
+/** Export */
   const handleExport = () => {
     copy(
       JSON.stringify(
@@ -168,7 +168,7 @@ export default () => {
         title={<Title text={formConfig.title} />}
         extra={
           <Button type="primary" onClick={() => setFormConfigDrawerVisible(true)}>
-            配置
+            Configuration
           </Button>
         }
       >
@@ -218,7 +218,7 @@ export default () => {
         submitFetch={submitFetch}
       />
 
-      {/**表单配置 */}
+      {/**Form configuration */}
       <ShortFormConfigDrawer
         visible={formConfigDrawerVisible}
         setVisible={setFormConfigDrawerVisible}
@@ -226,14 +226,14 @@ export default () => {
         formConfig={formConfig}
       />
 
-      {/**表单项集合 */}
+      {/**Form item collection */}
       <FormItemsDrawer
         visible={formItemsDrawerVisible}
         setVisible={setFormItemsDrawerVisible}
         onSubmit={handleSubmit}
       />
 
-      {/**配置单个表单项 */}
+      {/**Configure a single form item */}
       {currentItem && (
         <FormItemConfigDrawer
           visible={formItemConfigDrawerVisible}
@@ -244,7 +244,7 @@ export default () => {
         />
       )}
 
-      {/**提交时候弹出的输入文件路径 */}
+      {/**The input file path that pops up when submitting */}
       <PathMenuAction
         type={checked ? 'formWithDetail' : 'form'}
         onRemoteCall={remoteCall}

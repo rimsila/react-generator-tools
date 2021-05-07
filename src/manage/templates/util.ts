@@ -1,9 +1,8 @@
 /*
  * @File Description:
- * @公司: thundersdata
- * @Author: Chen Jie
+
  * @Date: 2020-05-08 13:56:59
- * @LastEditors: Chen Jie
+
  * @LastEditTime: 2020-05-19 23:31:55
  */
 import {LabeledValue} from'antd/lib/select';

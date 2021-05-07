@@ -374,6 +374,7 @@ export default function renderFormItem({
       const selectItem = (
         <Form.Item label={label} name={name}>
           <Select {...selectProps}>
+            //@ts-ignore
             {selectOptions &&
               ((eval(selectOptions as string) as LabeledValue[]) || []).map(option => (
                 <Option key={option.value} value={option.value}>

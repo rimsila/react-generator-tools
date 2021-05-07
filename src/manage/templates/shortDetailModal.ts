@@ -1,9 +1,9 @@
 /*
  * @File description: Generate a single column detail pop-up window
- * @公司: thundersdata
+
  * @作者: 陈杰
  * @Date: 2020-05-07 14:04:41
- * @LastEditors: 陈杰
+
  * @LastEditTime: 2020-05-19 11:39:50
  */
 import { Store } from 'antd/lib/form/interface';

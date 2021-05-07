@@ -1,9 +1,9 @@
 /*
  * @文件描述: 生成Short details页面
- * @公司: thundersdata
+
  * @作者: 陈杰
  * @Date: 2020-05-07 14:04:41
- * @LastEditors: 廖军
+
  * @LastEditTime: 2020-10-09 15:39:08
  */
 import { Store } from 'antd/lib/form/interface';

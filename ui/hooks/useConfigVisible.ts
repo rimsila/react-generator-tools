@@ -1,11 +1,4 @@
-/*
- * @文件描述:
- * @公司: thundersdata
- * @作者: 陈杰
- * @Date: 2020-05-11 15:23:37
- * @LastEditors: 黄姗姗
- * @LastEditTime: 2020-05-29 10:41:43
- */
+
 import { useState } from 'react';
 
 export default function useConfigVisible() {

@@ -1,9 +1,8 @@
 /*
  * @File description: Configuration content of Short form
- * @公司: thundersdata
- * @Author: Chen Jie
+
  * @Date: 2020-04-29 17:56:31
- * @LastEditors: Chen Jie
+
  * @LastEditTime: 2020-05-11 15:21:35
  */
 import React from'react';

@@ -1,9 +1,8 @@
 /*
- * @文件描述: 生成Short form
- * @公司: thundersdata
- * @作者: 陈杰
+  * @File description: Generate Short form
+
  * @Date: 2020-05-07 14:04:41
- * @LastEditors: 廖军
+
  * @LastEditTime: 2020-10-10 10:10:28
  */
 import { Store } from 'antd/lib/form/interface';
@@ -106,7 +105,7 @@ export default function generateShortFormCode(payload: Payload): string {
         });
         console.log('emptyline');
         const submit = (values: Store) => {
-          setTip('数据保存中，请稍候...');
+          setTip('Data saving, please wait...');
           console.log('emptyline');
           const payload = {
             ...values,
@@ -120,7 +119,7 @@ export default function generateShortFormCode(payload: Payload): string {
         const { run: handleFinish, loading: submitting } = useRequest(submit, {
           manual: true,
           onSuccess: () => {
-            message.success('保存成功');
+            message.success('Saved successfully');
           },
         });
         console.log('emptyline');
@@ -161,7 +160,7 @@ export default function generateShortFormCode(payload: Payload): string {
                   .join('')}
                 <Form.Item {...submitFormLayout} style={{ marginTop: 32 }}>
                   <Button type="primary" htmlType="submit" loading={submitting} ${hasUploadItem ? 'disabled={submitBtnDisabled}' : ''}>
-                    提交
+                    submit
                   </Button>
                 </Form.Item>
               </Form>

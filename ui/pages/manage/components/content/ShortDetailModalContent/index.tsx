@@ -37,12 +37,7 @@ export default () => {
     title: '单列详情',
   });
 
-  const {
-    initialFetch,
-    setInitialFetch,
-    submitFetch,
-    setSubmitFetch,
-  } = useConfig();
+  const { initialFetch, setInitialFetch, submitFetch, setSubmitFetch } = useConfig();
 
   const {
     pathModalVisible,
@@ -89,17 +84,17 @@ export default () => {
   };
 
   /**
-   * 把配置的表单信息和添加的表单项配置传到服务端
+   * Pass the configured form information and the added form item configuration to the server
    */
   const remoteCall = async ({ path, dirName }: { path?: string; dirName?: string }) => {
-    // 对formItems进行遍历，如果其中有任一项没有配置label/name，则不允许提交
+    // Traverse the formItems, if any of them is not configured with label/name, then submission is not allowed
     if (formItems.length === 0) {
-      message.error('您还没有添加详情展示项，不能提交！');
+      message.error('您还没有添加详情展示项，不能submit ！');
       return;
     }
     const key = 'message';
     try {
-      message.loading({ content: '正在生成文件，请稍候...', key });
+      message.loading({ content: 'File is being generated, please wait...', key });
       const result = await api.callRemote({
         type: 'org.umi-plugin-page-creator.shortDetailModal',
         payload: {
@@ -111,7 +106,7 @@ export default () => {
           submitFetch,
         },
       });
-      message.success({ content: (result as AjaxResponse<string>).message , key });
+      message.success({ content: (result as AjaxResponse<string>).message, key });
       setPathModalVisible(false);
     } catch (error) {
       message.error({ content: error.message, key });
@@ -121,7 +116,12 @@ export default () => {
   /** 把导入的配置信息进行解析 */
   useEffect(() => {
     if (impConfigJson) {
-      const { formConfig = { title: '单列详情', }, formItems = [], initialFetch = [], submitFetch = [] } = JSON.parse(impConfigJson);
+      const {
+        formConfig = { title: '单列详情' },
+        formItems = [],
+        initialFetch = [],
+        submitFetch = [],
+      } = JSON.parse(impConfigJson);
       setFormConfig(formConfig);
       setFormItems(formItems);
       setInitialFetch(initialFetch);
@@ -129,14 +129,20 @@ export default () => {
     }
   }, [impConfigJson]);
 
-  /** 导出 */
+/** Export */
   const handleExport = () => {
-    copy(JSON.stringify({
-      formConfig,
-      formItems,
-      initialFetch,
-      submitFetch
-    }, null, 2));
+    copy(
+      JSON.stringify(
+        {
+          formConfig,
+          formItems,
+          initialFetch,
+          submitFetch,
+        },
+        null,
+        2,
+      ),
+    );
     message.success('Configuration copied to clipboard');
   };
 
@@ -146,7 +152,7 @@ export default () => {
         title={<Title text={formConfig.title} />}
         extra={
           <Button type="primary" onClick={() => setFormConfigDrawerVisible(true)}>
-            配置
+            Configuration
           </Button>
         }
       >
@@ -169,7 +175,7 @@ export default () => {
             </div>
           ))}
           <Button onClick={addDetailItem} type="dashed" style={{ width: '100%', marginBottom: 32 }}>
-            添加展示项
+            Add display item
           </Button>
           <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
             Page interface configuration
@@ -177,7 +183,7 @@ export default () => {
         </Form>
       </Card>
 
-      {/**Page interface configuration  */}
+      {/**Page interface configuration */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}
@@ -186,7 +192,7 @@ export default () => {
         submitFetch={submitFetch}
       />
 
-      {/**表单配置 */}
+      {/**Form configuration */}
       <ShortFormConfigDrawer
         visible={formConfigDrawerVisible}
         setVisible={setFormConfigDrawerVisible}
@@ -194,7 +200,7 @@ export default () => {
         formConfig={formConfig}
       />
 
-      {/**配置单个表单项 */}
+      {/**Configure a single form item */}
       {currentItem && (
         <FormItemConfigDrawer
           visible={formItemConfigDrawerVisible}
@@ -207,7 +213,7 @@ export default () => {
         />
       )}
 
-      {/**提交时候弹出的输入文件路径 */}
+      {/**The input file path that pops up when submitting */}
       <PathMenuAction
         type="detail"
         onRemoteCall={remoteCall}

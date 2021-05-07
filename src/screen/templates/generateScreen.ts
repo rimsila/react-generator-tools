@@ -3,7 +3,7 @@ import { removeUnusedImport } from "../../utils/removeUnusedImport";
 import { writeFileSync } from "fs";
 
 /**
- * 生成大屏页面
+ * Generate large screen pages
  * @param payload
  */
 export default function(screenPath: string, payload: ScreenConfigPayload) {

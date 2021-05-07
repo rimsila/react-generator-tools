@@ -1,9 +1,7 @@
 /*
- * @文件描述:
- * @公司: thundersdata
- * @作者: 陈杰
+
  * @Date: 2020-04-29 21:58:39
- * @LastEditors: 廖军
+
  * @LastEditTime: 2020-10-09 17:03:40
  */
 import { Store } from 'antd/lib/form/interface';
@@ -68,7 +66,7 @@ export type CardItemProps = {
   formItems: FormItemProps[];
 };
 
-/** 导出/导入的json格式 */
+/** Export/导入的json格式 */
 export type ConfigProps = {
   formConfig?: Store;
   formItems?: FormItemProps[];

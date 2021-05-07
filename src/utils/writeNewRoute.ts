@@ -40,7 +40,7 @@ export function getNewRouteCode(configPath: string, newRoute: Route, absSrcPath:
   });
   let routesNode = null;
   const importModules = [];
-  // 查询当前配置文件是否导出 routes 属性
+  // 查询当前配置文件是否Export routes 属性
   traverse(ast, {
     Program({ node }) {
       // find import

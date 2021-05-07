@@ -1,9 +1,7 @@
 /*
- * @文件描述: 生成Single list弹窗
- * @公司: thundersdata
- * @作者: 陈杰
+
  * @Date: 2020-05-07 14:04:41
- * @LastEditors: 廖军
+
  * @LastEditTime: 2020-10-10 17:41:18
  */
 import { Store } from 'antd/lib/form/interface';
@@ -87,7 +85,7 @@ export default function generateShortFormModalCode(payload: Payload): string {
         }
         console.log('emptyline');
         const submit = (values: Store) => {
-          setTip('数据保存中，请稍候...');
+          setTip('Data saving, please wait...');
           console.log('emptyline');
           const payload = {
             ...values,
@@ -101,7 +99,7 @@ export default function generateShortFormModalCode(payload: Payload): string {
         const { run: handleFinish, loading: submitting } = useRequest(submit, {
           manual: true,
           onSuccess: () => {
-            message.success('保存成功');
+            message.success('Saved successfully');
             form.resetFields();
             ${fromTable ? `reload && reload();` : ''}
           },

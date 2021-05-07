@@ -327,7 +327,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "删除面试官信息",
+                    "description": "delete面试官信息",
                     "name": "delEmployee",
                     "method": "post",
                     "path": "/employee/delEmployee",
@@ -576,7 +576,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "删除面试记录",
+                    "description": "delete面试记录",
                     "name": "deleteInterviewer",
                     "method": "post",
                     "path": "/interview/deleteInterviewer",
@@ -1193,7 +1193,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "新增人才",
+                    "description": "Add人才",
                     "name": "addPerson",
                     "method": "post",
                     "path": "/person/addPerson",
@@ -1259,7 +1259,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "删除人才详情",
+                    "description": "delete人才详情",
                     "name": "delPerson",
                     "method": "post",
                     "path": "/person/delPerson",
@@ -1679,7 +1679,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "删除人才池目录",
+                    "description": "delete人才池目录",
                     "name": "delPersonPool",
                     "method": "post",
                     "path": "/personPool/delPersonPool",
@@ -1865,7 +1865,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "删除岗位信息",
+                    "description": "delete岗位信息",
                     "name": "delPost",
                     "method": "post",
                     "path": "/post/delPost",
@@ -2290,7 +2290,7 @@
             ]
         },
         {
-            "description": "删除应聘详情DTO",
+            "description": "delete应聘详情DTO",
             "name": "ApplyDeleteDTO",
             "templateArgs": [],
             "properties": [{
@@ -4785,7 +4785,7 @@
             ]
         },
         {
-            "description": "人才删除DTO",
+            "description": "人才deleteDTO",
             "name": "PersonDeleteDTO",
             "templateArgs": [],
             "properties": [{

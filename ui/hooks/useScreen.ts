@@ -195,7 +195,7 @@ export default function useScreen() {
   };
 
   /**
-   * 删除一行
+   * delete一行
    * @param type
    * @param rowIndex
    */
@@ -221,7 +221,7 @@ export default function useScreen() {
   };
 
   /**
-   * 在某一行里面新增一列
+   * 在某一行里面Add一列
    * @param type
    * @param rowIndex
    */
@@ -296,7 +296,7 @@ export default function useScreen() {
   };
 
   /**
-   * 从某一行删除一列
+   * 从某一行delete一列
    * @param type
    * @param rowIndex
    * @param colIndex

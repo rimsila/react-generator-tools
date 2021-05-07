@@ -15,7 +15,7 @@ import LongDetailModalContent from '../content/LongDetailModalContent';
 export default () => {
   const { templateType } = useContext(Context);
 
-  /** 根据模板映射不同的显示内容 */
+  /** Map different display content according to the template */
   const createContentByType = () => {
     switch (templateType) {
       case 'short-form':

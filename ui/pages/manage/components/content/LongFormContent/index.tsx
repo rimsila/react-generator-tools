@@ -87,7 +87,7 @@ export default () => {
   };
 
   /**
-   * 把配置的表单信息和添加的表单项配置传到服务端
+   * Pass the configured form information and the added form item configuration to the server
    */
   const remoteCall = async ({
     path,
@@ -107,10 +107,10 @@ export default () => {
     const key = 'message';
     try {
       if (cards.length === 0) {
-        message.error('你还没有添加Card');
+        message.error('You havent added Card');
         return;
       }
-      message.loading({ content: '正在生成文件，请稍候...', key });
+      message.loading({ content: 'File is being generated, please wait...', key });
       const result = await api.callRemote({
         type: 'org.umi-plugin-page-creator.longForm',
         payload: {
@@ -126,18 +126,18 @@ export default () => {
           generateDetail: checked,
         },
       });
-      message.success({ content: (result as AjaxResponse<string>).message , key });
+      message.success({ content: (result as AjaxResponse<string>).message, key });
       setPathModalVisible(false);
     } catch (error) {
       message.error({ content: error.message, key });
     }
   };
 
-  /** 把导入的配置信息进行解析 */
+  /** parse the imported configuration information */
   useEffect(() => {
     if (impConfigJson) {
       const {
-        cards = [{ title: '自定义Card0', formItems: [] }],
+        cards = [{ title: 'Custom Card0', formItems: [] }],
         initialFetch = [],
         submitFetch = [],
       } = JSON.parse(impConfigJson);
@@ -147,7 +147,8 @@ export default () => {
     }
   }, [impConfigJson]);
 
-  /** 导出 */
+  /** Export */
+
   const handleExport = () => {
     copy(
       JSON.stringify(
@@ -169,7 +170,7 @@ export default () => {
         {cards.map((card, cardIndex) => {
           const { title, formItems = [] } = card;
           const cols = 3;
-          // 把formItems分成3列
+          // Divide formItems into 3 columns
           const formItemLines = transformFormItemLines(formItems, cols);
           return (
             <Card
@@ -225,7 +226,10 @@ export default () => {
           );
         })}
       </Form>
-      <Form.Item label="Generate details page by default" style={{ marginLeft: 24, marginBottom: 0 }}>
+      <Form.Item
+        label="Generate details page by default"
+        style={{ marginLeft: 24, marginBottom: 0 }}
+      >
         <Switch checked={checked} onChange={setChecked} />
       </Form.Item>
       <Button
@@ -235,13 +239,13 @@ export default () => {
         }
         style={{ margin: 24 }}
       >
-        新增Card
+        Add Card
       </Button>
       <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
         Page interface configuration
       </Button>
 
-      {/**Card编辑的抽屉 */}
+      {/**Card editor drawer */}
       <CardConfigDrawer
         visible={cardDrawerVisible}
         setVisible={setCardDrawerVisible}
@@ -257,7 +261,7 @@ export default () => {
         submitFetch={submitFetch}
       />
 
-      {/** 选择表单元素的抽屉 */}
+      {/**  Select the drawer of the form element */}
       <FormItemsDrawer
         visible={formItemsDrawerVisible}
         setVisible={setFormItemsDrawerVisible}

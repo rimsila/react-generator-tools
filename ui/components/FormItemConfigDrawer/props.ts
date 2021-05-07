@@ -2,8 +2,7 @@ import { FormItemProps } from '../../../interfaces/common';
 
 /*
  * @File Description:
- * @公司: thundersdata
- * @Author: Chen Jie
+
  * @Date: 2020-04-30 15:27:34
  * @LastEditors: Huang Shanshan
  * @LastEditTime: 2020-05-28 15:56:12

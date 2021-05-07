@@ -1,7 +1,6 @@
 /*
  * @File description: Configuration content of Short form
- * @公司: thundersdata
- * @Author: Chen Jie
+
  * @Date: 2020-04-29 17:56:31
  * @LastEditors: Huang Shanshan
  * @LastEditTime: 2020-05-28 18:21:40

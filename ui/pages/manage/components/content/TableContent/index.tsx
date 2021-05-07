@@ -58,7 +58,7 @@ export default () => {
   };
 
   /**
-   * 把配置的表单信息和添加的表单项配置传到服务端
+   * Pass the configured form information and the added form item configuration to the server
    */
   const remoteCall = async ({ path, menu }: { path?: string; menu?: string }) => {
     const key = 'message';
@@ -67,7 +67,7 @@ export default () => {
         message.error('你还没有配置表格列');
         return;
       }
-      message.loading({ content: '正在生成文件，请稍候...', key });
+      message.loading({ content: 'File is being generated, please wait...', key });
       const result = await api.callRemote({
         type: 'org.umi-plugin-page-creator.table',
         payload: {
@@ -105,7 +105,7 @@ export default () => {
     }
   }, [impConfigJson]);
 
-  /** 导出 */
+/** Export */
   const handleExport = () => {
     copy(
       JSON.stringify(
@@ -201,9 +201,9 @@ export default () => {
         setVisible={setColumnConfigDrawerVisible}
         onSubmit={values => {
           const findIndex = columns.findIndex(item => item.dataIndex === values.dataIndex);
-          // 如果index不存在，或者findIndex和index相同，表示新增或者修改没有改到dataIndex
+          // 如果index不存在，或者findIndex和index相同，表示Add或者修改没有改到dataIndex
           if ((!index && findIndex > -1) || (index && index === findIndex)) {
-            message.error('这个dataIndex已存在，请修改后重新提交');
+            message.error('这个dataIndex已存在，请修改后重新submit ');
             return;
           }
           onConfirm(filterEmpty(values));
@@ -213,7 +213,7 @@ export default () => {
         initialFetch={initialFetch}
       />
 
-      {/**提交时候弹出的输入文件路径 */}
+      {/**submit 时候弹出的输入文件路径 */}
       <PathMenuAction
         type="table"
         onRemoteCall={remoteCall}

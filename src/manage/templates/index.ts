@@ -1,9 +1,7 @@
 /*
- * @文件描述:
- * @公司: thundersdata
- * @作者: 陈杰
+
  * @Date: 2020-05-07 14:06:48
- * @LastEditors: 廖军
+
  * @LastEditTime: 2020-10-10 16:50:07
  */
 import generateShortFormCode from './shortForm';

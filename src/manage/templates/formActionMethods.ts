@@ -1,9 +1,6 @@
 /*
- * @文件描述: 生成table与form连接的一些方法组件（非modal类型）
- * @公司: thundersdata
- * @作者: 廖军
+ * @File description: Generate some method components (non-modal type) connecting table and form
  * @Date: 2020-10-10 16:15:04
- * @LastEditors: 廖军
  * @LastEditTime: 2020-10-27 14:08:34
  */
 
@@ -14,14 +11,14 @@ export interface Payload {
 }
 
 export default ({ pageName, initialFetch = [], generateDetail }: Payload) => {
-    const apiStr = initialFetch.length === 3 ? 
-      `API.${initialFetch[0]}.${initialFetch[1]}` : 'API.recruitment.person';
+    const apiStr = initialFetch.length === 3?
+      `API.${initialFetch[0]}.${initialFetch[1]}`:'API.recruitment.person';
     return `
-      import React, { forwardRef } from 'react';
-      import { Store } from 'antd/es/form/interface';
-      import { history } from 'umi';
-      import { useRequest } from 'ahooks';
-      import { message } from 'antd';
+      import React, {forwardRef} from'react';
+      import {Store} from'antd/es/form/interface';
+      import {history} from'umi';
+      import {useRequest} from'ahooks';
+      import {message} from'antd';
 
       export interface FormActionMethodsInstance {
         onAdd?: () => void;
@@ -31,36 +28,36 @@ export default ({ pageName, initialFetch = [], generateDetail }: Payload) => {
         onDeleteBatch?: (ids: number[]) => void;
       }
 
-      export default forwardRef<FormActionMethodsInstance, { reload?: () => void }>(({ reload }, ref) => {
+      export default forwardRef<FormActionMethodsInstance, {reload?: () => void }>(({ reload }, ref) => {
         const formActionRef = ref as React.MutableRefObject<FormActionMethodsInstance>;
-        const { run: handleDelete } = useRequest(${apiStr}.remove.fetch, {
+        const {run: handleDelete} = useRequest(${apiStr}.remove.fetch, {
           manual: true,
           onSuccess: () => {
-            message.success('删除成功');
+            message.success('Delete successfully');
             reload && reload();
           },
         });
-        const { run: handleDeleteBatch } = useRequest(${apiStr}.deleteBatch, {
+        const {run: handleDeleteBatch} = useRequest(${apiStr}.deleteBatch, {
           manual: true,
           onSuccess: () => {
-            message.success('批量删除成功');
+            message.success('Batch delete success');
             reload && reload();
           },
         });
 
-        /** 新增 */
+        /** Add */
         formActionRef.current.onAdd = () => history.push('/${pageName}/edit');
 
-        /** 删除 */
+        /** Delete */
         formActionRef.current.onDelete = (row: Store) => handleDelete(row.id);
 
-        /** 编辑 */
+        /** Edit */
         formActionRef.current.onEdit = (row: Store) => history.push(\`/${pageName}/edit?id=\${row.id}\`);
 
-        ${generateDetail ? `/** 查看 */
-        formActionRef.current.onPreview = (row: Store) => history.push(\`/${pageName}/detail?id=\${row.id}\`);` : ''}
+        ${generateDetail? `/** View */
+        formActionRef.current.onPreview = (row: Store) => history.push(\`/${pageName}/detail?id=\${row.id}\`);`:''}
 
-        /** 批量删除 */
+        /** batch deletion */
         formActionRef.current.onDeleteBatch = (ids: number[]) => handleDeleteBatch(ids);
 
         return <></>;
