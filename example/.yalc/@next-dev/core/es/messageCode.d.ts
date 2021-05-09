@@ -1,0 +1,31 @@
+export declare const CODE_MESSAGE: {
+    200: string;
+    201: string;
+    202: string;
+    204: string;
+    400: string;
+    401: string;
+    403: string;
+    404: string;
+    405: string;
+    406: string;
+    410: string;
+    422: string;
+    500: string;
+    502: string;
+    503: string;
+    504: string;
+};
+export declare const HTTP_STATUS: {
+    SUCCESS: number;
+    CREATED: number;
+    ACCEPTED: number;
+    CLIENT_ERROR: number;
+    AUTHENTICATE: number;
+    FORBIDDEN: number;
+    NOT_FOUND: number;
+    SERVER_ERROR: number;
+    BAD_GATEWAY: number;
+    SERVICE_UNAVAILABLE: number;
+    GATEWAY_TIMEOUT: number;
+};

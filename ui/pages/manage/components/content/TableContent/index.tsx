@@ -1,31 +1,30 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Button, Card, message, Table } from 'antd';
-import Title from '../../../../../components/Title';
-import { AjaxResponse } from '../../../../../../interfaces/common';
-import Context from '../../../Context';
-import PathMenuAction from '../../PathMenuAction';
-import { Store } from 'antd/lib/form/interface';
-import TableConfigDrawer from '../../drawers/TableConfigDrawer';
-import TableColumnConfigDrawer from '../../drawers/TableColumnConfigDrawer';
-import TitleWithActions from './TitleWithActions';
-import useConfigVisible from '../../../../../hooks/useConfigVisible';
-import useTable from '../../../../../hooks/useTable';
-import { filterEmpty } from '../../../../../utils';
-import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
-import useConfig from '../../../../../hooks/useConfig';
-import { ColumnType } from 'antd/lib/table/interface';
-import copy from 'copy-to-clipboard';
-import ExportActions from '../../ExportActions';
+import React, {useContext, useState, useEffect} from'react';
+import {Button, Card, message, Table} from'antd';
+import Title from'../../../../../components/Title';
+import {AjaxResponse} from'../../../../../../interfaces/common';
+import Context from'../../../Context';
+import PathMenuAction from'../../PathMenuAction';
+import {Store} from'antd/lib/form/interface';
+import TableConfigDrawer from'../../drawers/TableConfigDrawer';
+import TableColumnConfigDrawer from'../../drawers/TableColumnConfigDrawer';
+import useConfigVisible from'../../../../../hooks/useConfigVisible';
+import useTable from'../../../../../hooks/useTable';
+import {filterEmpty} from'../../../../../utils';
+import ApiConfigDrawer from'../../drawers/ApiConfigDrawer';
+import useConfig from'../../../../../hooks/useConfig';
+import {ColumnType} from'antd/lib/table/interface';
+import copy from'copy-to-clipboard';
+import ExportActions from'../../ExportActions';
 
 export default () => {
-  const { api, impConfigJson } = useContext(Context);
+  const {api, impConfigJson} = useContext(Context);
   const [tableConfig, setTableConfig] = useState<Store>({
-    headerTitle: '表格配置',
-    rowKey: 'id',
+    headerTitle:'Form configuration',
+    rowKey:'id',
     bordered: false,
   });
 
-  const { initialFetch, setInitialFetch, submitFetch, setSubmitFetch } = useConfig();
+  const {initialFetch, setInitialFetch, submitFetch, setSubmitFetch} = useConfig();
 
   const {
     pathModalVisible,
@@ -60,16 +59,16 @@ export default () => {
   /**
    * Pass the configured form information and the added form item configuration to the server
    */
-  const remoteCall = async ({ path, menu }: { path?: string; menu?: string }) => {
-    const key = 'message';
+  const remoteCall = async ({ path, menu }: {path?: string; menu?: string }) => {
+    const key ='message';
     try {
       if (columns.length === 0) {
-        message.error('你还没有配置表格列');
+        message.error('You have not configured the table column');
         return;
       }
-      message.loading({ content: 'File is being generated, please wait...', key });
+      message.loading({ content:'File is being generated, please wait...', key });
       const result = await api.callRemote({
-        type: 'org.umi-plugin-page-creator.table',
+        type:'org.umi-plugin-page-creator.table',
         payload: {
           tableConfig,
           columns,
@@ -86,12 +85,12 @@ export default () => {
     }
   };
 
-  /** 把导入的配置信息进行解析 */
+  /** parse the imported configuration information */
   useEffect(() => {
     if (impConfigJson) {
       const {
         tableConfig = {
-          headerTitle: '表格配置',
+          headerTitle:'Form Configuration',
           bordered: true,
         },
         columns = [],
@@ -128,7 +127,7 @@ export default () => {
         title={<Title text={tableConfig.headerTitle} />}
         extra={
           <Button type="primary" onClick={() => setTableConfigDrawerVisible(true)}>
-            配置
+            Configuration
           </Button>
         }
       >
@@ -142,19 +141,19 @@ export default () => {
           }}
           columns={columns.map((column, index) => ({
             ...column,
-            title: (
-              <TitleWithActions
-                title={column.title}
-                moveUp={moveUp(index)}
-                moveDown={moveDown(index)}
-                deleteItem={deleteColumn(index)}
-                copyItem={copyColumn(index)}
-                configItem={() => {
-                  configColumn(column, index);
-                  setColumnConfigDrawerVisible(true);
-                }}
-              />
-            ),
+            // title: (
+            //   <TitleWithActions
+            //     title={column.title}
+            //     moveUp={moveUp(index)}
+            //     moveDown={moveDown(index)}
+            //     deleteItem={deleteColumn(index)}
+            //     copyItem={copyColumn(index)}
+            //     configItem={() => {
+            //       configColumn(column, index);
+            //       setColumnConfigDrawerVisible(true);
+            //     }}
+            //   />
+            // ),
           }))}
           dataSource={[]}
         />
@@ -172,12 +171,11 @@ export default () => {
             setCurrentColumn(undefined);
             setColumnConfigDrawerVisible(true);
           }}
-        >
-          添加列
+        >Add column
         </Button>
       </Card>
 
-      {/**Page interface configuration  */}
+      {/**Page interface configuration */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}
@@ -190,7 +188,7 @@ export default () => {
         visible={tableConfigDrawerVisible}
         setVisible={setTableConfigDrawerVisible}
         tableConfig={tableConfig}
-        onSubmit={values => {
+        onSubmit={values ​​=> {
           setTableConfig(values);
           setTableConfigDrawerVisible(false);
         }}
@@ -199,11 +197,11 @@ export default () => {
       <TableColumnConfigDrawer
         visible={columnConfigDrawerVisible}
         setVisible={setColumnConfigDrawerVisible}
-        onSubmit={values => {
+        onSubmit={values ​​=> {
           const findIndex = columns.findIndex(item => item.dataIndex === values.dataIndex);
-          // 如果index不存在，或者findIndex和index相同，表示Add或者修改没有改到dataIndex
-          if ((!index && findIndex > -1) || (index && index === findIndex)) {
-            message.error('这个dataIndex已存在，请修改后重新submit ');
+          // If index does not exist, or findIndex and index are the same, it means that Add or modify has not been changed to dataIndex
+          if ((!index && findIndex> -1) || (index && index === findIndex)) {
+            message.error('This dataIndex already exists, please modify and submit again');
             return;
           }
           onConfirm(filterEmpty(values));
@@ -213,7 +211,7 @@ export default () => {
         initialFetch={initialFetch}
       />
 
-      {/**submit 时候弹出的输入文件路径 */}
+      {/**The input file path that pops up when submitting */}
       <PathMenuAction
         type="table"
         onRemoteCall={remoteCall}

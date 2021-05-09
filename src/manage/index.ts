@@ -13,6 +13,9 @@ import {
   generateLongDetailModalCode,
   generateFormActionMethodsCode,
   generateFormActionMethodsModalCode,
+  generateTableCode1,
+  formRequestMethods,
+  generateGraph,
 } from './templates';
 import { removeUnusedImport } from '../utils/removeUnusedImport';
 import { writeNewRoute } from '../utils/writeNewRoute';
@@ -330,6 +333,32 @@ export default function(payload: any, type: string, api: IApi) {
           api,
         );
       code = generateTableCode({ ...payload, pageName });
+      break;
+    case 'org.umi-plugin-page-creator.table1':
+      // Generate intermediate components for table use, only generated when the file does not exist, mainly generated through form configuration, here in order to prevent table page references from reporting errors
+      pageName &&
+        !existsSync(`${api.paths.absPagesPath}/${pageName}/components/formRequestMethods`) &&
+        generateComponent(
+          `/${pageName}`,
+          'formRequestMethods',
+          prettify(
+            formRequestMethods({
+              pageName,
+            }),
+          ),
+          api,
+        );
+      pageName &&
+        !existsSync(`${api.paths.absPagesPath}/${pageName}/components/${pageName}Service`) &&
+        generateComponent(
+          `/${pageName}`,
+          `${pageName}Service`,
+          prettify(
+            generateGraph({ pageName })
+          ),
+          api,
+        );
+      code = generateTableCode1({ ...payload, pageName });
       break;
   }
   const prettifyCode = prettify(removeUnusedImport(code));

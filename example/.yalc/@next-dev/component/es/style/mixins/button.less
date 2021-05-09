@@ -1,0 +1,45 @@
+//* -------------- btn_default_mixin mixin --------------
+
+.btn_default_mixin(@btnColor) {
+  border-color: @btnColor;
+  color: @btnColor;
+  &:hover,
+  :active,
+  :focus {
+    color: @btnColor;
+    border-color: @btnColor;
+    opacity: 0.7;
+  }
+}
+
+//* -------------- btn_custom mixin  --------------
+
+.btn_custom(@btnColor) {
+  .ant-btn {
+    .btn_default_mixin(@btnColor);
+  }
+  .ant-btn-primary {
+    color: @white;
+    background-color: @btnColor;
+    border-color: @btnColor;
+    &:hover,
+    :active,
+    :focus {
+      border-color: @btnColor;
+      color: @white;
+    }
+  }
+  .ant-btn-ghost {
+    .btn_default_mixin(@btnColor);
+  }
+  .ant-btn-dashed {
+    .btn_default_mixin(@btnColor);
+  }
+  .ant-btn-link {
+    .btn_default_mixin(@btnColor);
+    border: 0;
+  }
+  .ant-btn-text {
+    border: 0;
+  }
+}

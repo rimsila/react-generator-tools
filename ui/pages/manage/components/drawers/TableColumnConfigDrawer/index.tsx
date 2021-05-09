@@ -4,6 +4,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Store } from 'antd/lib/form/interface';
 import { ColumnType } from 'antd/lib/table';
 import Context from '../../../Context';
+import { mockData } from '../../../../../../example/src/constant';
 
 const { Option } = Select;
 
@@ -21,7 +22,6 @@ export default function<T>({
   initialFetch?: string[];
 }) {
   const [form] = Form.useForm();
-  const { baseClasses = [] } = useContext(Context);
   const [responseName, setResponseName] = useState<string>();
 
   const initialValues = {
@@ -44,23 +44,22 @@ export default function<T>({
   }, [current]);
 
   /** The third value in initialFetch is value-paramsName-responseName, to obtain initial data, use responseName as DTO */
-  useEffect(() => {
-    if (initialFetch && initialFetch.length === 3) {
-      const responseName = initialFetch[2].split('-')[2];
-      setResponseName(responseName);
-    }
-  }, [initialFetch]);
+  // useEffect(() => {
+  //   setResponseName(responseName);
+  // }, [mockData]);
 
-  const properties = useMemo(
-    () => baseClasses.find(item => item.name === responseName)?.properties || [],
-    [baseClasses, responseName],
-  );
+  const properties = useMemo(() => {
+    const obj = mockData()[0];
+      return Object.keys(obj).map(ele => ({ label: ele, value: obj[ele] }));
+  }, [mockData()]);
 
   const handleChange = (value: string) => {
-    const matchClass = properties.find(item => item.value === value);
+    const matchClass = properties.find(item => item?.label === value);
+    console.log("e",value);
+
     form.setFieldsValue({
       title: matchClass?.label,
-      dataIndex: value,
+      dataIndex: matchClass?.label,
     });
   };
 
@@ -68,7 +67,7 @@ export default function<T>({
     <Drawer
       title="table column configuration"
       visible={visible}
-      width={360}
+      width={700}
       onClose={() => {
         form.setFieldsValue(initialValues);
         setVisible(false);
@@ -82,15 +81,13 @@ export default function<T>({
         onFinish={onSubmit}
         initialValues={initialValues}
       >
-        {initialFetch && initialFetch.length > 0 && (
+        {properties?.length > 0 && (
           <Form.Item label="Property value" name="prop">
             <Select onChange={handleChange}>
-              {properties.map(prop => (
-                <Option
-                  key={prop.value}
-                  value={prop.value}
-                >{`${prop.label}(${prop.value})`}</Option>
-              ))}
+              {properties.map(prop => {
+                // console.log('props', prop);
+              return  <Option key={prop.label}  value={prop.label}>{`${prop.label}(${prop?.value})`}</Option>;
+              })}
             </Select>
           </Form.Item>
         )}
@@ -141,15 +138,15 @@ export default function<T>({
               <span style={{ paddingRight: 5 }}>enumeration value</span>
               <Tooltip
                 overlay={`{
-  open: {
-    text:'Unresolved',
-    status:'Error',
-  },
-  closed: {
-    text:'Resolved',
-    status:'Success',
-  },
-}`}
+                  open: {
+                    text:'Unresolved',
+                    status:'Error',
+                  },
+                  closed: {
+                    text:'Resolved',
+                    status:'Success',
+                  },
+              }`}
               >
                 <QuestionCircleOutlined />
               </Tooltip>
@@ -164,7 +161,7 @@ export default function<T>({
           />
         </Form.Item>
         <Form.Item label="value type" name="valueType">
-          <Select>
+          <Select showSearch>
             {[
               { label: 'default value', value: 'text' },
               { label: 'Conversion value is amount', value: 'money' },

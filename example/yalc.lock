@@ -1,0 +1,21 @@
+{
+  "version": "v1",
+  "packages": {
+    "@next-dev/component": {
+      "signature": "02fc1be09730bfdd0d3b822356f4b756",
+      "file": true
+    },
+    "@next-dev/core": {
+      "signature": "b1bbe7597893e5720e3d39983106b7f3",
+      "file": true
+    },
+    "@next-dev/hooks": {
+      "signature": "d29762b3888b7dabae8b796183642933",
+      "file": true
+    },
+    "@next-dev/provider": {
+      "signature": "44af7950ce8477d775b8cc6ef840c924",
+      "file": true
+    }
+  }
+}

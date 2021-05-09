@@ -11,7 +11,8 @@
     "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": true,
     "declaration": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noImplicitAny": false
   },
   "exclude": ["node_modules", "dist", "**/*.spec.ts", "lib", "fixtures", "examples"]
 }

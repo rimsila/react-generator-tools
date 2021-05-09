@@ -34,7 +34,7 @@ const formItemLayout = {
 export default () => {
   const { api, impConfigJson } = useContext(Context);
   const [formConfig, setFormConfig] = useState<Store>({
-    title: '单列详情',
+    title: 'Single column details',
   });
 
   const { initialFetch, setInitialFetch, submitFetch, setSubmitFetch } = useConfig();
@@ -117,7 +117,7 @@ export default () => {
   useEffect(() => {
     if (impConfigJson) {
       const {
-        formConfig = { title: '单列详情' },
+        formConfig = { title: 'Single column details' },
         formItems = [],
         initialFetch = [],
         submitFetch = [],

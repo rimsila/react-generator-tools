@@ -6,7 +6,7 @@ import AppConfigPanel from'./pages/mobile';
 
 export default (api: IUiApi) => {
    api.addPanel({
-     title:'Middle and backstage',
+     title:'Form and Table',
      path:'/manageConfig',
      icon: <DashboardFilled />,
      component: () => <ManageConfigPanel api={api} />,

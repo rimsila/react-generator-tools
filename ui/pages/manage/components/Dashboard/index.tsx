@@ -11,6 +11,7 @@ import ShortFormModalContent from '../content/ShortFormModalContent';
 import LongFormModalContent from '../content/LongFormModalContent';
 import ShortDetailModalContent from '../content/ShortDetailModalContent';
 import LongDetailModalContent from '../content/LongDetailModalContent';
+import TableContent1 from '../content/TableContent1';
 
 export default () => {
   const { templateType } = useContext(Context);
@@ -36,6 +37,8 @@ export default () => {
         return <LongDetailModalContent />;
       case 'table':
         return <TableContent />;
+      case 'table1':
+        return <TableContent1 />;
       default:
         return null;
     }

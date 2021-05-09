@@ -110,7 +110,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "更改应聘信息",
+                    "description": "Change application information",
                     "name": "updateApply",
                     "method": "post",
                     "path": "/apply/updateApply",
@@ -145,7 +145,7 @@
             "description": "Authentication related interface",
             "name": "auth",
             "interfaces": [{
-                "description": "获取当前登录用户信息",
+                "description": "Get the information of the currently logged in user",
                 "name": "getUserInfo",
                 "method": "get",
                 "path": "/auth/user",
@@ -162,13 +162,13 @@
             }]
         },
         {
-            "description": "上传文件相关接口",
+            "description": "Upload file related interface",
             "name": "basic",
             "interfaces": [{
                 "consumes": [
                     "multipart/form-data"
                 ],
-                "description": "上传文件接口",
+                "description": "Upload file interface",
                 "name": "uploadFile",
                 "method": "post",
                 "path": "/basic/uploadFile",
@@ -199,10 +199,10 @@
             }]
         },
         {
-            "description": "字典相关接口",
+            "description": "Dictionary related interface",
             "name": "dict",
             "interfaces": [{
-                    "description": "获取所有字典",
+                    "description": "Get all dictionaries",
                     "name": "getAllDict",
                     "method": "get",
                     "path": "/dict/getAllDict",
@@ -244,7 +244,7 @@
                     "parameters": []
                 },
                 {
-                    "description": "更新所有字典",
+                    "description": "Update all dictionaries",
                     "name": "updateAllDict",
                     "method": "get",
                     "path": "/dict/updateAllDict",
@@ -288,13 +288,13 @@
             ]
         },
         {
-            "description": "面试官相关接口",
+            "description": "Interviewer related interface",
             "name": "employee",
             "interfaces": [{
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "添加面试官信息",
+                    "description": "Add interviewer information",
                     "name": "addEmployee",
                     "method": "post",
                     "path": "/employee/addEmployee",
@@ -327,7 +327,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "delete面试官信息",
+                    "description": "delete interviewer information",
                     "name": "delEmployee",
                     "method": "post",
                     "path": "/employee/delEmployee",
@@ -357,7 +357,7 @@
                     }]
                 },
                 {
-                    "description": "分页查询面试官信息",
+                    "description": "Pagination to query interviewer information",
                     "name": "queryEmployee",
                     "method": "get",
                     "path": "/employee/queryEmployee",
@@ -380,7 +380,7 @@
                     },
                     "parameters": [{
                             "in": "query",
-                            "description": "面试官所属部门",
+                            "description": "Department of the interviewer",
                             "name": "departmentName",
                             "required": false,
                             "dataType": {
@@ -395,7 +395,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "面试官名称",
+                            "description": "Interviewer name",
                             "name": "name",
                             "required": false,
                             "dataType": {
@@ -438,7 +438,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "面试官职位",
+                            "description": "Interviewer position",
                             "name": "positionName",
                             "required": false,
                             "dataType": {
@@ -453,7 +453,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "面试官性别",
+                            "description": "Interviewer gender",
                             "name": "sex",
                             "required": false,
                             "dataType": {
@@ -472,7 +472,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "更改面试官信息",
+                    "description": "Change interviewer information",
                     "name": "updateEmployee",
                     "method": "post",
                     "path": "/employee/updateEmployee",
@@ -504,13 +504,13 @@
             ]
         },
         {
-            "description": "面试管理相关接口",
+            "description": "Interview management related interface",
             "name": "interview",
             "interfaces": [{
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "添加预约面试",
+                    "description": "Add appointment appointment",
                     "name": "addInterview",
                     "method": "post",
                     "path": "/interview/addInterview",
@@ -543,7 +543,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "添加interview result",
+                    "description": "Add interview result",
                     "name": "addInterviewerResult",
                     "method": "post",
                     "path": "/interview/addInterviewerResult",
@@ -576,7 +576,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "delete面试记录",
+                    "description": "delete Interview record",
                     "name": "deleteInterviewer",
                     "method": "post",
                     "path": "/interview/deleteInterviewer",
@@ -591,7 +591,7 @@
                     },
                     "parameters": [{
                         "in": "query",
-                        "description": "面试code列表",
+                        "description": "Interview code list",
                         "name": "interviewCode",
                         "required": true,
                         "dataType": {
@@ -606,7 +606,7 @@
                     }]
                 },
                 {
-                    "description": "获取应聘详情中面试管理列表",
+                    "description": "Get the list of interview management in the application details",
                     "name": "getInterviewListByApplying",
                     "method": "get",
                     "path": "/interview/getInterviewListByApplying",
@@ -629,7 +629,7 @@
                     },
                     "parameters": [{
                         "in": "query",
-                        "description": "应聘的code",
+                        "description": "Application code",
                         "name": "applyCode",
                         "required": true,
                         "dataType": {
@@ -644,7 +644,7 @@
                     }]
                 },
                 {
-                    "description": "获取面试详情",
+                    "description": "Get interview details",
                     "name": "getInterviewDetail",
                     "method": "get",
                     "path": "/interview/getInterviewerDetail",
@@ -659,7 +659,7 @@
                     },
                     "parameters": [{
                         "in": "query",
-                        "description": "面试code",
+                        "description": "Interview code",
                         "name": "interviewCode",
                         "required": true,
                         "dataType": {
@@ -674,7 +674,7 @@
                     }]
                 },
                 {
-                    "description": "获取面试官选择列表",
+                    "description": "Get the interviewer selection list",
                     "name": "getInterviewerEnums",
                     "method": "get",
                     "path": "/interview/getInterviewerEnums",
@@ -698,7 +698,7 @@
                     "parameters": []
                 },
                 {
-                    "description": "获取岗位信息选择列表",
+                    "description": "Get job information selection list",
                     "name": "getPostEnums",
                     "method": "get",
                     "path": "/interview/getPostEnums",
@@ -722,7 +722,7 @@
                     "parameters": []
                 },
                 {
-                    "description": "获取应聘中面试管理列表",
+                    "description": "Get the list of interview management during application",
                     "name": "queryApplyingInterviewList",
                     "method": "get",
                     "path": "/interview/queryApplyingInterviewList",
@@ -805,7 +805,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "行数",
+                            "description": "Rows",
                             "name": "pageSize",
                             "required": false,
                             "dataType": {
@@ -850,7 +850,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "面试轮数",
+                            "description": "Interview rounds",
                             "name": "round",
                             "required": false,
                             "dataType": {
@@ -866,7 +866,7 @@
                     ]
                 },
                 {
-                    "description": "获取结束面试管理列表",
+                    "description": "Get the list of end interview management",
                     "name": "queryFinishInterviewList",
                     "method": "get",
                     "path": "/interview/queryFinishInterviewList",
@@ -949,7 +949,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "行数",
+                            "description": "Rows",
                             "name": "pageSize",
                             "required": false,
                             "dataType": {
@@ -994,7 +994,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "面试轮数",
+                            "description": "Interview rounds",
                             "name": "round",
                             "required": false,
                             "dataType": {
@@ -1187,13 +1187,13 @@
             ]
         },
         {
-            "description": "人才管理",
+            "description": "Talent management",
             "name": "person",
             "interfaces": [{
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "Add人才",
+                    "description": "Add talent",
                     "name": "addPerson",
                     "method": "post",
                     "path": "/person/addPerson",
@@ -1226,7 +1226,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "添加到人才目录",
+                    "description": "Add to talent directory",
                     "name": "copyPerson",
                     "method": "post",
                     "path": "/person/copyPerson",
@@ -1259,7 +1259,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "delete人才详情",
+                    "description": "delete talent details",
                     "name": "delPerson",
                     "method": "post",
                     "path": "/person/delPerson",
@@ -1289,7 +1289,7 @@
                     }]
                 },
                 {
-                    "description": "获取人才详情",
+                    "description": "Get talent details",
                     "name": "getPerson",
                     "method": "get",
                     "path": "/person/getPerson",
@@ -1304,7 +1304,7 @@
                     },
                     "parameters": [{
                         "in": "query",
-                        "description": "人才编码",
+                        "description": "Talent code",
                         "name": "personCode",
                         "required": true,
                         "dataType": {
@@ -1322,7 +1322,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "移动至人才目录",
+                    "description": "Move to talent directory",
                     "name": "movePerson",
                     "method": "post",
                     "path": "/person/movePerson",
@@ -1352,7 +1352,7 @@
                     }]
                 },
                 {
-                    "description": "获取人才列表",
+                    "description": "Get a list of talents",
                     "name": "queryPerson",
                     "method": "get",
                     "path": "/person/queryPerson",
@@ -1375,7 +1375,7 @@
                     },
                     "parameters": [{
                             "in": "query",
-                            "description": "创建人",
+                            "description": "founder",
                             "name": "employeeName",
                             "required": false,
                             "dataType": {
@@ -1390,7 +1390,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "年龄区间-结束年龄",
+                            "description": "Age range-end age",
                             "name": "endAge",
                             "required": false,
                             "dataType": {
@@ -1405,7 +1405,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "工作经验",
+                            "description": "work experience",
                             "name": "experience",
                             "required": false,
                             "dataType": {
@@ -1420,7 +1420,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "是否有意向",
+                            "description": "Is there any intention",
                             "name": "hasIntention",
                             "required": false,
                             "dataType": {
@@ -1435,7 +1435,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "起始页",
+                            "description": "Start page",
                             "name": "page",
                             "required": false,
                             "dataType": {
@@ -1450,7 +1450,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "页长",
+                            "description": "Page length",
                             "name": "pageSize",
                             "required": false,
                             "dataType": {
@@ -1465,7 +1465,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "姓名",
+                            "description": "Name",
                             "name": "personName",
                             "required": false,
                             "dataType": {
@@ -1480,7 +1480,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "联系方式",
+                            "description": "contact details",
                             "name": "phone",
                             "required": false,
                             "dataType": {
@@ -1495,7 +1495,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "人才库编码",
+                            "description": "Talent pool coding",
                             "name": "poolCode",
                             "required": false,
                             "dataType": {
@@ -1510,7 +1510,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "岗位",
+                            "description": "Post",
                             "name": "postName",
                             "required": false,
                             "dataType": {
@@ -1525,8 +1525,8 @@
                         },
                         {
                             "in": "query",
-                            "description": "性别",
                             "name": "sex",
+                            "description": "Gender",
                             "required": false,
                             "dataType": {
                                 "typeArgs": [],
@@ -1540,7 +1540,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "年龄区间-开始年龄",
+                            "description": "Age Range-Starting Age",
                             "name": "startAge",
                             "required": false,
                             "dataType": {
@@ -1559,7 +1559,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "从回收站恢复",
+                    "description": "Recover from Recycle Bin",
                     "name": "recoverPerson",
                     "method": "post",
                     "path": "/person/recoverPerson",
@@ -1574,7 +1574,7 @@
                     },
                     "parameters": [{
                         "in": "query",
-                        "description": "人才编码",
+                        "description": "Talent code",
                         "name": "personCode",
                         "required": true,
                         "dataType": {
@@ -1592,7 +1592,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "更新人才",
+                    "description": "Update talent",
                     "name": "updatePerson",
                     "method": "post",
                     "path": "/person/updatePerson",
@@ -1624,13 +1624,13 @@
             ]
         },
         {
-            "description": "人才目录管理",
+            "description": "Talent catalog management",
             "name": "personPool",
             "interfaces": [{
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "添加人才池目录",
+                    "description": "Add talent pool directory",
                     "name": "addPersonPool",
                     "method": "post",
                     "path": "/personPool/addPersonPool",
@@ -1660,7 +1660,7 @@
                     }]
                 },
                 {
-                    "description": "清空回收站",
+                    "description": "Empty the recycle bin",
                     "name": "clearRecycleBin",
                     "method": "get",
                     "path": "/personPool/clearRecycleBin",
@@ -1679,7 +1679,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "delete人才池目录",
+                    "description": "delete talent pool directory",
                     "name": "delPersonPool",
                     "method": "post",
                     "path": "/personPool/delPersonPool",
@@ -1694,7 +1694,7 @@
                     },
                     "parameters": [{
                         "in": "query",
-                        "description": "人才目录code",
+                        "description": "Talent catalog code",
                         "name": "poolCode",
                         "required": true,
                         "dataType": {
@@ -1709,7 +1709,7 @@
                     }]
                 },
                 {
-                    "description": "获取人才池目录",
+                    "description": "Get the talent pool catalog",
                     "name": "getPersonPool",
                     "method": "get",
                     "path": "/personPool/getPersonPool",
@@ -1728,7 +1728,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "获取人才目录详情",
+                    "description": "Get talent catalog details",
                     "name": "getPersonPoolDetail",
                     "method": "post",
                     "path": "/personPool/getPersonPoolDetail",
@@ -1743,7 +1743,7 @@
                     },
                     "parameters": [{
                         "in": "query",
-                        "description": "人才目录code",
+                        "description": "Talent catalog code",
                         "name": "poolCode",
                         "required": true,
                         "dataType": {
@@ -1761,7 +1761,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "从回收站恢复人才池目录",
+                    "description": "Restore Talent Pool Directory from Recycle Bin",
                     "name": "restorePersonPool",
                     "method": "post",
                     "path": "/personPool/restorePersonPool",
@@ -1776,7 +1776,7 @@
                     },
                     "parameters": [{
                         "in": "query",
-                        "description": "人才目录code",
+                        "description": "Talent catalog code",
                         "name": "poolCode",
                         "required": true,
                         "dataType": {
@@ -1794,7 +1794,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "更新人才池目录",
+                    "description": "Update talent pool directory",
                     "name": "updatePersonPool",
                     "method": "post",
                     "path": "/personPool/updatePersonPool",
@@ -1826,13 +1826,13 @@
             ]
         },
         {
-            "description": "岗位管理相关接口",
+            "description": "Job management related interface",
             "name": "post",
             "interfaces": [{
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "添加岗位信息",
+                    "description": "Add post information",
                     "name": "addApply",
                     "method": "post",
                     "path": "/post/addPost",
@@ -1865,7 +1865,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "delete岗位信息",
+                    "description": "delete post information",
                     "name": "delPost",
                     "method": "post",
                     "path": "/post/delPost",
@@ -1895,7 +1895,7 @@
                     }]
                 },
                 {
-                    "description": "获取岗位信息",
+                    "description": "Get job information",
                     "name": "getPost",
                     "method": "get",
                     "path": "/post/getPost",
@@ -1910,7 +1910,7 @@
                     },
                     "parameters": [{
                         "in": "query",
-                        "description": "岗位编码",
+                        "description": "Post code",
                         "name": "postCode",
                         "required": true,
                         "dataType": {
@@ -1925,7 +1925,7 @@
                     }]
                 },
                 {
-                    "description": "分页查询岗位信息",
+                    "description": "Query job information by page",
                     "name": "queryPost",
                     "method": "get",
                     "path": "/post/queryPost",
@@ -1976,7 +1976,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "岗位名称",
+                            "description": "Position Title",
                             "name": "postName",
                             "required": false,
                             "dataType": {
@@ -1991,7 +1991,7 @@
                         },
                         {
                             "in": "query",
-                            "description": "岗位类别",
+                            "description": "Job category",
                             "name": "postType",
                             "required": false,
                             "dataType": {
@@ -2010,7 +2010,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "更改岗位信息",
+                    "description": "Change job information",
                     "name": "updatePost",
                     "method": "post",
                     "path": "/post/updatePost",
@@ -2042,13 +2042,13 @@
             ]
         },
         {
-            "description": "多租户相关接口",
+            "description": "Multi-tenant related interfaces",
             "name": "tenant",
             "interfaces": [{
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "添加租户下用户",
+                    "description": "Add users under the tenant",
                     "name": "addTenantUser",
                     "method": "post",
                     "path": "/tenant/addTenantUser",
@@ -2089,7 +2089,7 @@
                     "consumes": [
                         "application/json"
                     ],
-                    "description": "初始化租户信息",
+                    "description": "Initialize tenant information",
                     "name": "initTenant",
                     "method": "post",
                     "path": "/tenant/init",
@@ -2144,7 +2144,7 @@
                         "typeProperties": []
                     },
                     "name": "postName",
-                    "description": "岗位名称",
+                    "description": "Position Title",
                     "required": true
                 },
                 {
@@ -2158,13 +2158,13 @@
                         "typeProperties": []
                     },
                     "name": "postType",
-                    "description": "岗位类别",
+                    "description": "Job category",
                     "required": false
                 }
             ]
         },
         {
-            "description": "应聘人添加DTO",
+            "description": "Candidate adds DTO",
             "name": "ApplyAddDTO",
             "templateArgs": [],
             "properties": [{
@@ -2178,7 +2178,7 @@
                         "typeProperties": []
                     },
                     "name": "entryDept",
-                    "description": "入职部门",
+                    "description": "Entry department",
                     "required": false
                 },
                 {
@@ -2192,7 +2192,7 @@
                         "typeProperties": []
                     },
                     "name": "entryStatus",
-                    "description": "是否入职",
+                    "description": "Whether to join",
                     "required": false
                 },
                 {
@@ -2214,7 +2214,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewListDTOS",
-                    "description": "面试记录",
+                    "description": "Interview record",
                     "required": false
                 },
                 {
@@ -2228,7 +2228,7 @@
                         "typeProperties": []
                     },
                     "name": "personCode",
-                    "description": "应聘人id",
+                    "description": "Applicant id",
                     "required": false
                 },
                 {
@@ -2242,7 +2242,7 @@
                         "typeProperties": []
                     },
                     "name": "postCode",
-                    "description": "应聘岗位id",
+                    "description": "Application position id",
                     "required": false
                 },
                 {
@@ -2256,7 +2256,7 @@
                         "typeProperties": []
                     },
                     "name": "postResult",
-                    "description": "应聘结果",
+                    "description": "Application result",
                     "required": false
                 },
                 {
@@ -2270,7 +2270,7 @@
                         "typeProperties": []
                     },
                     "name": "postStartAt",
-                    "description": "应聘时间",
+                    "description": "Application time",
                     "required": false
                 },
                 {
@@ -2284,13 +2284,13 @@
                         "typeProperties": []
                     },
                     "name": "remark",
-                    "description": "备注",
+                    "description": "Remarks",
                     "required": false
                 }
             ]
         },
         {
-            "description": "delete应聘详情DTO",
+            "description": "delete Application Details DTO",
             "name": "ApplyDeleteDTO",
             "templateArgs": [],
             "properties": [{
@@ -2304,12 +2304,12 @@
                     "typeProperties": []
                 },
                 "name": "applyCode",
-                "description": "应聘人编码",
+                "description": "Candidate Code",
                 "required": true
             }]
         },
         {
-            "description": "应聘结果DTO",
+            "description": "Application result DTO",
             "name": "ApplyResultDTO",
             "templateArgs": [],
             "properties": [{
@@ -2323,7 +2323,7 @@
                         "typeProperties": []
                     },
                     "name": "applyCode",
-                    "description": "应聘人id",
+                    "description": "Applicant id",
                     "required": true
                 },
                 {
@@ -2337,7 +2337,7 @@
                         "typeProperties": []
                     },
                     "name": "entryDept",
-                    "description": "入职部门",
+                    "description": "Entry department",
                     "required": false
                 },
                 {
@@ -2351,7 +2351,7 @@
                         "typeProperties": []
                     },
                     "name": "entryStatus",
-                    "description": "是否入职",
+                    "description": "Whether to join",
                     "required": false
                 },
                 {
@@ -2373,7 +2373,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewListDTOS",
-                    "description": "面试记录",
+                    "description": "Interview record",
                     "required": false
                 },
                 {
@@ -2387,7 +2387,7 @@
                         "typeProperties": []
                     },
                     "name": "personCode",
-                    "description": "应聘人id",
+                    "description": "Applicant id",
                     "required": true
                 },
                 {
@@ -2401,7 +2401,7 @@
                         "typeProperties": []
                     },
                     "name": "personName",
-                    "description": "应聘人姓名",
+                    "description": "Applicant's name",
                     "required": true
                 },
                 {
@@ -2415,7 +2415,7 @@
                         "typeProperties": []
                     },
                     "name": "postCode",
-                    "description": "应聘岗位编码",
+                    "description": "Application position code",
                     "required": true
                 },
                 {
@@ -2429,7 +2429,7 @@
                         "typeProperties": []
                     },
                     "name": "postEndAt",
-                    "description": "应聘终止时间",
+                    "description": "Application termination time",
                     "required": false
                 },
                 {
@@ -2443,7 +2443,7 @@
                         "typeProperties": []
                     },
                     "name": "postName",
-                    "description": "应聘岗位名称",
+                    "description": "Application name",
                     "required": true
                 },
                 {
@@ -2457,7 +2457,7 @@
                         "typeProperties": []
                     },
                     "name": "postResult",
-                    "description": "应聘结果",
+                    "description": "Application result",
                     "required": false
                 },
                 {
@@ -2471,7 +2471,7 @@
                         "typeProperties": []
                     },
                     "name": "postStartAt",
-                    "description": "应聘起始时间",
+                    "description": "Application start time",
                     "required": false
                 },
                 {
@@ -2485,13 +2485,13 @@
                         "typeProperties": []
                     },
                     "name": "remark",
-                    "description": "备注",
+                    "description": "Remarks",
                     "required": false
                 }
             ]
         },
         {
-            "description": "应聘修改DTO",
+            "description": "Apply to modify DTO",
             "name": "ApplyUpdateDTO",
             "templateArgs": [],
             "properties": [{
@@ -2505,7 +2505,7 @@
                         "typeProperties": []
                     },
                     "name": "applyCode",
-                    "description": "应聘人编码",
+                    "description": "Candidate Code",
                     "required": true
                 },
                 {
@@ -2519,7 +2519,7 @@
                         "typeProperties": []
                     },
                     "name": "entryDept",
-                    "description": "入职部门",
+                    "description": "Entry department",
                     "required": false
                 },
                 {
@@ -2533,7 +2533,7 @@
                         "typeProperties": []
                     },
                     "name": "entryStatus",
-                    "description": "是否入职",
+                    "description": "Whether to join",
                     "required": false
                 },
                 {
@@ -2555,7 +2555,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewListDTOS",
-                    "description": "面试记录",
+                    "description": "Interview record",
                     "required": false
                 },
                 {
@@ -2569,7 +2569,7 @@
                         "typeProperties": []
                     },
                     "name": "personCode",
-                    "description": "应聘人id",
+                    "description": "Applicant id",
                     "required": false
                 },
                 {
@@ -2583,7 +2583,7 @@
                         "typeProperties": []
                     },
                     "name": "postCode",
-                    "description": "应聘岗位id",
+                    "description": "Application position id",
                     "required": false
                 },
                 {
@@ -2597,7 +2597,7 @@
                         "typeProperties": []
                     },
                     "name": "postResult",
-                    "description": "应聘结果",
+                    "description": "Application result",
                     "required": false
                 },
                 {
@@ -2611,7 +2611,7 @@
                         "typeProperties": []
                     },
                     "name": "postStartAt",
-                    "description": "应聘时间",
+                    "description": "Application time",
                     "required": false
                 },
                 {
@@ -2625,7 +2625,7 @@
                         "typeProperties": []
                     },
                     "name": "remark",
-                    "description": "备注",
+                    "description": "Remarks",
                     "required": false
                 }
             ]
@@ -2956,7 +2956,7 @@
                         "typeProperties": []
                     },
                     "name": "name",
-                    "description": "面试官名称",
+                    "description": "Interviewer name",
                     "required": true
                 },
                 {
@@ -2970,7 +2970,7 @@
                         "typeProperties": []
                     },
                     "name": "positionName",
-                    "description": "面试官职位",
+                    "description": "Interviewer position",
                     "required": false
                 },
                 {
@@ -2984,7 +2984,7 @@
                         "typeProperties": []
                     },
                     "name": "sex",
-                    "description": "面试官性别",
+                    "description": "Interviewer gender",
                     "required": false
                 }
             ]
@@ -3032,7 +3032,7 @@
                         "typeProperties": []
                     },
                     "name": "name",
-                    "description": "面试官名称",
+                    "description": "Interviewer name",
                     "required": true
                 },
                 {
@@ -3046,7 +3046,7 @@
                         "typeProperties": []
                     },
                     "name": "positionName",
-                    "description": "面试官职位",
+                    "description": "Interviewer position",
                     "required": false
                 },
                 {
@@ -3060,7 +3060,7 @@
                         "typeProperties": []
                     },
                     "name": "sex",
-                    "description": "面试官性别",
+                    "description": "Interviewer gender",
                     "required": false
                 },
                 {
@@ -3074,7 +3074,7 @@
                         "typeProperties": []
                     },
                     "name": "sexDesc",
-                    "description": "面试官性别",
+                    "description": "Interviewer gender",
                     "required": false
                 }
             ]
@@ -3122,7 +3122,7 @@
                         "typeProperties": []
                     },
                     "name": "name",
-                    "description": "面试官名称",
+                    "description": "Interviewer name",
                     "required": true
                 },
                 {
@@ -3136,7 +3136,7 @@
                         "typeProperties": []
                     },
                     "name": "positionName",
-                    "description": "面试官职位",
+                    "description": "Interviewer position",
                     "required": false
                 },
                 {
@@ -3150,7 +3150,7 @@
                         "typeProperties": []
                     },
                     "name": "sex",
-                    "description": "面试官性别",
+                    "description": "Interviewer gender",
                     "required": false
                 }
             ]
@@ -3226,7 +3226,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewCode",
-                    "description": "面试记录Code",
+                    "description": "Interview recordCode",
                     "required": false
                 },
                 {
@@ -3268,7 +3268,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewerEmployeeName",
-                    "description": "面试官名称",
+                    "description": "Interviewer name",
                     "required": false
                 },
                 {
@@ -3338,7 +3338,7 @@
                         "typeProperties": []
                     },
                     "name": "round",
-                    "description": "面试轮数",
+                    "description": "Interview rounds",
                     "required": true
                 },
                 {
@@ -3441,7 +3441,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewCode",
-                    "description": "面试记录Code",
+                    "description": "Interview recordCode",
                     "required": false
                 },
                 {
@@ -3497,7 +3497,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewerEmployeeName",
-                    "description": "面试官名称",
+                    "description": "Interviewer name",
                     "required": false
                 },
                 {
@@ -3567,7 +3567,7 @@
                         "typeProperties": []
                     },
                     "name": "postCode",
-                    "description": "岗位code",
+                    "description": "Post code",
                     "required": false
                 },
                 {
@@ -3609,7 +3609,7 @@
                         "typeProperties": []
                     },
                     "name": "round",
-                    "description": "面试轮数",
+                    "description": "Interview rounds",
                     "required": true
                 },
                 {
@@ -3732,7 +3732,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewCode",
-                    "description": "面试记录Code",
+                    "description": "Interview recordCode",
                     "required": false
                 },
                 {
@@ -3900,7 +3900,7 @@
                         "typeProperties": []
                     },
                     "name": "round",
-                    "description": "面试轮数",
+                    "description": "Interview rounds",
                     "required": false
                 }
             ]
@@ -4045,7 +4045,7 @@
                         "typeProperties": []
                     },
                     "name": "round",
-                    "description": "面试轮数",
+                    "description": "Interview rounds",
                     "required": false
                 }
             ]
@@ -4093,7 +4093,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewCode",
-                    "description": "面试记录Code",
+                    "description": "Interview recordCode",
                     "required": true
                 },
                 {
@@ -4141,7 +4141,7 @@
                         "typeProperties": []
                     },
                     "name": "interviewerName",
-                    "description": "面试官名称",
+                    "description": "Interviewer name",
                     "required": false
                 }
             ]
@@ -4238,7 +4238,7 @@
                         "typeProperties": []
                     },
                     "name": "postName",
-                    "description": "岗位名称",
+                    "description": "Position Title",
                     "required": false
                 },
                 {
@@ -4252,7 +4252,7 @@
                         "typeProperties": []
                     },
                     "name": "postType",
-                    "description": "岗位类别",
+                    "description": "Job category",
                     "required": false
                 }
             ]
@@ -4615,7 +4615,7 @@
                         "typeProperties": []
                     },
                     "name": "personName",
-                    "description": "姓名",
+                    "description": "Name",
                     "required": true
                 },
                 {
@@ -4657,7 +4657,7 @@
                         "typeProperties": []
                     },
                     "name": "postCode",
-                    "description": "岗位code",
+                    "description": "Post code",
                     "required": false
                 },
                 {
@@ -4711,7 +4711,7 @@
                         "typeProperties": []
                     },
                     "name": "resumeAttachCode",
-                    "description": "简历附件",
+                    "description": "Resume attachment",
                     "required": false
                 },
                 {
@@ -4725,7 +4725,7 @@
                         "typeProperties": []
                     },
                     "name": "resumeAttachName",
-                    "description": "简历附件名称",
+                    "description": "Resume attachment name",
                     "required": false
                 },
                 {
@@ -4739,7 +4739,7 @@
                         "typeProperties": []
                     },
                     "name": "resumeFrom",
-                    "description": "简历来源",
+                    "description": "Resume source",
                     "required": false
                 },
                 {
@@ -4807,7 +4807,7 @@
                         "typeProperties": []
                     },
                     "name": "personCodes",
-                    "description": "人才编码列表",
+                    "description": "Talent code列表",
                     "required": true
                 },
                 {
@@ -5163,7 +5163,7 @@
                         "typeProperties": []
                     },
                     "name": "personCode",
-                    "description": "人才编码",
+                    "description": "Talent code",
                     "required": true
                 },
                 {
@@ -5177,7 +5177,7 @@
                         "typeProperties": []
                     },
                     "name": "personName",
-                    "description": "姓名",
+                    "description": "Name",
                     "required": true
                 },
                 {
@@ -5219,7 +5219,7 @@
                         "typeProperties": []
                     },
                     "name": "postCode",
-                    "description": "岗位code",
+                    "description": "Post code",
                     "required": true
                 },
                 {
@@ -5233,7 +5233,7 @@
                         "typeProperties": []
                     },
                     "name": "postName",
-                    "description": "岗位名称",
+                    "description": "Position Title",
                     "required": true
                 },
                 {
@@ -5289,7 +5289,7 @@
                         "typeProperties": []
                     },
                     "name": "resumeAttachName",
-                    "description": "简历附件名称",
+                    "description": "Resume attachment name",
                     "required": false
                 },
                 {
@@ -5303,7 +5303,7 @@
                         "typeProperties": []
                     },
                     "name": "resumeFrom",
-                    "description": "简历来源",
+                    "description": "Resume source",
                     "required": false
                 },
                 {
@@ -5317,7 +5317,7 @@
                         "typeProperties": []
                     },
                     "name": "school",
-                    "description": "毕业院系",
+                    "description": "Graduated Department",
                     "required": false
                 },
                 {
@@ -5378,7 +5378,7 @@
                         "typeProperties": []
                     },
                     "name": "arrivalTime",
-                    "description": "最快到岗时间",
+                    "description": "Fastest time",
                     "required": true
                 },
                 {
@@ -5602,7 +5602,7 @@
                         "typeProperties": []
                     },
                     "name": "personCode",
-                    "description": "人才编码",
+                    "description": "Talent code",
                     "required": true
                 },
                 {
@@ -5616,7 +5616,7 @@
                         "typeProperties": []
                     },
                     "name": "personName",
-                    "description": "姓名",
+                    "description": "Name",
                     "required": true
                 },
                 {
@@ -5630,7 +5630,7 @@
                         "typeProperties": []
                     },
                     "name": "phone",
-                    "description": "联系电话",
+                    "description": "contact number",
                     "required": true
                 },
                 {
@@ -5644,7 +5644,7 @@
                         "typeProperties": []
                     },
                     "name": "poolCode",
-                    "description": "人才库编码",
+                    "description": "Talent pool coding",
                     "required": false
                 },
                 {
@@ -5658,7 +5658,7 @@
                         "typeProperties": []
                     },
                     "name": "postCode",
-                    "description": "岗位code",
+                    "description": "Post code",
                     "required": false
                 },
                 {
@@ -5672,7 +5672,7 @@
                         "typeProperties": []
                     },
                     "name": "postName",
-                    "description": "岗位",
+                    "description": "post",
                     "required": true
                 },
                 {
@@ -5712,7 +5712,7 @@
                         "typeProperties": []
                     },
                     "name": "resumeAttachCode",
-                    "description": "简历附件",
+                    "description": "Resume attachment",
                     "required": false
                 },
                 {
@@ -5726,7 +5726,7 @@
                         "typeProperties": []
                     },
                     "name": "resumeAttachName",
-                    "description": "简历附件名称",
+                    "description": "Resume attachment name",
                     "required": false
                 },
                 {
@@ -5740,7 +5740,7 @@
                         "typeProperties": []
                     },
                     "name": "resumeFrom",
-                    "description": "简历来源",
+                    "description": "Resume source",
                     "required": false
                 },
                 {
@@ -5799,12 +5799,12 @@
                     "typeProperties": []
                 },
                 "name": "postCode",
-                "description": "岗位编码",
+                "description": "Post code",
                 "required": true
             }]
         },
         {
-            "description": "职位选择列表DTO",
+            "description": "Job selection list DTO",
             "name": "PostEnumDTO",
             "templateArgs": [],
             "properties": [{
@@ -5851,7 +5851,7 @@
                         "typeProperties": []
                     },
                     "name": "postCode",
-                    "description": "岗位编码",
+                    "description": "Post code",
                     "required": true
                 },
                 {
@@ -5865,7 +5865,7 @@
                         "typeProperties": []
                     },
                     "name": "postName",
-                    "description": "岗位名称",
+                    "description": "Position Title",
                     "required": true
                 },
                 {
@@ -5879,7 +5879,7 @@
                         "typeProperties": []
                     },
                     "name": "postType",
-                    "description": "岗位类别",
+                    "description": "Job category",
                     "required": false
                 }
             ]

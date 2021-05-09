@@ -3,7 +3,7 @@ import {ColumnType} from'antd/lib/table';
 import {useImmer} from'use-immer';
 
 export default function useTable() {
-  const [columns, setColumns] = useImmer([]);
+  const [columns, setColumns] = useImmer<any>([]);
   const [index, setIndex] = useState<number>(0); // the index of the currently selected form element
   const [currentColumn, setCurrentColumn] = useState(); // currently selected form element
 

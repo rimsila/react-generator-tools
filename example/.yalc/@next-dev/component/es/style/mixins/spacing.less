@@ -1,0 +1,41 @@
+/*Total number of passport inserts*/
+@numInserts: 10;
+@space-unit: 0.5rem;
+
+// * -------------- loopSpacingMr  --------------
+.loopSpacingMr (@index: 1) when (@index <= @numInserts){
+
+   .mr-@{index}{
+      /*Here are our properties that get adjusted with the index*/
+     margin-right:  ( @index * @space-unit)
+   }
+   /*Here we increment our loop*/
+   .loopSpacingMr(@index + 1);
+}
+
+// * -------------- loopSpacingMl  --------------
+.loopSpacingMl (@index: 1) when (@index <= @numInserts){
+
+   .ml-@{index}{
+     margin-left:  ( @index * @space-unit)
+   }
+   .loopSpacingMl(@index + 1);
+}
+
+// * -------------- loopSpacingMb  --------------
+.loopSpacingMb (@index: 1) when (@index <= @numInserts){
+
+   .mb-@{index}{
+     margin-bottom:  ( @index * @space-unit)
+   }
+   .loopSpacingMb(@index + 1);
+}
+
+// * -------------- loopSpacingMt  --------------
+.loopSpacingMt (@index: 1) when (@index <= @numInserts){
+
+   .mt-@{index}{
+     margin-top:  ( @index * @space-unit)
+   }
+   .loopSpacingMt(@index + 1);
+}

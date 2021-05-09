@@ -5,23 +5,23 @@
  * @LastEditors: Huang Shanshan
  * @LastEditTime: 2020-05-29 14:27:52
  */
-import React, {useState, useEffect} from'react'; // -> Temporarily solve the error first, delete all later
-import {Layout, message} from'antd';
-import {IUiApi} from'@umijs/ui-types';
-import Context from'./Context';
-import'./index.module.less';
-import {CascaderOptionType} from'antd/lib/cascader';
-import {Store} from'antd/lib/form/interface';
-import {TemplateType} from'../../../interfaces/common';
-import {BaseClass} from'../../../interfaces/api';
-import TemplateList from'./components/TemplateList';
-import Dashboard from'./components/Dashboard';
-import ImportAction from'./components/ImportAction';
-import ConstantConfigAction from'./components/ConstantConfigAction';
+import React, { useState, useEffect } from 'react'; // -> Temporarily solve the error first, delete all later
+import { Layout, message } from 'antd';
+import { IUiApi } from '@umijs/ui-types';
+import Context from './Context';
+import './index.module.less';
+import { CascaderOptionType } from 'antd/lib/cascader';
+import { Store } from 'antd/lib/form/interface';
+import { TemplateType } from '../../../interfaces/common';
+import { BaseClass } from '../../../interfaces/api';
+import TemplateList from './components/TemplateList';
+import Dashboard from './components/Dashboard';
+import ImportAction from './components/ImportAction';
+import ConstantConfigAction from './components/ConstantConfigAction';
 
-const {Header, Content} = Layout;
+const { Header, Content } = Layout;
 
-export default ({ api }: {api: IUiApi }) => {
+export default ({ api }: { api: IUiApi }) => {
   const [databases, setDatabases] = useState<CascaderOptionType[]>([]);
   const [baseClasses, setBaseClasses] = useState<BaseClass[]>([]);
   const [templateType, setTemplate] = useState<TemplateType>();
@@ -34,11 +34,11 @@ export default ({ api }: {api: IUiApi }) => {
   useEffect(() => {
     (async () => {
       const result = (await api.callRemote({
-        type:'org.umi-plugin-page-creator.apiGenerator',
+        type: 'org.umi-plugin-page-creator.apiGenerator',
         payload: {
           fetchApiJson: true,
         },
-      })) as {databases: CascaderOptionType[]; success: boolean; baseClasses: BaseClass[] };
+      })) as { databases: CascaderOptionType[]; success: boolean; baseClasses: BaseClass[] };
 
       if (!result.success) {
         message.warning('Your project does not integrate pont');
@@ -55,8 +55,8 @@ export default ({ api }: {api: IUiApi }) => {
   useEffect(() => {
     (async () => {
       const result = (await api.callRemote({
-        type:'org.umi-plugin-page-creator.constantLoad',
-      })) as {success: boolean; data: string };
+        type: 'org.umi-plugin-page-creator.constantLoad',
+      })) as { success: boolean; data: string };
       if (result.success) {
         setConstantConfig(result.data);
       }
@@ -72,7 +72,7 @@ export default ({ api }: {api: IUiApi }) => {
   /** Import */
   const handleImportSubmit = (values: Store) => {
     setImportModalVisible(false);
-    const {importConfig} = values;
+    const { importConfig } = values;
     setImpConfigJson(importConfig);
   };
 
@@ -81,15 +81,16 @@ export default ({ api }: {api: IUiApi }) => {
    * @param code
    */
   const saveConstantConfig = async (code: string) => {
-    const key ='message';
-    message.loading({ content:'Save, please wait...', key });
+    const key = 'message';
+    message.loading({ content: 'Save, please wait...', key });
+
     await api.callRemote({
-      type:'org.umi-plugin-page-creator.constantSave',
+      type: 'org.umi-plugin-page-creator.constantSave',
       payload: {
         code,
-      }
+      },
     });
-    message.success({ content:'Constant configuration saved successfully', key });
+    message.success({ content: 'Constant configuration saved successfully', key });
   };
 
   return (
@@ -105,7 +106,7 @@ export default ({ api }: {api: IUiApi }) => {
         constantConfig,
       }}
     >
-      <Layout style={{ overflowY:'auto' }}>
+      <Layout style={{ overflowY: 'auto' }}>
         <Header>
           <TemplateList />
         </Header>

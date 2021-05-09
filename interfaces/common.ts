@@ -43,7 +43,8 @@ export type TemplateType =
   | 'long-detail'
   | 'one-column-detail-modal'
   | 'two-columns-detail-modal'
-  | 'table';
+  | 'table'
+  | 'table1';
 
 export type ShortFormConfig = {
   title: string;

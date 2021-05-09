@@ -1,0 +1,46 @@
+{
+    "name": "@next-dev/provider",
+    "version": "0.0.2-beta.0+44af7950",
+    "description": "@next-dev/provider",
+    "keywords": [
+        "antd",
+        "admin",
+        "ant-design",
+        "ant-design-pro"
+    ],
+    "homepage": "https://github.com/rimsila/next-dev/tree/master/packages/configProvider#readme",
+    "bugs": "https://github.com/rimsila/next-dev/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rimsila/next-dev"
+    },
+    "license": "MIT",
+    "main": "lib/index.js",
+    "module": "es/index.js",
+    "types": "lib/index.d.ts",
+    "files": [
+        "lib",
+        "dist",
+        "es"
+    ],
+    "browserslist": [
+        "last 2 versions",
+        "Firefox ESR",
+        "> 1%",
+        "ie >= 11"
+    ],
+    "dependencies": {
+        "rc-util": "^5.0.1"
+    },
+    "peerDependencies": {
+        "antd": "^4.x",
+        "react": "^16.x"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "authors": [
+        "xiexingen <1002275364@qq.com> (https://github.com/xiexingen)"
+    ],
+    "yalcSig": "44af7950ce8477d775b8cc6ef840c924"
+}

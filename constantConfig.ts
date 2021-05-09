@@ -11,9 +11,11 @@ import generate from '@babel/generator';
 export function getConstantConfig(api: IApi) {
   const constantFilePath = api.paths.absSrcPath + '/constant.ts';
   if (!existsSync(constantFilePath)) {
+
     writeFileSync(constantFilePath, '', 'utf-8');
     return '';
   } else {
+
     const ast: types.File = parser.parse(readFileSync(constantFilePath, 'utf-8'), {
       sourceType: 'module',
       plugins: ['typescript'],

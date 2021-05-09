@@ -1,0 +1,49 @@
+{
+    "name": "@next-dev/core",
+    "version": "3.4.6+b1bbe759",
+    "description": "@wetrial/core",
+    "module": "es/index.js",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "files": [
+        "es"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rimsila/next-dev"
+    },
+    "browserslist": [
+        "last 2 versions",
+        "Firefox ESR",
+        "> 1%",
+        "ie >= 11"
+    ],
+    "keywords": [
+        "antd",
+        "admin",
+        "ant-design",
+        "wetrial"
+    ],
+    "authors": [
+        "xiexingen <1002275364@qq.com> (https://github.com/xiexingen)"
+    ],
+    "license": "MIT",
+    "bugs": "https://github.com/rimsila/next-dev/issues",
+    "homepage": "https://github.com/rimsila/next-dev/tree/master/packages/core#readme",
+    "peerDependencies": {
+        "antd": "^4.x",
+        "lodash": "^4.x",
+        "path-to-regexp": "^6.x",
+        "react": "^16.x"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "crypto-js": "^4.0.0",
+        "jsencrypt": "^3.0.0-rc.1",
+        "store": "^2.0.12"
+    },
+    "yalcSig": "b1bbe7597893e5720e3d39983106b7f3"
+}
