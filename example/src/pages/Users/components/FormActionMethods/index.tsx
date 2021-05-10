@@ -17,14 +17,14 @@ export default forwardRef<FormActionMethodsInstance, { reload?: () => void }>(({
   const { run: handleDelete } = useRequest(API.recruitment.person.remove.fetch, {
     manual: true,
     onSuccess: () => {
-      message.success('delete成功');
+      message.success('Delete successfully');
       reload && reload();
     },
   });
   const { run: handleDeleteBatch } = useRequest(API.recruitment.person.deleteBatch, {
     manual: true,
     onSuccess: () => {
-      message.success('Batch delete成功');
+      message.success('Batch delete success');
       reload && reload();
     },
   });
@@ -32,13 +32,13 @@ export default forwardRef<FormActionMethodsInstance, { reload?: () => void }>(({
   /** Add */
   formActionRef.current.onAdd = () => history.push('/Users/edit');
 
-  /** delete */
+  /** Delete */
   formActionRef.current.onDelete = (row: Store) => handleDelete(row.id);
 
-  /** 编辑 */
+  /** Edit */
   formActionRef.current.onEdit = (row: Store) => history.push(`/Users/edit?id=${row.id}`);
 
-  /** Batch delete */
+  /** batch deletion */
   formActionRef.current.onDeleteBatch = (ids: number[]) => handleDeleteBatch(ids);
 
   return <></>;

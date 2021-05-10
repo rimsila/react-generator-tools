@@ -4,7 +4,6 @@ import { Rule } from 'antd/es/form';
  * Rules for form configuration
  */
 export const VERIFICATION_RULE = {};
-
 /**
  * Obtain the corresponding verification content according to the field
  */

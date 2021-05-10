@@ -11,17 +11,17 @@
     "allowJs": true,
     "lib": ["esnext", "dom"],
     "noEmit": true,
-    "strict": true,
+    "strict": false,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": false,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
-    "noImplicitThis": true,
+    "noImplicitThis": false,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": true,
     "downlevelIteration": true,
     "resolveJsonModule": true,
@@ -32,5 +32,5 @@
       "@@/*": ["src/.umi/*"]
     }
   },
-  "include": ["./src/**/*", "./typings.d.ts"],
+  "include": ["./src/**/*", "./typings.d.ts", "client.ts"],
 }

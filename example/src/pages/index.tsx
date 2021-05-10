@@ -1,114 +1,61 @@
-import TableListCrud, { ITableList } from '@/components/TableForm/TableListCrud';
-import { IColumns } from '@/components/TableForm/TableListCrud/hook';
-import { usePersistFn, useSetState } from 'ahooks/es';
-import { Form } from 'antd';
-import React from 'react';
+import { usePersistFn, useReactive } from 'ahooks/es';
+import { Button, Form, Space, Tabs } from 'antd';
+import React, { useRef } from 'react';
 import { FormLayout } from '@/components/NextLayout';
-import { mockData } from '@/constant';
-
-type IAddSchema = {
-  isAddSchema: boolean;
-};
-
-type IState = {
-  visibleModal: boolean;
-  visiblePopDel: boolean;
-  isEditMode: boolean;
-  isViewMode: boolean;
-  isAddMode: boolean;
-  type?: 'form' | 'table';
-  filter?: {
-    _timestamp?: number;
-  };
-
-  isModalMode: boolean; //* form mode style
-  record?: any;
-} & IAddSchema;
+import { usePostsQuery } from '@/graphQl/hooks';
+import { PageQueryOptions } from '@/graphQl/schemas';
+import { isEmpty } from 'lodash';
+import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
+import { API } from '@/graphQl/API';
+import { ClearOutlined, LeftOutlined, PlusOutlined } from '@ant-design/icons';
+import type { ProSchemaComponentTypes } from '@ant-design/pro-utils';
+import { NextButton } from '@next-dev/component/es/NextButton';
+import { IFormMode, setFormMode } from '@/utils/form';
+import NextTable from '@/components/NextTable';
+import ProDescriptions from '@ant-design/pro-descriptions';
 
 export default () => {
-  const [formFilter] = Form.useForm();
+  const actionRef = useRef<ActionType>();
+  const [form] = Form.useForm();
 
-  const [state, setState] = useSetState<Partial<IState>>({
-    filter: {},
+  const filterValue = useReactive<{ options?: PageQueryOptions }>({});
+  const state = useReactive<{
+    mode?: { add?: boolean; edit?: boolean; view?: boolean; isShowAdd?: boolean };
+    type: ProSchemaComponentTypes;
+  }>({
     type: 'table',
   });
+  const { mode = {}, type } = state;
+  const isModifyMode = type === 'form';
+  const setMode = (mode: typeof state.mode) => {
+    const reset = () => form.resetFields();
 
-  const { visibleModal, visiblePopDel, isEditMode, isViewMode, isModalMode, isAddMode, record = {}, filter, type } =
-    state || {};
-
-  const data = {};
-  const {
-    runGetJob,
-    loadingTable,
-    runEditJob,
-    runAddJob,
-    // runDelJob,
-    loadingDel,
-    loadingAdd,
-    loadingEdit,
-    form,
-    jobMetadata,
-    runDelJob,
-    loadingDefaultJob,
-  } = data || {};
-
-  // console.log('dataSource', dataSource);
-
-  const isMutate = isAddMode || isEditMode;
-
-  //* ------------------ set modal/form mode ------------------------
-
-  const setType = usePersistFn((type?: 'form' | 'table') => {
-    setState({
-      type,
-    });
-  });
-
-  //* ------------------ set modal/form mode ------------------------
-
-  const setFilter = usePersistFn((filter?: any) => {
-    setState({
-      filter,
-    });
-  });
-
-  // * ------------ refresh and clear filter --------------
-  const refreshAll = async () => {
-    formFilter.resetFields();
-    setFilter({});
-    // await refresh();
+    if (mode.view) {
+      form.setFieldsValue({
+        title: 'ss',
+      });
+      state.type = 'descriptions';
+    }
+    if (mode.edit) {
+      form.setFieldsValue({
+        title: 'ss',
+      });
+      state.type = 'form';
+    }
+    if (mode.add) {
+      state.type = 'form';
+      reset();
+    }
   };
 
-  const setVisibleModal = usePersistFn(() => {
-    setState((prev) => ({
-      visibleModal: !prev.visibleModal,
-    }));
+  const { data: dataPosts, loading: loadingTable } = usePostsQuery({
+    variables: {
+      options: {
+        ...filterValue.options,
+      },
+    },
   });
-
-  const setAdd = usePersistFn((isAddMode: boolean) => {
-    setState({
-      isAddMode,
-    });
-  });
-
-  const setEdit = usePersistFn((isEditMode: boolean, record?: any) => {
-    setState({
-      isEditMode,
-      record,
-    });
-  });
-
-  const setViewMode = usePersistFn((isViewMode: boolean) => {
-    setState({
-      isViewMode,
-    });
-  });
-
-  const backTable = () => {
-    setEdit(false);
-    setAdd(false);
-    setType('table');
-  };
+  const dataSource = dataPosts?.posts?.data as any;
 
   //* ------------------ Submit part ------------------------
   const onClickDelete = usePersistFn((v) => {
@@ -119,37 +66,30 @@ export default () => {
     console.log('delete', v);
   });
 
-  const onSubmit = usePersistFn(async (params: any) => {
-    // console.log('11111111111', params);
-    // if (isEditMode && record?.id && !isEmpty(params)) {
-    //   runEditJob({ ...params, id: record?.id }).then((res) => {
-    //     if (!res?.data) {
-    //       backTable();
-    //     }
-    //   });
-    // }
-    // if (!isViewMode && !isEditMode && !isEmpty(params)) {
-    //   runAddJob(params);
-    // }
-    // // console.log('submit edit', params);
-    // if (!isViewMode) {
-    //   // setEdit(false);
-    //   setViewMode(false);
-    // }
-    // if (isModalMode) {
-    //   setVisibleModal();
-    // }
-  });
+  const onSubmit = usePersistFn(async (params: any) => {});
 
-  const beforeSearchSubmit = (params) => {
-    // runGetJob({ status: params.status });
-    // setFilter(params);
-    // console.log('222222', params);
+  const beforeSearchSubmit = (params?: any) => {
+    console.log('ss', params);
+
+    if (!isEmpty(params)) {
+      filterValue.options = {
+        paginate: {
+          limit: params?.pageSize,
+          page: params?.current,
+        },
+        search: {
+          q: params?.title,
+        },
+      };
+      // }
+    }
   };
+
+  console.log('data', dataSource);
 
   //* ------------------ columns data ------------------------
 
-  const columns: IColumns[] = [
+  const columns: ProColumns<API.Post>[] = [
     {
       title: 'No',
       dataIndex: 'id',
@@ -162,8 +102,7 @@ export default () => {
       width: 150,
       valueType: 'text',
       formItemProps: {
-        style: !isMutate ? {} : { display: 'inline-block', width: 'calc(50% - 0px)', paddingRight: 10 },
-
+        style: isModifyMode ? { display: 'inline-block', width: 'calc(50% - 0px)', paddingRight: 10 } : {},
         rules: [
           {
             required: true,
@@ -178,7 +117,7 @@ export default () => {
       width: 150,
       valueType: 'text',
       formItemProps: {
-        style: !isMutate ? {} : { display: 'inline-block', width: 'calc(50% - 0px)', paddingRight: 10 },
+        style: isModifyMode ? { display: 'inline-block', width: 'calc(50% - 0px)', paddingRight: 10 } : {},
 
         rules: [
           {
@@ -190,59 +129,111 @@ export default () => {
     },
   ];
 
-  console.log('mockData', mockData());
+  // console.log('mockData', mockData());
 
-  const getName = () => (isEditMode && 'Edit Job') || (isViewMode && 'View Job') || ' Add Job';
+  const getName = () => (mode.edit && 'Edit') || (mode.view && 'View') || ' Add';
 
   //* ------------------ return data ------------------------
   return (
     <FormLayout style={{ padding: 30 }}>
-      {/* @ts-ignore */}
-      <TableListCrud
-        {...{
-          refresh: refreshAll,
-          loadingAdd,
-          loadingEdit,
-          loadingTable: loadingTable || loadingDefaultJob,
-          loadingDel,
-          form,
-          tabListName: 'Job List',
-          tabFormName: (isViewMode && 'View Job Form') || (isEditMode && 'Edit Job Form') || 'Add Job Form',
-          model: {
-            isShowAdd: true,
-            isModalMode,
-            onClickDelete,
-            setEdit,
-            setVisibleModal,
-            onSubmit,
-            beforeSearchSubmit,
-            visibleModal,
-            visiblePopDel,
-            isEditMode,
-            setViewMode,
-            isViewMode,
-            setAdd,
-            isAddMode,
-            setType,
-            type,
-          },
-          title: getName(),
-          columns,
-          dataSource: mockData(),
-          search: {
-            form: formFilter,
-            labelWidth: 'auto',
-          },
-          pagination: {
-            pageSize: jobMetadata?.limit,
-            total: jobMetadata?.total,
-            current: jobMetadata?.page,
-            onChange: (page, pageSize) => {
-              setFilter({ pageSize, current: page });
-            },
-          },
+      <Tabs
+        activeKey={type}
+        onChange={(e: any) => {
+          if (!mode.edit && !mode.view) {
+            form.resetFields();
+          }
+          state.type = e;
         }}
-      />
+      >
+        <Tabs.TabPane tab={getName() + ' Book List'} key="table" />
+        {<Tabs.TabPane tab={getName() + ' Book'} key="form" />}
+      </Tabs>
+      {['table', 'form'].includes(type as any) && (
+        <>
+          {/* @ts-ignore */}
+          <NextTable
+            {...{
+              actionRef,
+              loading: loadingTable,
+              type: state?.type,
+              beforeSearchSubmit,
+              onSubmit,
+              columns,
+              dataSource,
+              search: {
+                labelWidth: 'auto',
+              },
+              form:
+                type === 'form'
+                  ? {
+                      form,
+                      submitter: {
+                        render: () => {
+                          return (
+                            <Space
+                              style={{
+                                display: 'flex',
+                              }}
+                            >
+                              <NextButton icon={<LeftOutlined />} danger onClick={() => (state.type = 'table')}>
+                                Back
+                              </NextButton>
+
+                              {!mode.view && (
+                                <>
+                                  {!mode.edit && (
+                                    <NextButton
+                                      icon={<ClearOutlined style={{ color: '#edad2d' }} />}
+                                      onClick={() => actionRef.current.reset()}
+                                    >
+                                      Reset
+                                    </NextButton>
+                                  )}
+                                  <NextButton
+                                    {...{
+                                      type: 'primary',
+                                      htmlType: 'submit',
+                                      // icon: loadingAdd ? null : <SaveOutlined />,
+                                      loading: loadingTable,
+                                    }}
+                                  >
+                                    Submit
+                                  </NextButton>
+                                </>
+                              )}
+                            </Space>
+                          );
+                        },
+                      },
+                    }
+                  : {},
+              toolBarRender: () => [
+                <Button key="button" icon={<PlusOutlined />} type="primary" onClick={() => setMode({ add: true })}>
+                  Add
+                </Button>,
+                <Button key="button" icon={<PlusOutlined />} type="primary" onClick={() => setMode({ edit: true })}>
+                  edit
+                </Button>,
+              ],
+
+              onChange: (pagination) => {
+                const { pageSize, current } = pagination;
+                console.log('dd', pagination);
+                filterValue.options = {
+                  paginate: {
+                    limit: pageSize,
+                    page: current,
+                  },
+                };
+              },
+              pagination: {
+                showQuickJumper: true,
+              },
+            }}
+          />
+        </>
+      )}
+
     </FormLayout>
   );
 };

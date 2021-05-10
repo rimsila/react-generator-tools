@@ -121,7 +121,7 @@ function TableListCrud<T = Record<string, any>, U = Record<string, any>, ValueTy
   };
 
   //* ----------- onClickEdit ----------
-  const onClickEdit = usePersistFn((record?: any, isEdit: boolean = false) => {
+  const onClickEdit = usePersistFn((record?: any, isEdit = false) => {
     if (isEdit) {
       form?.setFieldsValue(record);
       // console.log('record', record);
@@ -140,7 +140,7 @@ function TableListCrud<T = Record<string, any>, U = Record<string, any>, ValueTy
   });
 
   //* ----------- onClickView ----------
-  const onClickView = usePersistFn((record?: any, isView: boolean = false) => {
+  const onClickView = usePersistFn((record?: any, isView = false) => {
     form?.setFieldsValue(record);
     // console.log('record', record);
     model?.setEdit(true);
@@ -166,9 +166,7 @@ function TableListCrud<T = Record<string, any>, U = Record<string, any>, ValueTy
       </Tabs>
       {['table', 'form'].includes(type as any) && (
         <>
-          {/* {!loading || !loadingTable ? (
-            <SkeletonList />
-          ) : ( */}
+
           {/*  @ts-ignore */}
           <NextTable
             {...{

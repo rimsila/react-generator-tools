@@ -4,7 +4,7 @@
     "description": "",
     "license": "MIT",
     "scripts": {
-        "start": "umi dev",
+        "start": "umi dev && yarn schemas:watch",
         "build": "umi build",
         "eslint:fix": "eslint --fix --ext .ts,.tsx src/",
         "dp-build": "yarn build &&  yarn fixedSurge404 && surge --project ./dist --domain https://sila-test.surge.sh",
@@ -19,7 +19,10 @@
         "yhook-update": "yalc add @next-dev/hooks ",
         "ypro-update": "yalc add @next-dev/provider ",
         "y-add": "yarn ycom && yarn ycore && yarn yhook && yarn ypro",
-        "y-update": "yarn ycom-update && yarn ycore-update && yarn yhook-update && yarn ypro-update"
+        "y-update": "yarn ycom-update && yarn ycore-update && yarn yhook-update && yarn ypro-update",
+        "-------------------------graph ---------------------------------": "",
+        "schemas": "graphql-codegen --config codegen.yml",
+        "schemas:watch": "npm run schemas -- --watch"
     },
     "dependencies": {
         "@ant-design/icons": "^4.0.2",
@@ -30,17 +33,25 @@
         "@ant-design/pro-list": "^1.7.2",
         "@ant-design/pro-skeleton": "^1.0.1",
         "@ant-design/pro-table": "^2.35.1",
+        "@apollo/client": "^3.3.16",
         "@next-dev/component": "file:.yalc/@next-dev/component",
         "@next-dev/core": "file:.yalc/@next-dev/core",
         "@next-dev/hooks": "file:.yalc/@next-dev/hooks",
         "@next-dev/provider": "file:.yalc/@next-dev/provider",
         "ahooks": "^2.10.2",
         "antd": "^4.15.4",
+        "graphql": "^15.2.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "umi": "^3.4.15"
     },
     "devDependencies": {
+        "@graphql-codegen/cli": "^1.15.0",
+        "@graphql-codegen/import-types-preset": "^1.18.1",
+        "@graphql-codegen/introspection": "^1.15.0",
+        "@graphql-codegen/typescript": "^1.15.0",
+        "@graphql-codegen/typescript-operations": "^1.15.0",
+        "@graphql-codegen/typescript-react-apollo": "^1.15.0",
         "@types/react": "^16.9.35",
         "@types/react-dom": "^16.9.8",
         "@typescript-eslint/eslint-plugin": "^3.1.0",

@@ -1,0 +1,40 @@
+# Endpoint API, the following URL is a example
+schema: https://graphqlzero.almansi.me/api
+overwrite: true
+
+# Format files
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+
+generates:
+  # Get schemas from server
+  src/graphQl/schemas.tsx:
+    documents: 'src/graphQl/**/**.gql'
+    plugins:
+      - typescript
+
+  # Create operations based on queries
+  src/graphQl/operations.tsx:
+    documents: 'src/graphQl/**/**.gql'
+    preset: import-types
+    presetConfig:
+      typesPath: ./schemas
+    plugins:
+      - typescript-operations
+
+  # 1. Export GraphQL documents
+  # 2. React interface
+  src/graphQl/hooks.tsx:
+    documents: 'src/graphQl/**/**.gql'
+    preset: import-types
+    presetConfig:
+      typesPath: ./operations
+    plugins:
+      - typescript-react-apollo
+    config:
+      # Optionals
+      withHOC: false
+      withComponent: false
+      withHooks: true
+      reactApolloVersion: 3

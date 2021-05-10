@@ -1,6 +1,7 @@
 import type { ProTableProps } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { ReactNode } from 'react';
+import React from 'react';
 import { memo } from 'react';
 import css from './index.less';
 
@@ -21,20 +22,8 @@ function NextTable<T = Record<string, any>, U = Record<string, any>, ValueType =
         className: css.nextTable,
         dateFormatter: 'string',
         // * ------- modal form --------
-
         ...rest,
-        // search: {
-        //   ...rest?.search,
-        //   filterType:
-        //     // @ts-ignore
-        //     rest?.filter || isDownMd()
-        //       ? 'query'
-        //       : // @ts-ignore
-        //       rest?.type === 'form' && rest?.search?.filterType === 'light'
-        //       ? 'query'
-        //       : // @ts-ignore
-        //         (rest?.type === 'table' && (rest?.search?.filterType || 'light')) || 'query',
-        // },
+
         scroll: {
           scrollToFirstRowOnChange: true,
           x: true,
