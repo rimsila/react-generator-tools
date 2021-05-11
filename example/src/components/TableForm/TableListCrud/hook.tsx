@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { ProColumns } from '@ant-design/pro-table';
 import type { ProFieldValueType } from '@ant-design/pro-utils';
 import { useCreation } from 'ahooks/es';
@@ -57,6 +56,7 @@ export const useNextTable = () => {
               fixed: 'right',
               width: 60,
               hideInForm: true,
+              hideInDescriptions:true,
               render: (_: any, record: any) => (
                 <ActionButton
                   {...{

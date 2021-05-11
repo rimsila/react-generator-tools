@@ -1,182 +1,107 @@
-import { ClearOutlined, FileAddOutlined, LeftOutlined, SaveOutlined } from '@ant-design/icons';
-import type { ProTableProps } from '@ant-design/pro-table';
-import { SearchConfig } from '@ant-design/pro-table/lib/components/Form/FormRender';
-import { NextButton } from '@next-dev/component/es/NextButton';
-import { useDebounceFn, useLocalStorageState, usePersistFn } from 'ahooks/es';
-import type { FormInstance } from 'antd';
-import { Space, Tabs } from 'antd';
-import React, { memo, useState } from 'react';
 import NextTable from '@/components/NextTable';
-import type { IUserForm } from './CrudForm';
-import CrudForm from './CrudForm';
+import { ClearOutlined, LeftOutlined, PlusOutlined } from '@ant-design/icons';
+import type { ProTableProps } from '@ant-design/pro-table';
+import type { ProSchemaComponentTypes } from '@ant-design/pro-utils';
+import { NextButton } from '@next-dev/component/es/NextButton';
+import { Button, FormInstance, Space, Tabs } from 'antd';
+import React, { memo } from 'react';
 import { useNextTable } from './hook';
 
 /**
  * @Global Crud table do not modify it plz ask the component owner
  */
 
+type ITableState = {
+  isDelete?: boolean;
+  add?: boolean;
+  edit?: boolean;
+  view?: boolean;
+  record?: Record<any, any>;
+  type?: ProSchemaComponentTypes;
+};
+
 export type ITableList<T = Record<string, any>, U = Record<string, any>, ValueType = 'text'> = {
-  title?: string;
-  tabListName: string;
-  tabFormName: string;
-  isAddSchema?: boolean;
-  refresh?: () => void;
-  restCrudForm?: Partial<IUserForm>;
-  model?: {
-    setAdd: (arg0?: boolean) => void;
-    setEdit: (arg0: boolean, arg1?: any) => void;
-    setViewMode: (arg0: boolean) => void;
-    setVisibleModal: () => void;
-    onSubmit: (param?: any, isForm?: boolean) => any;
-    beforeSearchSubmit: (arg0: Partial<Record<string, any>>) => any;
-    visibleModal: boolean | undefined;
-    visiblePopDel: any;
-    isEditMode: boolean;
-    isViewMode: boolean;
-    isModalMode?: boolean;
-    isAddMode?: boolean;
-    isShowAdd?: boolean;
-    onClickDelete: (v?: any) => void;
-    isHideView?: boolean;
-    type?: 'form' | 'table' | undefined;
-    setType?: (v?: 'form' | 'table' | undefined) => void;
-  };
-  dataSource?: any[];
-  columns?: any[];
-  loadingTable?: boolean;
-  loadingDel?: boolean;
-  loadingAdd?: boolean;
-  loadingEdit?: boolean;
+  colMap?: any;
   form?: FormInstance;
-  search?: SearchConfig;
   operation?: any;
+  state: ITableState;
+  setMode: (v?: ITableState) => void;
+  setColMap: (v?: Record<any, any>) => void;
+  tabTitleList: string;
+  tabTitleCrud: string;
 } & ProTableProps<T, U, ValueType>;
 
 function TableListCrud<T = Record<string, any>, U = Record<string, any>, ValueType = 'text'>(
   props: ITableList<T, U, ValueType>,
 ) {
   const {
-    title,
-    restCrudForm,
-    model,
-    dataSource,
-    columns,
-    loadingTable,
-    form,
-    tabListName = '',
-    tabFormName = 'Form',
-    search,
-    loadingDel,
-    loadingAdd,
-    loadingEdit,
-    refresh,
+    state = {},
     operation,
+    actionRef,
+    setColMap = () => null,
+    setMode = () => null,
+    tabTitleList,
+    tabTitleCrud,
     ...rest
   } = props;
-  const {
-    isViewMode,
-    setViewMode,
-    setEdit,
-    isEditMode,
-    onClickDelete,
-    isHideView = true,
-    isShowAdd,
-    type,
-    setType,
-  } = model || {};
 
   const { getCommonTableField } = useNextTable();
-  const [loading, setLoading] = useState(false);
-  const [colMap, setColMap] = useLocalStorageState('column', {});
 
-  const { run: runSetLoading } = useDebounceFn(
-    (isTable) => {
-      if (setType) {
-        setType(isTable as any);
-      }
-      if (type === 'form' && setViewMode && setEdit) {
-        setViewMode(false);
-        setEdit(false);
-        form?.resetFields();
-      }
-      setLoading(false);
-      if (type === 'form' && setViewMode && isViewMode) {
-        setViewMode(false);
-      }
-      if (isTable === 'form' && !isEditMode && !isViewMode) {
-        form?.resetFields();
-        model?.setAdd(true);
-      } else {
-        model?.setAdd(false);
-      }
-    },
-    {
-      wait: 0,
-    },
-  );
-
-  const onRunSetLoading = (isTable: any) => {
-    setLoading(true);
-    runSetLoading(isTable);
-  };
-
-  //* ----------- onClickEdit ----------
-  const onClickEdit = usePersistFn((record?: any, isEdit = false) => {
-    if (isEdit) {
-      form?.setFieldsValue(record);
-      // console.log('record', record);
-      model?.setEdit(isEdit, record);
-      model?.setViewMode(false);
-    } else {
-      form?.resetFields();
-      model?.setEdit(false);
-      model?.setViewMode(false);
-    }
-    if (model?.isModalMode) {
-      model?.setVisibleModal();
-    } else {
-      onRunSetLoading('form');
-    }
-  });
-
-  //* ----------- onClickView ----------
-  const onClickView = usePersistFn((record?: any, isView = false) => {
-    form?.setFieldsValue(record);
-    // console.log('record', record);
-    model?.setEdit(true);
-    model?.setViewMode(isView);
-    if (model?.isModalMode) {
-      model?.setVisibleModal();
-    } else {
-      onRunSetLoading('form');
-    }
-  });
-
-  // const duplicate = duplicateArrFn(columns?.length > 0 ? columns : [], 'dataIndex');
   return (
     <>
       <Tabs
-        activeKey={type}
-        onChange={(e: any) => {
-          onRunSetLoading(e);
+        activeKey={state?.type}
+        onChange={(e: ITableList['type']) => {
+          if (!state.edit && !state.view) {
+            rest?.form?.resetFields();
+          }
+          if (e === 'table') {
+            state.view = false;
+            state.edit = false;
+            state.add = false;
+          }
+          state.type = e;
         }}
       >
-        <Tabs.TabPane tab={tabListName} key="table" />
-        {(isShowAdd || isEditMode) && <Tabs.TabPane tab={tabFormName} key="form" />}
+        <Tabs.TabPane tab={tabTitleList} key="table" />
+        {<Tabs.TabPane tab={tabTitleCrud} key="form" />}
       </Tabs>
-      {['table', 'form'].includes(type as any) && (
+      {['table', 'form'].includes(state?.type) && (
         <>
-
-          {/*  @ts-ignore */}
           <NextTable
-            {...{
-              options: {
-                reload: () => refresh && refresh(),
+            {...({
+              ...rest,
+              columns: getCommonTableField({
+                operation,
+                columnsData: rest?.columns as any,
+                onClickDelete: (record) => setMode({ isDelete: true, record }),
+                onClickEdit: (record) => setMode({ edit: true, record }),
+                onClickView: (record) => setMode({ view: true, record }),
+                disabled: state.view && state?.type === 'form',
+              }),
+              onColumnsStateChange: (v: any) => {
+                setColMap(v);
+              },
+              type: state?.type,
+              beforeSearchSubmit: (v: any) => {
+                if (state?.type === 'table') {
+                  rest?.beforeSearchSubmit(v);
+                }
+              },
+              onSubmit: (v: any) => {
+                if (state.type === 'form') {
+                  rest?.onSubmit(v);
+                }
+              },
+
+              search: {
+                labelWidth: 'auto',
+                ...rest?.search,
               },
               form:
-                type === 'form'
+                state?.type === 'form'
                   ? {
-                      form,
+                      form: rest?.form,
                       submitter: {
                         render: () => {
                           return (
@@ -185,20 +110,17 @@ function TableListCrud<T = Record<string, any>, U = Record<string, any>, ValueTy
                                 display: 'flex',
                               }}
                             >
-                              <NextButton
-                                icon={<LeftOutlined />}
-                                danger
-                                onClick={() => onRunSetLoading('table')}
-                              >
+                              <NextButton icon={<LeftOutlined />} danger onClick={() => (state.type = 'table')}>
                                 Back
                               </NextButton>
 
-                              {!isViewMode && (
+                              {!state.view && (
                                 <>
-                                  {!isEditMode && (
+                                  {!state.edit && (
                                     <NextButton
                                       icon={<ClearOutlined style={{ color: '#edad2d' }} />}
-                                      onClick={() => form?.resetFields()}
+                                      //@ts-ignore
+                                      onClick={() => actionRef?.current?.reset()}
                                     >
                                       Reset
                                     </NextButton>
@@ -207,8 +129,8 @@ function TableListCrud<T = Record<string, any>, U = Record<string, any>, ValueTy
                                     {...{
                                       type: 'primary',
                                       htmlType: 'submit',
-                                      icon: loadingAdd ? null : <SaveOutlined />,
-                                      loading: loadingAdd || loadingEdit,
+                                      // icon: loadingAdd ? null : <SaveOutlined />,
+                                      // loading: rest?.loading,
                                     }}
                                   >
                                     Submit
@@ -218,94 +140,15 @@ function TableListCrud<T = Record<string, any>, U = Record<string, any>, ValueTy
                             </Space>
                           );
                         },
-                      },
-                      style: {
-                        padding: 24,
+                        ...rest?.form?.submitter,
                       },
                     }
                   : {},
-              onSubmit: (params) => {
-                //* --- submit for add and edit -----------
-                if (type === 'form') {
-                  model?.onSubmit(params);
-                }
-              },
-
-              search: !search
-                ? false
-                : {
-                    ...(search as any),
-                    filterType:
-                      type === 'table' && search?.filterType === 'light' ? 'light' : 'query',
-                  },
-              type,
-              loading: loadingDel || loading || loadingTable,
-              columns: getCommonTableField({
-                operation,
-                columnsData: columns,
-                onClickDelete: model?.onClickDelete,
-                onClickEdit,
-                onClickView: isHideView ? (false as any) : onClickView,
-                disabled: model?.isViewMode,
-              }),
-
-              onColumnsStateChange: (v: any) => {
-                setColMap(v);
-              },
-
-              columnsStateMap: colMap,
-              dataSource,
-
-              //* --- submit for filter mode -----------
-
-              beforeSearchSubmit: (params) => model?.beforeSearchSubmit(params),
-
-              toolBarRender: () =>
-                model?.isModalMode
-                  ? [
-                      <CrudForm
-                        key="Form"
-                        {...{
-                          ...restCrudForm,
-                          form,
-                          isViewMode: model?.isViewMode,
-                          visible: model?.visibleModal,
-                          modalProps: {
-                            onCancel: onClickEdit,
-                            title,
-                          },
-                          onFinish: model?.onSubmit,
-                          triggerProps: {
-                            onClick: onClickEdit,
-                          },
-
-                          tableFieldName: () =>
-                            getCommonTableField({
-                              columnsData: columns,
-                              onClickDelete,
-                              onClickEdit,
-                              onClickView,
-                            }),
-                        }}
-                      />,
-                    ]
-                  : isShowAdd
-                  ? [
-                      <NextButton
-                        key="add"
-                        type="primary"
-                        icon={<FileAddOutlined />}
-                        onClick={() => {
-                          onRunSetLoading('form');
-                          model?.setAdd(true);
-                        }}
-                      >
-                        Add
-                      </NextButton>,
-                    ]
-                  : [],
-              ...rest,
-
+              toolBarRender: () => [
+                <Button key="button" icon={<PlusOutlined />} type="primary" onClick={() => setMode({ add: true })}>
+                  Add
+                </Button>,
+              ],
               pagination:
                 rest?.pagination === false
                   ? false
@@ -314,7 +157,7 @@ function TableListCrud<T = Record<string, any>, U = Record<string, any>, ValueTy
                       showQuickJumper: true,
                       ...rest?.pagination,
                     },
-            }}
+            } as any)}
           />
         </>
       )}

@@ -1,52 +1,61 @@
-import { usePersistFn, useReactive } from 'ahooks/es';
-import { Button, Form, Space, Tabs } from 'antd';
-import React, { useRef } from 'react';
 import { FormLayout } from '@/components/NextLayout';
+import TableListCrud from '@/components/TableForm/TableListCrud';
+import { API } from '@/graphQl/API';
 import { usePostsQuery } from '@/graphQl/hooks';
 import { PageQueryOptions } from '@/graphQl/schemas';
-import { isEmpty } from 'lodash';
-import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
-import { API } from '@/graphQl/API';
-import { ClearOutlined, LeftOutlined, PlusOutlined } from '@ant-design/icons';
+import { ActionType, ProColumns } from '@ant-design/pro-table';
 import type { ProSchemaComponentTypes } from '@ant-design/pro-utils';
-import { NextButton } from '@next-dev/component/es/NextButton';
-import { IFormMode, setFormMode } from '@/utils/form';
-import NextTable from '@/components/NextTable';
-import ProDescriptions from '@ant-design/pro-descriptions';
+import { useCreation } from 'ahooks';
+import { useLocalStorageState, usePersistFn, useReactive } from 'ahooks/es';
+import { Form } from 'antd';
+import { isEmpty } from 'lodash';
+import React, { useRef } from 'react';
 
 export default () => {
   const actionRef = useRef<ActionType>();
   const [form] = Form.useForm();
 
+  type IState = {
+    isDelete?: boolean;
+    add?: boolean;
+    edit?: boolean;
+    view?: boolean;
+    isShowAdd?: boolean;
+    record?: Record<any, any>;
+    type?: ProSchemaComponentTypes;
+  };
+
   const filterValue = useReactive<{ options?: PageQueryOptions }>({});
-  const state = useReactive<{
-    mode?: { add?: boolean; edit?: boolean; view?: boolean; isShowAdd?: boolean };
-    type: ProSchemaComponentTypes;
-  }>({
+  const state = useReactive<IState>({
     type: 'table',
   });
-  const { mode = {}, type } = state;
+
+  const { type } = state;
   const isModifyMode = type === 'form';
-  const setMode = (mode: typeof state.mode) => {
+  const [columnsStateMap, setColMap] = useLocalStorageState('book', {});
+
+  const setMode = usePersistFn(({ isDelete, view, record, add, edit }: IState) => {
     const reset = () => form.resetFields();
 
-    if (mode.view) {
-      form.setFieldsValue({
-        title: 'ss',
-      });
-      state.type = 'descriptions';
+    // console.log('mode', mode);
+    if (isDelete) {
+      console.log('calla api delete', record);
     }
-    if (mode.edit) {
+    if (edit || view) {
+      state.edit = edit;
+      state.view = view;
+
       form.setFieldsValue({
-        title: 'ss',
+        ...record,
       });
       state.type = 'form';
     }
-    if (mode.add) {
+    if (add) {
+      add = true;
       state.type = 'form';
       reset();
     }
-  };
+  });
 
   const { data: dataPosts, loading: loadingTable } = usePostsQuery({
     variables: {
@@ -57,35 +66,31 @@ export default () => {
   });
   const dataSource = dataPosts?.posts?.data as any;
 
-  //* ------------------ Submit part ------------------------
-  const onClickDelete = usePersistFn((v) => {
-    if (v?.id) {
-      // runDelJob(v?.id);
-    }
-
-    console.log('delete', v);
+  const onSubmit = usePersistFn(async (params: any) => {
+    console.log('submit', params);
   });
 
-  const onSubmit = usePersistFn(async (params: any) => {});
-
   const beforeSearchSubmit = (params?: any) => {
-    console.log('ss', params);
+    if (type === 'table') {
+      console.log('ss', params);
 
-    if (!isEmpty(params)) {
-      filterValue.options = {
-        paginate: {
-          limit: params?.pageSize,
-          page: params?.current,
-        },
-        search: {
-          q: params?.title,
-        },
-      };
-      // }
+      if (!isEmpty(params)) {
+        filterValue.options = {
+          ...filterValue.options,
+          paginate: {
+            limit: params?.pageSize,
+            page: params?.current,
+          },
+          search: {
+            q: params?.title,
+          },
+        };
+        // }
+      }
     }
   };
 
-  console.log('data', dataSource);
+  console.log('data', state.view);
 
   //* ------------------ columns data ------------------------
 
@@ -113,7 +118,7 @@ export default () => {
     },
     {
       title: 'name',
-      dataIndex: 'name',
+      dataIndex: '__typename',
       width: 150,
       valueType: 'text',
       formItemProps: {
@@ -131,109 +136,44 @@ export default () => {
 
   // console.log('mockData', mockData());
 
-  const getName = () => (mode.edit && 'Edit') || (mode.view && 'View') || ' Add';
+  const pageName = 'Book';
+  const tabTitleCrud = useCreation(() => (state.edit && 'Edit') || (state.view && 'View') || ' Add', [
+    state?.view,
+    state?.edit,
+    state?.add,
+  ]);
 
   //* ------------------ return data ------------------------
   return (
-    <FormLayout style={{ padding: 30 }}>
-      <Tabs
-        activeKey={type}
-        onChange={(e: any) => {
-          if (!mode.edit && !mode.view) {
-            form.resetFields();
-          }
-          state.type = e;
+    <FormLayout style={{ maxWidth: '90%', margin: 'auto' }}>
+      <TableListCrud
+        {...{
+          form,
+          onSubmit,
+          columns,
+          loading: loadingTable,
+          setColMap,
+          columnsStateMap,
+          setMode,
+          state,
+          tabTitleList: 'List ' + pageName,
+          tabTitleCrud: tabTitleCrud + ' ' + pageName,
+          actionRef,
+          beforeSearchSubmit,
+          dataSource,
+          onChange: (pagination) => {
+            const { pageSize, current } = pagination;
+            // console.log('dd', pagination);
+            filterValue.options = {
+              ...filterValue.options,
+              paginate: {
+                limit: pageSize,
+                page: current,
+              },
+            };
+          },
         }}
-      >
-        <Tabs.TabPane tab={getName() + ' Book List'} key="table" />
-        {<Tabs.TabPane tab={getName() + ' Book'} key="form" />}
-      </Tabs>
-      {['table', 'form'].includes(type as any) && (
-        <>
-          {/* @ts-ignore */}
-          <NextTable
-            {...{
-              actionRef,
-              loading: loadingTable,
-              type: state?.type,
-              beforeSearchSubmit,
-              onSubmit,
-              columns,
-              dataSource,
-              search: {
-                labelWidth: 'auto',
-              },
-              form:
-                type === 'form'
-                  ? {
-                      form,
-                      submitter: {
-                        render: () => {
-                          return (
-                            <Space
-                              style={{
-                                display: 'flex',
-                              }}
-                            >
-                              <NextButton icon={<LeftOutlined />} danger onClick={() => (state.type = 'table')}>
-                                Back
-                              </NextButton>
-
-                              {!mode.view && (
-                                <>
-                                  {!mode.edit && (
-                                    <NextButton
-                                      icon={<ClearOutlined style={{ color: '#edad2d' }} />}
-                                      onClick={() => actionRef.current.reset()}
-                                    >
-                                      Reset
-                                    </NextButton>
-                                  )}
-                                  <NextButton
-                                    {...{
-                                      type: 'primary',
-                                      htmlType: 'submit',
-                                      // icon: loadingAdd ? null : <SaveOutlined />,
-                                      loading: loadingTable,
-                                    }}
-                                  >
-                                    Submit
-                                  </NextButton>
-                                </>
-                              )}
-                            </Space>
-                          );
-                        },
-                      },
-                    }
-                  : {},
-              toolBarRender: () => [
-                <Button key="button" icon={<PlusOutlined />} type="primary" onClick={() => setMode({ add: true })}>
-                  Add
-                </Button>,
-                <Button key="button" icon={<PlusOutlined />} type="primary" onClick={() => setMode({ edit: true })}>
-                  edit
-                </Button>,
-              ],
-
-              onChange: (pagination) => {
-                const { pageSize, current } = pagination;
-                console.log('dd', pagination);
-                filterValue.options = {
-                  paginate: {
-                    limit: pageSize,
-                    page: current,
-                  },
-                };
-              },
-              pagination: {
-                showQuickJumper: true,
-              },
-            }}
-          />
-        </>
-      )}
-
+      />
     </FormLayout>
   );
 };
