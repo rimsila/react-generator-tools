@@ -31,7 +31,6 @@ function NextTable<T = Record<string, any>, U = Record<string, any>, ValueType =
         options: {
           fullScreen: true,
           density: true,
-          reload: true,
           ...options,
         },
         manualRequest: true,
