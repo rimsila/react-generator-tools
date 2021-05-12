@@ -22,7 +22,6 @@ type IState = Partial<{
 
 export const useIndex = () => {
   const [form] = Form.useForm();
-
   const filterValue = useReactive<{ options?: PageQueryOptions }>({});
   const state = useReactive<IState>({
     type: 'table',
@@ -34,6 +33,10 @@ export const useIndex = () => {
   const [columnsStateMap, setColMap] = useLocalStorageState('book', {});
   const resetForm = () => form.resetFields();
 
+  const defaultPaging = {
+    limit: 10,
+    page: 10,
+  };
   const { data: dataPosts, loading: loadingTable } = usePostsQuery({
     variables: {
       options: {
@@ -101,14 +104,17 @@ export const useIndex = () => {
     columnsStateMap,
     form,
     loading: loadingTable || loadingDeletePost,
-    // options: {
-    //   search: {
-    //     type: 'search',
-    //     onSearch: (v) => {
-    //       console.log('search', v);
-    //     },
-    //   },
-    // },
+    options: {
+      // search: {
+      //   type: 'search',
+      //   onSearch: (v) => {
+      //     console.log('search', v);
+      //   },
+      // },
+      reload: () => {
+        filterValue.options = { paginate: defaultPaging };
+      },
+    },
     onSubmit: usePersistFn(
       useLockFn(async (record: API.Post) => {
         // console.log('submit', record);
