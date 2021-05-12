@@ -1,13 +1,12 @@
-import React from 'react';
+import client from '@/client';
 import { enUSIntl, IntlProvider } from '@ant-design/pro-table';
+import { ApolloProvider } from '@apollo/client';
 import '@next-dev/component/es/style/index.less';
 import validateMessages from '@next-dev/core/es/validation';
 import { ConfigProvider } from 'antd';
 import 'antd/dist/antd.less';
 import enUS from 'antd/lib/locale/en_US';
-import { ApolloProvider } from '@apollo/client';
-import client from '@/client';
-
+import React from 'react';
 
 const BlankLayout: React.FC = (props) => (
   <div>

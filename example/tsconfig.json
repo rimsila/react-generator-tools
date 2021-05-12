@@ -21,16 +21,13 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": true,
     "downlevelIteration": true,
     "resolveJsonModule": true,
-    "strictPropertyInitialization": true,
-    "skipLibCheck": true,
     "paths": {
       "@/*": ["src/*"],
       "@@/*": ["src/.umi/*"]
     }
   },
-  "include": ["./src/**/*", "./typings.d.ts", "client.ts"],
+  "include": ["./src/**/*", "./typings.d.ts", "client.ts"]
 }

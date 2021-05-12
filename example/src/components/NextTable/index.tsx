@@ -1,8 +1,7 @@
 import type { ProTableProps } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { ReactNode } from 'react';
-import React from 'react';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import css from './index.less';
 
 export type INextTable<T = Record<string, any>, U = Record<string, any>, ValueType = 'text'> = {
@@ -23,7 +22,6 @@ function NextTable<T = Record<string, any>, U = Record<string, any>, ValueType =
         dateFormatter: 'string',
         // * ------- modal form --------
         ...rest,
-
         scroll: {
           scrollToFirstRowOnChange: true,
           x: true,

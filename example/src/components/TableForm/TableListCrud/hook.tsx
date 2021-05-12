@@ -1,10 +1,10 @@
+import type { IActionButton } from '@/components/ActionButton';
+import ActionButton from '@/components/ActionButton';
+import { toCapitalize } from '@/utils/stringRegex';
 import type { ProColumns } from '@ant-design/pro-table';
 import type { ProFieldValueType } from '@ant-design/pro-utils';
 import { useCreation } from 'ahooks/es';
 import React from 'react';
-import type { IActionButton } from '@/components/ActionButton';
-import ActionButton from '@/components/ActionButton';
-import { toCapitalize } from '@/utils/stringRegex';
 
 export type INextType = 'href' | 'enumBoolean' | ProFieldValueType;
 
@@ -50,20 +50,31 @@ export const useNextTable = () => {
           ]
         : ([
             {
+              title: 'No',
+              dataIndex: 'id',
+              width: 90,
+              valueType: 'text',
+              hideInTable: true,
+              formItemProps: {
+                style: {
+                  display: 'none',
+                },
+              },
+            },
+            {
               title: 'Operation',
               key: 'operation',
               search: false,
               fixed: 'right',
-              width: 60,
+              width: 50,
+              align: 'right',
               hideInForm: true,
-              hideInDescriptions:true,
+              hideInDescriptions: true,
               render: (_: any, record: any) => (
                 <ActionButton
                   {...{
                     operation: { ...operation, record },
-                    onClickView: onClickView
-                      ? () => onClickView && onClickView(record, true)
-                      : (false as any),
+                    onClickView: onClickView ? () => onClickView && onClickView(record, true) : (false as any),
                     onClickEdit: () => onClickEdit && onClickEdit(record, true),
                     delPopconfirmProps: onClickDelete && {
                       onConfirm: () => onClickDelete && onClickDelete(record),
