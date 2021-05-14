@@ -9,6 +9,12 @@ export const cache: InMemoryCache = new InMemoryCache({});
 const isDev = process.env.NODE_ENV === 'development';
 const httpLink = new HttpLink({
   uri: graphBaseUrlTest,
+  headers: {
+    'api-key':
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoS2V5IjoiMmFlZTE0MmItMTg1My00MjYzLWEzYTMtYTRhMWQ5MTliOWRkLTE2MTMyMzU0Nzc0MjAiLCJkdCI6MTYyMTAxNjUyNjIxMCwiaWF0IjoxNjIxMDE2NTI2fQ.zcW4q2yJh0zql5ZwZrSte5UOHqcDxKZ5VQeReSlXlfs',
+    Authorization:
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJhY2stODMxZWQ0cGU2LTE2MjEwMTY2ODM5MTMiLCJpZCI6IjYwOWVjMDZiNWQ1ZTM2MzNlODA1OTU2NSIsImR0IjoxNjIxMDE2NzYxNDYyLCJpYXQiOjE2MjEwMTY3NjF9.XSR32P8BH0QolR1TsSS_aK4bzpE9X_FXBKrbUMYo4fU',
+  },
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -39,9 +45,6 @@ const client = new ApolloClient({
   // The `from` function combines an array of individual links
   // into a link chain
   link: from([errorLink, httpLink]),
-  headers: {
-    authorization: localStorage.getItem('token') || '',
-  },
   connectToDevTools: true,
 });
 

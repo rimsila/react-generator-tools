@@ -17,7 +17,6 @@ export default memo(() => {
       width: 90,
       valueType: 'index',
     },
-
     {
       title: 'Title',
       dataIndex: 'title',

@@ -1,2 +1,1 @@
-
-export * as API from './schemas';
+export * as API from './operations';

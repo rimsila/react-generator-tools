@@ -1,5 +1,5 @@
 # Endpoint API, the following URL is a example
-schema: https://graphqlzero.almansi.me/api
+schema: https://powerful-chamber-29893.herokuapp.com/graphql
 overwrite: true
 
 # Format files

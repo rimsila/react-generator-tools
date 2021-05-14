@@ -1,5 +1,5 @@
 import { identity, pickBy } from 'lodash';
 
-export const getOnlyValue = (values: any = {}) => {
-  return pickBy(values, identity);
+export const getOnlyValue = (values = {}) => {
+  return pickBy(values, identity) as any;
 };

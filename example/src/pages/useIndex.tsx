@@ -1,28 +1,56 @@
 import { ITableList } from '@/components/TableForm/TableListCrud';
 import { API } from '@/graphQl/API';
-import { useCreatePostMutation, useDeletePostMutation, usePostsQuery, useUpdatePostMutation } from '@/graphQl/hooks';
-import { PageQueryOptions } from '@/graphQl/schemas';
+import { useCreateJobMutation, useDeleteJobsMutation, useGetJobsQuery, useUpdateJobsMutation } from '@/graphQl/hooks';
+import { getOnlyValue } from '@/utils/arrObj';
+import { PageInfo } from '@ant-design/pro-table/lib/typing';
 import type { ProSchemaComponentTypes } from '@ant-design/pro-utils';
 import { useCreation } from 'ahooks';
-import { useLocalStorageState, useLockFn, usePersistFn, useReactive } from 'ahooks/es';
+import { useLocalStorageState, usePersistFn, useReactive } from 'ahooks/es';
 import { Form, message } from 'antd';
-import { omit } from 'lodash';
+import { ArgsProps } from 'antd/lib/message';
 import isEmpty from 'lodash/isEmpty';
+/**
+ * ----------------------- Interface ----------------------
+ */
+export type IJobType = {
+  filter: API.GetJobsQueryVariables['filter'];
+  jobInput: API.CreateJobMutationVariables['input'];
+  jobUpdate: API.UpdateJobsMutationVariables['input'];
+  jobDelete: API.DeleteJobsMutationVariables;
+  jobRecord: API.GetJobsQuery['getJobs']['records'][0] & { status: any };
+  jobMetadata: API.GetJobsQuery['getJobs']['metadata'];
+};
 
 type IState = Partial<{
   isDelete: boolean;
   add: boolean;
   edit: boolean;
   view: boolean;
-  record: API.Post;
+  record: IJobType['jobRecord'];
   type: ProSchemaComponentTypes;
-  id: string;
-  input: API.UpdatePostInput;
+  mutationId: string;
+  loadingRefetch: boolean;
 }>;
 
 export const useIndex = () => {
+  /**
+   * ----------------------- State and Function ----------------------
+   */
+
   const [form] = Form.useForm();
-  const filterValue = useReactive<{ options?: PageQueryOptions }>({});
+  const [columnsStateMap, setColMap] = useLocalStorageState('book', {});
+
+  const defaultFilter: IJobType['filter'] = {
+    limit: 10,
+    page: 1,
+  };
+
+  const filterValue = useReactive<{ filter?: IJobType['filter'] }>({
+    filter: defaultFilter,
+  });
+
+  const { filter } = filterValue || {};
+
   const state = useReactive<IState>({
     type: 'table',
     add: true,
@@ -30,52 +58,70 @@ export const useIndex = () => {
 
   const { type } = state;
   const isModifyMode = type === 'form';
-  const [columnsStateMap, setColMap] = useLocalStorageState('book', {});
   const resetForm = () => form.resetFields();
 
-  const defaultPaging = {
-    limit: 10,
-    page: 10,
+  const successAction = (
+    msg: ArgsProps['content'] = 'Operation Successfully!',
+    isResetForm = false,
+    formType: IState['type'] = 'table',
+  ) => {
+    state.loadingRefetch = true;
+    refetchJobs().then(() => {
+      message.success(msg);
+      state.type = formType;
+      state.loadingRefetch = false;
+      isResetForm && resetForm();
+    });
   };
-  const { data: dataPosts, loading: loadingTable } = usePostsQuery({
-    variables: {
-      options: {
-        ...filterValue.options,
-      },
-    },
-  });
 
-  const [deletePostMutation, { loading: loadingDeletePost }] = useDeletePostMutation({
-    onCompleted: () => {
-      message.success('Deleted Successfully!');
-      state.type = 'table';
-    },
-  });
-  const [updatePostMutation, { loading: loadingUpdatePost }] = useUpdatePostMutation({
-    onCompleted: () => {
-      message.success('Update Successfully!');
-      state.type = 'table';
-    },
-  });
-  const [createPostMutation, { loading: loadingCreatePost }] = useCreatePostMutation({
-    onCompleted: () => {
-      // console.log('res', res);
-      message.success('Created Successfully!');
-      resetForm();
+  /**
+   * ----------------------- useGetJobsQuery ----------------------
+   */
+  const { data: dataPosts, loading: loadingGetJob, refetch: refetchJobs } = useGetJobsQuery({
+    variables: {
+      filter,
     },
   });
 
   /**
-   * crud mode
+   * ----------------------- deletePostMutation ----------------------
+   */
+  const [deletePostMutation, { loading: loadingDeletePost }] = useDeleteJobsMutation({
+    onCompleted: () => {
+      successAction();
+    },
+  });
+  /**
+   * ----------------------- updatePostMutation ----------------------
+   */
+  const [updatePostMutation, { loading: loadingUpdatePost }] = useUpdateJobsMutation({
+    onCompleted: () => {
+      successAction('Update Jobs Successfully');
+    },
+  });
+
+  /**
+   * ----------------------- createPostMutation ----------------------
+   */
+  const [createPostMutation, { loading: loadingCreatePost }] = useCreateJobMutation({
+    onCompleted: () => {
+      successAction({}, true, 'form');
+    },
+  });
+
+  /**
+   *   ----------------------- Submit Part ----------------------
    */
   const setMode = usePersistFn(({ record }: IState) => {
     if (state.isDelete) {
-      console.log('calla api delete', record);
       deletePostMutation({ variables: { id: record?.id } });
     }
   });
 
-  const dataSource = dataPosts?.posts?.data;
+  /**
+   * ----------------------- Return State& Props ----------------------
+   */
+  const dataSource = dataPosts?.getJobs?.records;
 
   const pageName = 'Book';
   const tabTitleCrud = useCreation(() => (state.edit && 'Edit') || (state.view && 'View') || (state.add && 'Add'), [
@@ -90,20 +136,22 @@ export const useIndex = () => {
   const customProps = {
     setColMap,
     setMode,
-    loadingSubmit: loadingUpdatePost || loadingCreatePost,
     isModifyMode,
     state,
     tabTitleList: 'List ' + pageName,
     tabTitleCrud: tabTitleCrud + ' ' + pageName,
     pageName,
+    loadingSubmit: loadingGetJob || state.loadingRefetch || loadingUpdatePost || loadingCreatePost,
   };
+
+  console.log('lo', loadingGetJob);
 
   return {
     ...customProps,
     dataSource,
     columnsStateMap,
     form,
-    loading: loadingTable || loadingDeletePost,
+    loading: loadingGetJob || loadingDeletePost,
     options: {
       // search: {
       //   type: 'search',
@@ -112,48 +160,41 @@ export const useIndex = () => {
       //   },
       // },
       reload: () => {
-        filterValue.options = { paginate: defaultPaging };
+        filterValue.filter = { ...defaultFilter };
       },
     },
-    onSubmit: usePersistFn(
-      useLockFn(async (record: API.Post) => {
-        // console.log('submit', record);
-        if (!isEmpty(record)) {
-          const input = omit(record, 'id');
-          if (state.edit) {
-            await updatePostMutation({ variables: { input, id: record?.id } });
-          }
-          if (state.add) {
-            console.log('add', record);
-            await createPostMutation({ variables: record });
-          }
+    onSubmit: usePersistFn((record: IJobType['jobRecord']) => {
+      // console.log('submit', record);
+      if (!isEmpty(record)) {
+        const input = getOnlyValue(record) as typeof record;
+        if (state.edit) {
+          updatePostMutation({ variables: { input } });
         }
-      }),
-    ),
-    beforeSearchSubmit: (params?: any) => {
+        if (state.add) {
+          // console.log('add', record);
+          createPostMutation({ variables: { input } });
+        }
+      }
+    }),
+    beforeSearchSubmit: (params?: IJobType['jobRecord'] & PageInfo) => {
+      const newParam = getOnlyValue(params) as typeof params;
       console.log('ss', params);
       if (!isEmpty(params)) {
-        filterValue.options = {
-          ...filterValue.options,
-          paginate: {
-            limit: params?.pageSize,
-            page: params?.current,
-          },
-          search: {
-            q: params?.title,
-          },
+        filterValue.filter = {
+          ...filterValue.filter,
+          limit: newParam?.pageSize,
+          page: newParam?.current,
+          title: newParam?.title,
         };
       }
     },
     onChange: (pagination) => {
       const { pageSize, current } = pagination;
       // console.log('dd', pagination);
-      filterValue.options = {
-        ...filterValue.options,
-        paginate: {
-          limit: pageSize,
-          page: current,
-        },
+      filterValue.filter = {
+        ...filterValue.filter,
+        limit: pageSize,
+        page: current,
       };
     },
   } as ITableList & typeof customProps;
