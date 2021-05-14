@@ -1,26 +1,25 @@
-import { IApi } from 'umi';
-import { writeFileSync, mkdirSync, existsSync, appendFileSync, unlinkSync } from 'fs';
+import { appendFileSync, existsSync, mkdirSync, unlinkSync, writeFileSync } from 'fs';
 import prettier from 'prettier';
+import { IApi } from 'umi';
+import { TableVerificationRuleList } from '../../interfaces/common';
+import { removeUnusedImport } from '../utils/removeUnusedImport';
+import { writeNewMenu } from '../utils/writeNewMenu';
+import { writeNewRoute } from '../utils/writeNewRoute';
 import {
-  generateShortFormCode,
-  generateLongFormCode,
-  generateShortDetailCode,
-  generateLongDetailCode,
-  generateTableCode,
-  generateShortFormModalCode,
-  generateLongFormModalCode,
-  generateShortDetailModalCode,
-  generateLongDetailModalCode,
   generateFormActionMethodsCode,
   generateFormActionMethodsModalCode,
+  generateLongDetailCode,
+  generateLongDetailModalCode,
+  generateLongFormCode,
+  generateLongFormModalCode,
+  generateShortDetailCode,
+  generateShortDetailModalCode,
+  generateShortFormCode,
+  generateShortFormModalCode,
+  generateTableCode,
   generateTableCode1,
-  formRequestMethods,
-  generateGraph,
+  generateUseTable1,
 } from './templates';
-import { removeUnusedImport } from '../utils/removeUnusedImport';
-import { writeNewRoute } from '../utils/writeNewRoute';
-import { writeNewMenu } from '../utils/writeNewMenu';
-import { TableVerificationRuleList } from '../../interfaces/common';
 
 export default function(payload: any, type: string, api: IApi) {
   let code = '';
@@ -336,28 +335,24 @@ export default function(payload: any, type: string, api: IApi) {
       break;
     case 'org.umi-plugin-page-creator.table1':
       // Generate intermediate components for table use, only generated when the file does not exist, mainly generated through form configuration, here in order to prevent table page references from reporting errors
+
+      pageName && mkdirSync(`${api.paths.absPagesPath}/${pageName}`, { recursive: true });
+      writeFileSync(`${api.paths.absPagesPath}/${pageName}/index.gql`, 'hello', 'utf-8');
+      writeFileSync(
+        `${api.paths.absPagesPath}/${pageName}/useHook.tsx`,
+        prettify(generateUseTable1({ pageName })),
+        'utf-8',
+      );
+
       pageName &&
-        !existsSync(`${api.paths.absPagesPath}/${pageName}/components/formRequestMethods`) &&
+        !existsSync(`${api.paths.absPagesPath}/${pageName}`) &&
         generateComponent(
           `/${pageName}`,
-          'formRequestMethods',
-          prettify(
-            formRequestMethods({
-              pageName,
-            }),
-          ),
+          `useHook`,
+          prettify(generateUseTable1({ pageName })),
           api,
         );
-      pageName &&
-        !existsSync(`${api.paths.absPagesPath}/${pageName}/components/${pageName}Service`) &&
-        generateComponent(
-          `/${pageName}`,
-          `${pageName}Service`,
-          prettify(
-            generateGraph({ pageName })
-          ),
-          api,
-        );
+
       code = generateTableCode1({ ...payload, pageName });
       break;
   }

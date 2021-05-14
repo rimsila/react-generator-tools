@@ -5,9 +5,9 @@
  * @LastEditors: Huang Shanshan
  * @LastEditTime: 2020-05-28 18:21:40
  */
-import React, {useContext, useEffect} from'react';
-import {Form, Button, Input, Drawer} from'antd';
-import {Store} from'antd/lib/form/interface';
+import React, { useContext, useEffect } from 'react';
+import { Form, Button, Input, Drawer } from 'antd';
+import { Store } from 'antd/lib/form/interface';
 
 export default ({
   visible,
@@ -32,13 +32,18 @@ export default ({
   };
 
   return (
-    <Drawer title="Short form configuration" width={360} visible={visible} onClose={() => setVisible(false)}>
+    <Drawer
+      title="Short form configuration"
+      width={360}
+      visible={visible}
+      onClose={() => setVisible(false)}
+    >
       <Form form={form} onFinish={handleFinish} layout="vertical">
         <Form.Item
           label="title"
           name="title"
           required
-          rules={[{ required: true, message:'Please fill in the title' }]}
+          rules={[{ required: true, message: 'Please fill in the title' }]}
         >
           <Input placeholder="Please fill in the title" />
         </Form.Item>

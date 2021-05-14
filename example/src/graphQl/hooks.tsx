@@ -1,8 +1,7 @@
-import * as Types from './operations';
-
-import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
+import gql from 'graphql-tag';
+import * as Types from './operations';
 
 export const PostsDocument = gql`
   query posts($options: PageQueryOptions) {
@@ -175,4 +174,104 @@ export type DeletePostMutationResult = ApolloReactCommon.MutationResult<Types.De
 export type DeletePostMutationOptions = ApolloReactCommon.BaseMutationOptions<
   Types.DeletePostMutation,
   Types.DeletePostMutationVariables
+>;
+export const UsersQueryDocument = gql`
+  query usersQuery($paginate: PaginateOptions = {}) {
+    users(options: { paginate: $paginate }) {
+      data {
+        email
+        id
+        name
+        phone
+        address {
+          city
+          street
+          suite
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useUsersQueryQuery__
+ *
+ * To run a query within a React component, call `useUsersQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUsersQueryQuery({
+ *   variables: {
+ *      paginate: // value for 'paginate'
+ *   },
+ * });
+ */
+export function useUsersQueryQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<Types.UsersQueryQuery, Types.UsersQueryQueryVariables>,
+) {
+  return ApolloReactHooks.useQuery<Types.UsersQueryQuery, Types.UsersQueryQueryVariables>(
+    UsersQueryDocument,
+    baseOptions,
+  );
+}
+export function useUsersQueryLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.UsersQueryQuery, Types.UsersQueryQueryVariables>,
+) {
+  return ApolloReactHooks.useLazyQuery<Types.UsersQueryQuery, Types.UsersQueryQueryVariables>(
+    UsersQueryDocument,
+    baseOptions,
+  );
+}
+export type UsersQueryQueryHookResult = ReturnType<typeof useUsersQueryQuery>;
+export type UsersQueryLazyQueryHookResult = ReturnType<typeof useUsersQueryLazyQuery>;
+export type UsersQueryQueryResult = ApolloReactCommon.QueryResult<
+  Types.UsersQueryQuery,
+  Types.UsersQueryQueryVariables
+>;
+export const DeleteUsersMutationDocument = gql`
+  mutation deleteUsersMutation($id: ID = "") {
+    deleteUser(id: $id)
+  }
+`;
+export type DeleteUsersMutationMutationFn = ApolloReactCommon.MutationFunction<
+  Types.DeleteUsersMutationMutation,
+  Types.DeleteUsersMutationMutationVariables
+>;
+
+/**
+ * __useDeleteUsersMutationMutation__
+ *
+ * To run a mutation, you first call `useDeleteUsersMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUsersMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUsersMutationMutation, { data, loading, error }] = useDeleteUsersMutationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteUsersMutationMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    Types.DeleteUsersMutationMutation,
+    Types.DeleteUsersMutationMutationVariables
+  >,
+) {
+  return ApolloReactHooks.useMutation<Types.DeleteUsersMutationMutation, Types.DeleteUsersMutationMutationVariables>(
+    DeleteUsersMutationDocument,
+    baseOptions,
+  );
+}
+export type DeleteUsersMutationMutationHookResult = ReturnType<typeof useDeleteUsersMutationMutation>;
+export type DeleteUsersMutationMutationResult = ApolloReactCommon.MutationResult<Types.DeleteUsersMutationMutation>;
+export type DeleteUsersMutationMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  Types.DeleteUsersMutationMutation,
+  Types.DeleteUsersMutationMutationVariables
 >;

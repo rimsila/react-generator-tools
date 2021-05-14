@@ -14,7 +14,7 @@ export default ({
   type,
 }: {
   showCreatePatchCheckbox?: boolean;
-  type: 'detail' | 'form' | 'table' |  'table1' | 'formWithDetail';
+  type: 'detail' | 'form' | 'table' | 'table1' | 'formWithDetail';
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   onRemoteCall: (values: {

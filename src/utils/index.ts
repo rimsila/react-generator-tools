@@ -4,11 +4,11 @@
 
  * @LastEditTime: 2020-05-06 16:34:22
  */
-import fs from'fs';
-import {join} from'path';
-import {utils} from'umi';
+import fs from 'fs';
+import { join } from 'path';
+import { utils } from 'umi';
 
-const {winPath} = utils;
+const { winPath } = utils;
 
 export interface TreeData {
   title: string;
@@ -23,7 +23,7 @@ export interface TreeData {
  */
 export const getFolderTreeData = (
   path: string,
-  parentPath: string ='/',
+  parentPath: string = '/',
   depth: number = 0,
 ): TreeData[] => {
   const files = fs.readdirSync(winPath(path));
@@ -31,11 +31,11 @@ export const getFolderTreeData = (
     .map((fileName: string) => {
       const status = fs.statSync(join(path, fileName));
       // It is a folder and is endless. Beginning, and the deepest three levels
-      if (status.isDirectory() && fileName.indexOf('.') !== 0 && depth <3) {
+      if (status.isDirectory() && fileName.indexOf('.') !== 0 && depth < 3) {
         const absPath = winPath(join(path, fileName));
         const absPagePath = winPath(join(parentPath, fileName));
         const children = getFolderTreeData(absPath, absPagePath, depth + 1);
-        if (children && children.length> 0) {
+        if (children && children.length > 0) {
           return {
             key: absPagePath,
             title: fileName,
@@ -61,7 +61,7 @@ export const getFolderTreeData = (
  */
 export const getFilesTreeData = (
   path: string,
-  parentPath: string ='/',
+  parentPath: string = '/',
   depth: number = 0,
 ): TreeData[] => {
   const files = fs.readdirSync(winPath(path));
@@ -70,7 +70,7 @@ export const getFilesTreeData = (
       const status = fs.statSync(join(path, fileName));
       const isDirectory = status.isDirectory();
       // It's a folder and it's endless. At the beginning, and the deepest five levels
-      if (fileName.indexOf('.') !== 0 && depth <5) {
+      if (fileName.indexOf('.') !== 0 && depth < 5) {
         if (
           !isDirectory &&
           !fileName.includes('.tsx') &&
@@ -82,7 +82,7 @@ export const getFilesTreeData = (
         }
         const absPath = winPath(join(path, fileName));
         const absPagePath = winPath(join(parentPath, fileName));
-        const children = isDirectory? getFilesTreeData(absPath, absPagePath, depth + 1): [];
+        const children = isDirectory ? getFilesTreeData(absPath, absPagePath, depth + 1) : [];
         return {
           selectable: !isDirectory,
           key: absPagePath,

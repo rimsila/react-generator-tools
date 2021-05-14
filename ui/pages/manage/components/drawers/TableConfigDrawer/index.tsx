@@ -1,7 +1,7 @@
-import React from'react';
-import {Drawer, Form, Input, Button, Radio} from'antd';
-import {filterEmpty} from'../../../../../utils';
-import {Store} from'antd/lib/form/interface';
+import React from 'react';
+import { Drawer, Form, Input, Button, Radio } from 'antd';
+import { filterEmpty } from '../../../../../utils';
+import { Store } from 'antd/lib/form/interface';
 
 export default ({
   setVisible,
@@ -26,7 +26,7 @@ export default ({
         wrapperCol={{ span: 12 }}
         labelAlign="left"
         initialValues={{ ...tableConfig }}
-        onFinish={values ​​=> onSubmit(filterEmpty(values))}
+        onFinish={values => onSubmit(filterEmpty(values))}
       >
         <Form.Item label="Form title" name="headerTitle">
           <Input />

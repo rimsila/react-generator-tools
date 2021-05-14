@@ -17,19 +17,13 @@ export const inputProps: FormItemProps[] = [
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
 ];
 
@@ -38,19 +32,13 @@ export const passwordProps: FormItemProps[] = [
     name: 'visibilityToggle',
     label: 'Display toggle button',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
 ];
 
@@ -59,28 +47,19 @@ export const textareaProps: FormItemProps[] = [
     name: 'autoSize',
     label: 'Adaptive content height',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
 ];
 
@@ -89,37 +68,25 @@ export const cascaderProps: FormItemProps[] = [
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'changeOnSelect',
     label: 'Choose is to change',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'showSearch',
     label: 'Show search box',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
 ];
 
@@ -128,37 +95,25 @@ export const dateProps: FormItemProps[] = [
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'showTime',
     label: 'Time selection',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'showToday',
     label: 'Show "Today" button',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'format',
@@ -173,28 +128,19 @@ export const rangeProps: FormItemProps[] = [
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'showTime',
     label: 'Time selection',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'format',
@@ -209,19 +155,13 @@ export const timeProps: FormItemProps[] = [
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'format',
@@ -251,10 +191,7 @@ export const numberProps: FormItemProps[] = [
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'min',
@@ -283,10 +220,7 @@ export const radioProps: FormItemProps[] = [
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'options',
@@ -303,10 +237,7 @@ export const checkboxProps: FormItemProps[] = [
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'options',
@@ -323,28 +254,19 @@ export const switchProps: FormItemProps[] = [
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'defaultChecked',
     label: 'Whether selected by default',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'loading',
     label: 'Loading switch',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
 ];
 
@@ -353,19 +275,13 @@ export const sliderProps: FormItemProps[] = [
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'min',
@@ -381,28 +297,19 @@ export const sliderProps: FormItemProps[] = [
     name: 'range',
     label: 'Dual slider mode',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'reverse',
     label: 'Reverse axis',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'vertical',
     label: 'Whether it is vertical',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'step',
@@ -417,19 +324,13 @@ export const selectProps: FormItemProps[] = [
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'mode',
@@ -445,10 +346,7 @@ export const selectProps: FormItemProps[] = [
     name: 'showSearch',
     label: 'Single selection mode can be searched',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'options',
@@ -465,37 +363,25 @@ export const treeselectProps: FormItemProps[] = [
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'multiple',
     label: 'Multiple choice',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'showSearch',
     label: 'Show search box',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
 ];
 
@@ -504,19 +390,13 @@ export const uploadProps: FormItemProps[] = [
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'multiple',
     label: 'Multiple choice',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
 ];
 
@@ -525,28 +405,19 @@ export const rateProps: FormItemProps[] = [
     name: 'allowClear',
     label: 'Display clear icon',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'disabled',
     label: 'Whether to disable',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'allowHalf',
     label: 'Allow half selection',
     type: 'radio',
-    options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false },
-    ],
+    options: [{ label: 'Yes', value: true }, { label: 'No', value: false }],
   },
   {
     name: 'count',

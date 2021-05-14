@@ -129,7 +129,7 @@ export default () => {
     }
   }, [impConfigJson]);
 
-/** Export */
+  /** Export */
   const handleExport = () => {
     copy(
       JSON.stringify(

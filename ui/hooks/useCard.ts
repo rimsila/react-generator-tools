@@ -6,14 +6,14 @@
 
  * @LastEditTime: 2020-05-14 18:28:44
  */
-import {useState} from'react';
-import {CardItemProps, FormItemProps, FormItemType} from'../../interfaces/common';
-import {Store} from'antd/lib/form/interface';
-import produce from'immer';
-import faker from'faker';
+import { useState } from 'react';
+import { CardItemProps, FormItemProps, FormItemType } from '../../interfaces/common';
+import { Store } from 'antd/lib/form/interface';
+import produce from 'immer';
+import faker from 'faker';
 
 export default function useCard() {
-  const [cards, setCards] = useState<CardItemProps[]>([{ title:'Custom Card0', formItems: [] }]);
+  const [cards, setCards] = useState<CardItemProps[]>([{ title: 'Custom Card0', formItems: [] }]);
   const [cardIndex, setCardIndex] = useState<number>(0);
   const [currentCard, setCurrentCard] = useState<CardItemProps>();
   const [itemIndex, setItemIndex] = useState<number>();
@@ -29,7 +29,7 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft.splice(index, 1);
-        draft.splice(index-1, 0, ...card);
+        draft.splice(index - 1, 0, ...card);
       }),
     );
   };
@@ -39,7 +39,7 @@ export default function useCard() {
    * @param index
    */
   const moveCardDown = (index: number) => () => {
-    if (index === cards.length-1) return;
+    if (index === cards.length - 1) return;
 
     setCards(
       produce(cards, draft => {
@@ -108,10 +108,10 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft[cardIndex];
-        const {formItems = []} = card;
+        const { formItems = [] } = card;
         if (itemIndex === 0) return;
         const items = formItems.splice(itemIndex, 1);
-        formItems.splice(itemIndex-1, 0, ...items);
+        formItems.splice(itemIndex - 1, 0, ...items);
       }),
     );
   };
@@ -125,8 +125,8 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft[cardIndex];
-        const {formItems = []} = card;
-        if (itemIndex === formItems.length-1) return;
+        const { formItems = [] } = card;
+        if (itemIndex === formItems.length - 1) return;
         const items = formItems.splice(itemIndex, 1);
         formItems.splice(itemIndex + 1, 0, ...items);
       }),
@@ -141,7 +141,7 @@ export default function useCard() {
   const configItem = (itemIndex: number, formItem: FormItemProps) => {
     setCards(
       produce(cards, draft => {
-        const {formItems = []} = draft[cardIndex];
+        const { formItems = [] } = draft[cardIndex];
         formItems[itemIndex] = formItem;
       }),
     );
@@ -156,7 +156,7 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft[cardIndex];
-        const {formItems = []} = card;
+        const { formItems = [] } = card;
         formItems.splice(itemIndex, 1);
       }),
     );
@@ -171,7 +171,7 @@ export default function useCard() {
     setCards(
       produce(cards, draft => {
         const card = draft[cardIndex];
-        const {formItems = []} = card;
+        const { formItems = [] } = card;
         const formItem = {
           ...formItems[itemIndex],
           name: faker.name.lastName(),

@@ -1,21 +1,21 @@
-import React, { useContext, useState, useEffect } from 'react';
 import { Button, Card, message, Table } from 'antd';
-import Title from '../../../../../components/Title';
-import { AjaxResponse } from '../../../../../../interfaces/common';
-import Context from '../../../Context';
-import PathMenuAction from '../../PathMenuAction';
 import { Store } from 'antd/lib/form/interface';
-import TableConfigDrawer from '../../drawers/TableConfigDrawer';
-import TableColumnConfigDrawer from '../../drawers/TableColumnConfigDrawer';
+import { ColumnType } from 'antd/lib/table/interface';
+import copy from 'copy-to-clipboard';
+import React, { useContext, useEffect, useState } from 'react';
+import { mockData } from '../../../../../../example/src/constant';
+import { AjaxResponse } from '../../../../../../interfaces/common';
+import Title from '../../../../../components/Title';
+import useConfig from '../../../../../hooks/useConfig';
 import useConfigVisible from '../../../../../hooks/useConfigVisible';
 import useTable from '../../../../../hooks/useTable';
 import { filterEmpty } from '../../../../../utils';
+import Context from '../../../Context';
 import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
-import useConfig from '../../../../../hooks/useConfig';
-import { ColumnType } from 'antd/lib/table/interface';
-import copy from 'copy-to-clipboard';
+import TableColumnConfigDrawer from '../../drawers/TableColumnConfigDrawer';
+import TableConfigDrawer from '../../drawers/TableConfigDrawer';
 import ExportActions from '../../ExportActions';
-import { mockData } from '../../../../../../example/src/constant';
+import PathMenuAction from '../../PathMenuAction';
 import TitleWithActions from './TitleWithActions';
 
 export default () => {
@@ -78,6 +78,7 @@ export default () => {
           menu,
           initialFetch,
           submitFetch,
+          // gqlCode
         },
       });
       message.success({ content: (result as AjaxResponse<string>).message, key });
@@ -144,7 +145,7 @@ export default () => {
             showQuickJumper: true,
           }}
           columns={columns.map((column, index) => ({
-            ...column as any,
+            ...(column as any),
             title: (
               <TitleWithActions
                 title={column?.title}

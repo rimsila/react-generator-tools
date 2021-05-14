@@ -1,0 +1,157 @@
+import { ITableList } from '@/components/TableForm/TableListCrud';
+import { API } from '@/graphQl/API';
+import { useCreateHhMutation, useDeleteHhMutation, useHhQuery, useUpdateHhMutation } from '@/graphQl/hooks';
+import { HhFilter } from '@/graphQl/schemas';
+import { ProSchemaComponentTypes } from '@ant-design/pro-utils';
+import { useCreation } from 'ahooks';
+import { useLocalStorageState, useLockFn, usePersistFn, useReactive } from 'ahooks/es';
+import { Form, message } from 'antd';
+import { omit } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+
+type IState = Partial<{
+  isDelete: boolean;
+  add: boolean;
+  edit: boolean;
+  view: boolean;
+  record: API.Hh;
+  type: ProSchemaComponentTypes;
+  id: string;
+  input: API.UpdateHh;
+}>;
+
+export const useHook = () => {
+  const [form] = Form.useForm();
+  const filterValue = useReactive<{ filter: HhFilter }>({});
+  const state = useReactive<IState>({
+    type: 'table',
+    add: true,
+  });
+
+  const { type } = state;
+  const isModifyMode = type === 'form';
+  const [columnsStateMap, setColMap] = useLocalStorageState('hh', {});
+  const resetForm = () => form.resetFields();
+
+  const defaultPaging = {
+    limit: 10,
+    page: 10,
+  };
+  const { data: dataHh, loading: loadingTable } = useHhQuery({
+    variables: {
+      filter: {
+        ...filterValue.filter,
+      },
+    },
+  });
+
+  const [deleteHhMutation, { loading: loadingDeleteHh }] = useDeleteHhMutation({
+    onCompleted: () => {
+      message.success('Deleted Successfully!');
+      state.type = 'table';
+    },
+  });
+  const [updateHhMutation, { loading: loadingUpdateHh }] = useUpdateHhMutation({
+    onCompleted: () => {
+      message.success('Update Successfully!');
+      state.type = 'table';
+    },
+  });
+  const [createHhMutation, { loading: loadingCreateHh }] = useCreateHhMutation({
+    onCompleted: () => {
+      // console.log('res', res);
+      message.success('Created Successfully!');
+      resetForm();
+    },
+  });
+
+  /**
+   * crud mode
+   */
+  const setMode = usePersistFn(({ record }: IState) => {
+    if (state.isDelete) {
+      console.log('calla api delete', record);
+      deleteHhMutation({ variables: { id: record?.id } });
+    }
+  });
+
+  const dataSource = dataHh?.hh?.data;
+
+  const pageName = 'Hh';
+  const tabTitleCrud = useCreation(() => (state.edit && 'Edit') || (state.view && 'View') || (state.add && 'Add'), [
+    state?.view,
+    state?.edit,
+    state?.add,
+  ]);
+
+  /**
+   * all custom props here
+   */
+  const customProps = {
+    setColMap,
+    setMode,
+    loadingSubmit: loadingUpdateHh || loadingCreateHh,
+    isModifyMode,
+    state,
+    tabTitleList: 'List ' + pageName,
+    tabTitleCrud: tabTitleCrud + ' ' + pageName,
+    pageName,
+  };
+
+  return {
+    ...customProps,
+    dataSource,
+    columnsStateMap,
+    form,
+    loading: loadingTable || loadingDeleteHh,
+    options: {
+      // search: {
+      //   type: 'search',
+      //   onSearch: (v) => {
+      //     console.log('search', v);
+      //   },
+      // },
+      reload: () => {
+        filterValue.filter = { metadata: defaultPaging };
+      },
+    },
+    onSubmit: usePersistFn(
+      useLockFn(async (record: API.HhType) => {
+        // console.log('submit', record);
+        if (!isEmpty(record)) {
+          const input = omit(record, 'id');
+          if (state.edit) {
+            await updateHhMutation({ variables: { input, id: record?.id } });
+          }
+          if (state.add) {
+            console.log('add', record);
+            await createHhMutation({ variables: record });
+          }
+        }
+      }),
+    ),
+    beforeSearchSubmit: (params?: any) => {
+      console.log('ss', params);
+      if (!isEmpty(params)) {
+        filterValue.filter = {
+          ...filterValue,
+          metadata: {
+            limit: params?.pageSize,
+            page: params?.current,
+          },
+        };
+      }
+    },
+    onChange: pagination => {
+      const { pageSize, current } = pagination;
+      // console.log('dd', pagination);
+      filterValue.filter = {
+        ...filterValue.filter,
+        metadata: {
+          limit: pageSize,
+          page: current,
+        },
+      };
+    },
+  } as ITableList & typeof customProps;
+};

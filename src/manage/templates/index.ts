@@ -4,21 +4,20 @@
 
  * @LastEditTime: 2020-10-10 16:50:07
  */
-import generateShortFormCode from './shortForm';
-import generateLongFormCode from './longForm';
-import generateShortDetailCode from './shortDetail';
-import generateLongDetailCode from './longDetail';
-import generateTableCode from './table';
-export {default as generateTableCode1} from './table1';
-export {default as formRequestMethods} from './formRequestMethods';
-export {default as generateGraph} from './generateGraph';
-import generateShortFormModalCode from './shortFormModal';
-import generateLongFormModalCode from './longFormModal';
-import generateShortDetailModalCode from './shortDetailModal';
-import generateLongDetailModalCode from './longDetailModal';
 import generateFormActionMethodsCode from './formActionMethods';
 import generateFormActionMethodsModalCode from './formActionMethodsModal';
-
+import generateLongDetailCode from './longDetail';
+import generateLongDetailModalCode from './longDetailModal';
+import generateLongFormCode from './longForm';
+import generateLongFormModalCode from './longFormModal';
+import generateShortDetailCode from './shortDetail';
+import generateShortDetailModalCode from './shortDetailModal';
+import generateShortFormCode from './shortForm';
+import generateShortFormModalCode from './shortFormModal';
+import generateTableCode from './table';
+export { default as formRequestMethods } from './formRequestMethods';
+export { default as generateTableCode1 } from './table1';
+export { default as generateUseTable1 } from './useTable1';
 export {
   generateShortFormCode,
   generateLongFormCode,
@@ -32,3 +31,5 @@ export {
   generateFormActionMethodsCode,
   generateFormActionMethodsModalCode,
 };
+
+

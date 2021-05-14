@@ -175,7 +175,7 @@ export default () => {
             </div>
           ))}
           <Button onClick={addDetailItem} type="dashed" style={{ width: '100%', marginBottom: 32 }}>
-          Add display item
+            Add display item
           </Button>
           <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
             Page interface configuration

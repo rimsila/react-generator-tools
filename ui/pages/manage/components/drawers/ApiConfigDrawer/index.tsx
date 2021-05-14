@@ -5,10 +5,10 @@
  * @LastEditors: Huang Shanshan
  * @LastEditTime: 2020-05-28 18:24:49
  */
-import React, {useContext, useEffect} from'react';
-import {Form, Button, Drawer, Cascader} from'antd';
-import {Store} from'antd/lib/form/interface';
-import Context from'../../../Context';
+import React, { useContext, useEffect } from 'react';
+import { Form, Button, Drawer, Cascader } from 'antd';
+import { Store } from 'antd/lib/form/interface';
+import Context from '../../../Context';
 
 export default ({
   visible,
@@ -23,29 +23,34 @@ export default ({
   submitFetch?: string[];
   initialFetch?: string[];
 }) => {
-  const {databases = []} = useContext(Context);
+  const { databases = [] } = useContext(Context);
   const [form] = Form.useForm();
 
   useEffect(() => {
     form.setFieldsValue({
-      initialFetch
-    })
+      initialFetch,
+    });
   }, [initialFetch]);
 
   useEffect(() => {
     form.setFieldsValue({
-      submitFetch
-    })
+      submitFetch,
+    });
   }, [submitFetch]);
 
   const handleFinish = (values: Store) => {
     setVisible(false);
-    const {initialFetch, submitFetch} = values;
+    const { initialFetch, submitFetch } = values;
     onSubmit(initialFetch, submitFetch);
   };
 
   return (
-    <Drawer title="Interface API configuration" width={360} visible={visible} onClose={() => setVisible(false)}>
+    <Drawer
+      title="Interface API configuration"
+      width={360}
+      visible={visible}
+      onClose={() => setVisible(false)}
+    >
       <Form form={form} onFinish={handleFinish} layout="vertical">
         <Form.Item label="Called when the page loads" name="initialFetch">
           <Cascader options={databases} />

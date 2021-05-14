@@ -103,18 +103,20 @@ export default function renderFormItem({
 
     case 'textarea':
       const textareaItem = (
-        <Form.Item required={(formItem.required || false) as boolean} label={
-          <label>
-            <span style={{ paddingRight: 10 }}>{label}</span>
-            {formItem.tooltip && (
-              <Tooltip
-                overlay={(formItem.tooltip) as string}
-              >
-                <QuestionCircleOutlined />
-              </Tooltip>
-            )}
-          </label>
-        } name={name}>
+        <Form.Item
+          required={(formItem.required || false) as boolean}
+          label={
+            <label>
+              <span style={{ paddingRight: 10 }}>{label}</span>
+              {formItem.tooltip && (
+                <Tooltip overlay={formItem.tooltip as string}>
+                  <QuestionCircleOutlined />
+                </Tooltip>
+              )}
+            </label>
+          }
+          name={name}
+        >
           <Input.TextArea placeholder={placeholder as string} {...restProps} />
         </Form.Item>
       );

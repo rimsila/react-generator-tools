@@ -17,7 +17,7 @@ export default ({
   setVisible: (visible: boolean) => void;
   onSubmit: (code: string) => void;
 }) => {
-  const {constantConfig} = useContext(Context);
+  const { constantConfig } = useContext(Context);
   const [editorValue, setEditorValue] = useState('');
 
   return (

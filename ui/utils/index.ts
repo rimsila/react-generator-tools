@@ -5,9 +5,9 @@
 
  * @LastEditTime: 2020-05-14 11:17:27
  */
-import {Store} from'antd/lib/form/interface';
-import {FormItemProps} from'../../interfaces/common';
-import {ScreenConfig, ScreenConfigPayload, LayoutType} from'../../interfaces/screen';
+import { Store } from 'antd/lib/form/interface';
+import { FormItemProps } from '../../interfaces/common';
+import { ScreenConfig, ScreenConfigPayload, LayoutType } from '../../interfaces/screen';
 
 /**
  * Split an array into N two-dimensional arrays according to the specified column
@@ -16,11 +16,11 @@ import {ScreenConfig, ScreenConfigPayload, LayoutType} from'../../interfaces/scr
  */
 export function transformFormItemLines(formItems: FormItemProps[], cols = 3) {
   let lineNum =
-    formItems.length% cols === 0
+    formItems.length % cols === 0
       ? formItems.length / cols
       : Math.floor(formItems.length / cols + 1);
   let res = [];
-  for (let i = 0; i <lineNum; i++) {
+  for (let i = 0; i < lineNum; i++) {
     let temp = formItems.slice(i * cols, i * cols + cols);
     res.push(temp);
   }
@@ -32,10 +32,10 @@ export function transformFormItemLines(formItems: FormItemProps[], cols = 3) {
  * @param values
  */
 export function filterEmpty(values: Store) {
-  const filteredValues ​​= {};
+  const filteredValues = {};
 
   Object.entries(values).forEach(([key, value]) => {
-    if (value !=='' && value !== undefined && value !== null) {
+    if (value !== '' && value !== undefined && value !== null) {
       filteredValues[key] = value;
     }
   });
@@ -46,7 +46,7 @@ export function filterEmpty(values: Store) {
  * Convert the large screen configuration parameters into the data structure required by the backend
  * @param screenConfig
  */
-type ScreenConfigPayloadPart = Omit<ScreenConfigPayload,'title' |'titleStyle' |'gutter'>;
+type ScreenConfigPayloadPart = Omit<ScreenConfigPayload, 'title' | 'titleStyle' | 'gutter'>;
 export function transformConfig(screenConfig: ScreenConfig): ScreenConfigPayloadPart {
   const payload: ScreenConfigPayloadPart = {
     layout: [],
@@ -54,7 +54,7 @@ export function transformConfig(screenConfig: ScreenConfig): ScreenConfigPayload
 
   function generateConfig(type: LayoutType, config: ScreenConfig) {
     const layout = config[type];
-    const {rows, ...restProps} = layout;
+    const { rows, ...restProps } = layout;
     return {
       ...restProps,
       name: type.charAt(0).toUpperCase() + type.substr(1, type.length),

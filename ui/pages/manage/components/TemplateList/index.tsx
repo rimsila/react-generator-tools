@@ -5,20 +5,20 @@
 
  * @LastEditTime: 2020-04-29 22:00:14
  */
-import React, {useState, useContext} from'react';
-import {Button, Tooltip, Modal} from'antd';
-import {EyeOutlined, PlusOutlined} from'@ant-design/icons';
-import classnames from'classnames';
-import Context from'../../Context';
-import templateList from'./template.json';
-import styles from'./index.module.less';
-import {Template} from'../../../../../interfaces/common';
+import React, { useState, useContext } from 'react';
+import { Button, Tooltip, Modal } from 'antd';
+import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
+import classnames from 'classnames';
+import Context from '../../Context';
+import templateList from './template.json';
+import styles from './index.module.less';
+import { Template } from '../../../../../interfaces/common';
 
 export default () => {
   const [visible, setVisible] = useState(false);
   const [image, setImage] = useState<string>();
   const [title, setTitle] = useState<string>();
-  const {addTemplate, templateType} = useContext(Context);
+  const { addTemplate, templateType } = useContext(Context);
 
   const previewImage = (image: string, title: string) => {
     setImage(image);
@@ -33,7 +33,7 @@ export default () => {
           key={template.name}
           className={classnames(
             styles.col,
-            templateType === template.type? styles.selected: null,
+            templateType === template.type ? styles.selected : null,
           )}
         >
           <div className={styles.hover}>

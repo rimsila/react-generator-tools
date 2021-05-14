@@ -126,7 +126,7 @@ export default () => {
           generateDetail: checked,
         },
       });
-      message.success({ content: (result as AjaxResponse<string>).message , key });
+      message.success({ content: (result as AjaxResponse<string>).message, key });
       setPathModalVisible(false);
     } catch (error) {
       message.error({ content: error.message, key });
@@ -149,7 +149,7 @@ export default () => {
     }
   }, [impConfigJson]);
 
-/** Export */
+  /** Export */
   const handleExport = () => {
     copy(
       JSON.stringify(

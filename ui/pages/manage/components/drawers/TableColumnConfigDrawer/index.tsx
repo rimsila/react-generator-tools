@@ -1,9 +1,8 @@
-import React, { useContext, useMemo, useEffect, useState } from 'react';
-import { Drawer, Form, Input, Button, Radio, Select, InputNumber, Tooltip, message } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Button, Drawer, Form, Input, InputNumber, Radio, Select, Tooltip } from 'antd';
 import { Store } from 'antd/lib/form/interface';
 import { ColumnType } from 'antd/lib/table';
-import Context from '../../../Context';
+import React, { useEffect, useMemo, useState } from 'react';
 import { mockData } from '../../../../../../example/src/constant';
 
 const { Option } = Select;
@@ -50,12 +49,12 @@ export default function<T>({
 
   const properties = useMemo(() => {
     const obj = mockData()[0];
-      return Object.keys(obj).map(ele => ({ label: ele, value: obj[ele] }));
+    return Object.keys(obj).map(ele => ({ label: ele, value: obj[ele] }));
   }, [mockData()]);
 
   const handleChange = (value: string) => {
     const matchClass = properties.find(item => item?.label === value);
-    console.log("e",value);
+    console.log('e', value);
 
     form.setFieldsValue({
       title: matchClass?.label,
@@ -73,6 +72,21 @@ export default function<T>({
         setVisible(false);
       }}
     >
+      {properties?.length > 0 && (
+        <Form.Item label="Property value" name="prop">
+          <Select onChange={handleChange}>
+            {properties.map(prop => {
+              // console.log('props', prop);
+              return (
+                <Option
+                  key={prop.label}
+                  value={prop.label}
+                >{`${prop.label}(${prop?.value})`}</Option>
+              );
+            })}
+          </Select>
+        </Form.Item>
+      )}
       <Form
         form={form}
         labelCol={{ span: 10 }}
@@ -81,16 +95,6 @@ export default function<T>({
         onFinish={onSubmit}
         initialValues={initialValues}
       >
-        {properties?.length > 0 && (
-          <Form.Item label="Property value" name="prop">
-            <Select onChange={handleChange}>
-              {properties.map(prop => {
-                // console.log('props', prop);
-              return  <Option key={prop.label}  value={prop.label}>{`${prop.label}(${prop?.value})`}</Option>;
-              })}
-            </Select>
-          </Form.Item>
-        )}
         <Form.Item
           label="Column header display text"
           name="title"

@@ -14,5 +14,5 @@ export default function useConfig() {
     setInitialFetch,
     submitFetch,
     setSubmitFetch,
-  }
+  };
 }

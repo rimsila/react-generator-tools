@@ -137,16 +137,18 @@ export default () => {
   /** Analyze the imported configuration information */
   useEffect(() => {
     if (impConfigJson) {
-      const { formConfig = { title: 'Single list' }, formItems = [], submitFetch = [] } = JSON.parse(
-        impConfigJson,
-      );
+      const {
+        formConfig = { title: 'Single list' },
+        formItems = [],
+        submitFetch = [],
+      } = JSON.parse(impConfigJson);
       setFormConfig(formConfig);
       setFormItems(formItems);
       setSubmitFetch(submitFetch);
     }
   }, [impConfigJson]);
 
-/** Export */
+  /** Export */
   const handleExport = () => {
     copy(
       JSON.stringify(

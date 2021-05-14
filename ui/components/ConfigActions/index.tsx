@@ -1,5 +1,5 @@
-import React, {CSSProperties} from'react';
-import {Button, Tooltip} from'antd';
+import React, { CSSProperties } from 'react';
+import { Button, Tooltip } from 'antd';
 import {
   ArrowUpOutlined,
   ArrowDownOutlined,
@@ -8,7 +8,7 @@ import {
   SettingOutlined,
   DeleteOutlined,
   CopyOutlined,
-} from'@ant-design/icons';
+} from '@ant-design/icons';
 
 export default ({
   moveUp,
@@ -16,10 +16,10 @@ export default ({
   configItem,
   deleteItem,
   copyItem,
-  position ='left',
+  position = 'left',
   style,
 }: {
-  position?:'left' |'top';
+  position?: 'left' | 'top';
   moveUp?: () => void;
   moveDown?: () => void;
   configItem?: () => void;
@@ -30,20 +30,28 @@ export default ({
   return (
     <div
       style={{
-        display:'flex',
-        alignItems:'center',
+        display: 'flex',
+        alignItems: 'center',
         marginBottom: 5,
         ...style,
       }}
     >
-      <Tooltip overlay={position ==='left'?'Move up':'Move left'} trigger={['hover']} placement="top">
+      <Tooltip
+        overlay={position === 'left' ? 'Move up' : 'Move left'}
+        trigger={['hover']}
+        placement="top"
+      >
         <Button style={{ marginRight: 10 }} onClick={moveUp}>
-          {position ==='left'? <ArrowUpOutlined />: <ArrowLeftOutlined />}
+          {position === 'left' ? <ArrowUpOutlined /> : <ArrowLeftOutlined />}
         </Button>
       </Tooltip>
-      <Tooltip overlay={position ==='left'?'Move down':'Move right'} trigger={['hover']} placement="top">
+      <Tooltip
+        overlay={position === 'left' ? 'Move down' : 'Move right'}
+        trigger={['hover']}
+        placement="top"
+      >
         <Button style={{ marginRight: 10 }} onClick={moveDown}>
-          {position ==='left'? <ArrowDownOutlined />: <ArrowRightOutlined />}
+          {position === 'left' ? <ArrowDownOutlined /> : <ArrowRightOutlined />}
         </Button>
       </Tooltip>
       <Tooltip overlay="delete" trigger={['hover']} placement="top">

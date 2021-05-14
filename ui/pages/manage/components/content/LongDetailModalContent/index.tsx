@@ -1,49 +1,44 @@
-import React, {useContext, useState, useEffect} from'react';
-import {Form, Button, Card, message, Input, Row, Col} from'antd';
-import Title from'../../../../../components/Title';
-import {AjaxResponse} from'../../../../../../interfaces/common';
-import FormItemConfigDrawer from'../../../../../components/FormItemConfigDrawer';
-import Context from'../../../Context';
-import PathMenuAction from'../../PathMenuAction';
-import {Store} from'antd/lib/form/interface';
-import ShortFormConfigDrawer from'../../drawers/ShortFormConfigDrawer';
-import useFormItem from'../../../../../hooks/useFormItem';
-import produce from'immer';
-import faker from'faker';
-import styles from'./index.module.less';
-import useConfigVisible from'../../../../../hooks/useConfigVisible';
-import ConfigActions from'../../../../../components/ConfigActions';
-import {transformFormItemLines} from'../../../../../utils';
-import ApiConfigDrawer from'../../drawers/ApiConfigDrawer';
-import useConfig from'../../../../../hooks/useConfig';
-import copy from'copy-to-clipboard';
-import ExportActions from'../../ExportActions';
+import React, { useContext, useState, useEffect } from 'react';
+import { Form, Button, Card, message, Input, Row, Col } from 'antd';
+import Title from '../../../../../components/Title';
+import { AjaxResponse } from '../../../../../../interfaces/common';
+import FormItemConfigDrawer from '../../../../../components/FormItemConfigDrawer';
+import Context from '../../../Context';
+import PathMenuAction from '../../PathMenuAction';
+import { Store } from 'antd/lib/form/interface';
+import ShortFormConfigDrawer from '../../drawers/ShortFormConfigDrawer';
+import useFormItem from '../../../../../hooks/useFormItem';
+import produce from 'immer';
+import faker from 'faker';
+import styles from './index.module.less';
+import useConfigVisible from '../../../../../hooks/useConfigVisible';
+import ConfigActions from '../../../../../components/ConfigActions';
+import { transformFormItemLines } from '../../../../../utils';
+import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
+import useConfig from '../../../../../hooks/useConfig';
+import copy from 'copy-to-clipboard';
+import ExportActions from '../../ExportActions';
 
 const formItemLayout = {
   labelCol: {
-    xs: {span: 24 },
-    sm: {span: 7 },
-    md: {span: 10 },
+    xs: { span: 24 },
+    sm: { span: 7 },
+    md: { span: 10 },
   },
   wrapperCol: {
-    xs: {span: 24 },
-    sm: {span: 12 },
-    md: {span: 14 },
+    xs: { span: 24 },
+    sm: { span: 12 },
+    md: { span: 14 },
   },
 };
 
 export default () => {
-  const {api, impConfigJson} = useContext(Context);
+  const { api, impConfigJson } = useContext(Context);
   const [formConfig, setFormConfig] = useState<Store>({
-    title:'Two columns of details',
+    title: 'Two columns of details',
   });
 
-  const {
-    initialFetch,
-    setInitialFetch,
-    submitFetch,
-    setSubmitFetch,
-  } = useConfig();
+  const { initialFetch, setInitialFetch, submitFetch, setSubmitFetch } = useConfig();
 
   const {
     pathModalVisible,
@@ -78,7 +73,7 @@ export default () => {
         draft.push({
           label: faker.name.title(),
           name: faker.name.lastName(),
-          type:'input',
+          type: 'input',
         });
       }),
     );
@@ -92,17 +87,17 @@ export default () => {
   /**
    * Pass the configured form information and the added form item configuration to the server
    */
-  const remoteCall = async ({ path, dirName }: {path?: string; dirName?: string }) => {
+  const remoteCall = async ({ path, dirName }: { path?: string; dirName?: string }) => {
     // Traverse the formItems, if any of them is not configured with label/name, then submission is not allowed
     if (formItems.length === 0) {
       message.error('You havent added a detailed display item yet, you cant submit it!');
       return;
     }
-    const key ='message';
+    const key = 'message';
     try {
-      message.loading({ content:'File is being generated, please wait...', key });
+      message.loading({ content: 'File is being generated, please wait...', key });
       const result = await api.callRemote({
-        type:'org.umi-plugin-page-creator.longDetailModal',
+        type: 'org.umi-plugin-page-creator.longDetailModal',
         payload: {
           formConfig,
           formItems,
@@ -122,7 +117,12 @@ export default () => {
   /** parse the imported configuration information */
   useEffect(() => {
     if (impConfigJson) {
-      const {formConfig = {title:'Two columns of details', }, formItems = [], initialFetch = [], submitFetch = []} = JSON.parse(impConfigJson);
+      const {
+        formConfig = { title: 'Two columns of details' },
+        formItems = [],
+        initialFetch = [],
+        submitFetch = [],
+      } = JSON.parse(impConfigJson);
       setFormConfig(formConfig);
       setFormItems(formItems);
       setInitialFetch(initialFetch);
@@ -132,12 +132,18 @@ export default () => {
 
   /** Export */
   const handleExport = () => {
-    copy(JSON.stringify({
-      formConfig,
-      formItems,
-      initialFetch,
-      submitFetch
-    }, null, 2));
+    copy(
+      JSON.stringify(
+        {
+          formConfig,
+          formItems,
+          initialFetch,
+          submitFetch,
+        },
+        null,
+        2,
+      ),
+    );
     message.success('Configuration copied to clipboard');
   };
 
@@ -171,64 +177,64 @@ export default () => {
                       }}
                       deleteItem={deleteItem(index * cols + itemIndex)}
                       copyItem={copyItem(index * cols + itemIndex)}
-                      />
-                      <Form.Item label={formItem.label} name={formItem.name}>
-                        <Input disabled />
-                      </Form.Item>
-                    </div>
-                  </Col>
-                ))}
-              </Row>
-            ))}
-            <Button onClick={addDetailItem} type="dashed" style={{ width: '100%', marginBottom: 32 }}>
-              Add display item
-            </Button>
-            <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
-              Page interface configuration
-            </Button>
-          </Form>
-        </Card>
+                    />
+                    <Form.Item label={formItem.label} name={formItem.name}>
+                      <Input disabled />
+                    </Form.Item>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          ))}
+          <Button onClick={addDetailItem} type="dashed" style={{ width: '100%', marginBottom: 32 }}>
+            Add display item
+          </Button>
+          <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
+            Page interface configuration
+          </Button>
+        </Form>
+      </Card>
 
-        {/**Page interface configuration */}
-        <ApiConfigDrawer
-          visible={apiConfigDrawerVisible}
-          setVisible={setApiConfigDrawerVisible}
-          onSubmit={handleApiSubmit}
+      {/**Page interface configuration */}
+      <ApiConfigDrawer
+        visible={apiConfigDrawerVisible}
+        setVisible={setApiConfigDrawerVisible}
+        onSubmit={handleApiSubmit}
+        initialFetch={initialFetch}
+        submitFetch={submitFetch}
+      />
+
+      {/**Form configuration */}
+      <ShortFormConfigDrawer
+        visible={formConfigDrawerVisible}
+        setVisible={setFormConfigDrawerVisible}
+        onFinish={setFormConfig}
+        formConfig={formConfig}
+      />
+
+      {/**Configure a single form item */}
+      {currentItem && (
+        <FormItemConfigDrawer
+          visible={formItemConfigDrawerVisible}
+          onVisible={setFormItemConfigDrawerVisible}
+          index={index}
+          formItem={currentItem}
+          onConfirm={onConfirm}
+          from="detail"
           initialFetch={initialFetch}
-          submitFetch={submitFetch}
         />
+      )}
 
-        {/**Form configuration */}
-        <ShortFormConfigDrawer
-          visible={formConfigDrawerVisible}
-          setVisible={setFormConfigDrawerVisible}
-          onFinish={setFormConfig}
-          formConfig={formConfig}
-        />
+      {/**The input file path that pops up when submitting */}
+      <PathMenuAction
+        type="detail"
+        onRemoteCall={remoteCall}
+        modalVisible={pathModalVisible}
+        setModalVisible={setPathModalVisible}
+        modal
+      />
 
-        {/**Configure a single form item */}
-        {currentItem && (
-          <FormItemConfigDrawer
-            visible={formItemConfigDrawerVisible}
-            onVisible={setFormItemConfigDrawerVisible}
-            index={index}
-            formItem={currentItem}
-            onConfirm={onConfirm}
-            from="detail"
-            initialFetch={initialFetch}
-          />
-        )}
-
-        {/**The input file path that pops up when submitting */}
-        <PathMenuAction
-          type="detail"
-          onRemoteCall={remoteCall}
-          modalVisible={pathModalVisible}
-          setModalVisible={setPathModalVisible}
-          modal
-        />
-
-        <ExportActions onClick={handleExport} />
-      </>
-    );
-  };
+      <ExportActions onClick={handleExport} />
+    </>
+  );
+};

@@ -36,3 +36,29 @@ export type DeletePostMutationVariables = Types.Exact<{
 }>;
 
 export type DeletePostMutation = { __typename?: 'Mutation' } & Pick<Types.Mutation, 'deletePost'>;
+
+export type UsersQueryQueryVariables = Types.Exact<{
+  paginate?: Types.Maybe<Types.PaginateOptions>;
+}>;
+
+export type UsersQueryQuery = { __typename?: 'Query' } & {
+  users?: Types.Maybe<
+    { __typename?: 'UsersPage' } & {
+      data?: Types.Maybe<
+        Array<
+          Types.Maybe<
+            { __typename?: 'User' } & Pick<Types.User, 'email' | 'id' | 'name' | 'phone'> & {
+                address?: Types.Maybe<{ __typename?: 'Address' } & Pick<Types.Address, 'city' | 'street' | 'suite'>>;
+              }
+          >
+        >
+      >;
+    }
+  >;
+};
+
+export type DeleteUsersMutationMutationVariables = Types.Exact<{
+  id?: Types.Maybe<Types.Scalars['ID']>;
+}>;
+
+export type DeleteUsersMutationMutation = { __typename?: 'Mutation' } & Pick<Types.Mutation, 'deleteUser'>;

@@ -5,9 +5,9 @@
 
  * @LastEditTime: 2020-05-11 15:21:35
  */
-import React from'react';
-import {Form, Button, Input, Drawer} from'antd';
-import {Store} from'antd/lib/form/interface';
+import React from 'react';
+import { Form, Button, Input, Drawer } from 'antd';
+import { Store } from 'antd/lib/form/interface';
 
 export default ({
   visible,
@@ -26,13 +26,18 @@ export default ({
   };
 
   return (
-    <Drawer title="Card Configuration" width={360} visible={visible} onClose={() => setVisible(false)}>
+    <Drawer
+      title="Card Configuration"
+      width={360}
+      visible={visible}
+      onClose={() => setVisible(false)}
+    >
       <Form form={form} onFinish={handleFinish} layout="vertical">
         <Form.Item
           label="card title"
           name="title"
           required
-          rules={[{ required: true, message:'Please fill in the card title' }]}
+          rules={[{ required: true, message: 'Please fill in the card title' }]}
         >
           <Input placeholder="Form container title" />
         </Form.Item>

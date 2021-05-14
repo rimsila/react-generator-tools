@@ -1,12 +1,12 @@
-import React, { useEffect, useContext, useState, useMemo } from 'react';
-import { Drawer, Form, Input, Button, Radio, Tooltip, Select } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { FormItemProps, FormItemType } from '../../../interfaces/common';
+import { Button, Drawer, Form, Input, Radio, Select, Tooltip } from 'antd';
 import { Store } from 'antd/lib/form/interface';
-import * as itemProps from './props';
-import renderFormItem from '../FormItemConfig';
-import { filterEmpty } from '../../utils';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { FormItemProps, FormItemType } from '../../../interfaces/common';
 import Context from '../../pages/manage/Context';
+import { filterEmpty } from '../../utils';
+import renderFormItem from '../FormItemConfig';
+import * as itemProps from './props';
 
 const { Option } = Select;
 
@@ -149,14 +149,14 @@ export default ({
                   <span style={{ paddingRight: 10 }}>Custom rules</span>
                   <Tooltip
                     overlay={`[
-  {required: true},
-  {enum: []},
-  {whitespace: true},
-  {type:'string', len: 10, max: 20, min: 6 },
-  {type:'number', len: 10, max: 20, min: 6},
-  {type:'array', len: 10, max: 20, min: 6},
-  {type:'date', format:'', parse:'', invalid:''}
-]`}
+                  {required: true},
+                  {enum: []},
+                  {whitespace: true},
+                  {type:'string', len: 10, max: 20, min: 6 },
+                  {type:'number', len: 10, max: 20, min: 6},
+                  {type:'array', len: 10, max: 20, min: 6},
+                  {type:'date', format:'', parse:'', invalid:''}
+                ]`}
                   >
                     <QuestionCircleOutlined />
                   </Tooltip>
@@ -181,7 +181,7 @@ export default ({
         )}
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            determine
+            generate
           </Button>
         </Form.Item>
       </Form>
