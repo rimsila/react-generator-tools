@@ -5,9 +5,9 @@
  * @LastEditors: Huang Shanshan
  * @LastEditTime: 2020-05-28 18:24:49
  */
-import React, { useContext, useEffect } from 'react';
-import { Form, Button, Drawer, Cascader } from 'antd';
+import { Button, Cascader, Drawer, Form } from 'antd';
 import { Store } from 'antd/lib/form/interface';
+import React, { useContext, useEffect } from 'react';
 import Context from '../../../Context';
 
 export default ({
@@ -46,7 +46,7 @@ export default ({
 
   return (
     <Drawer
-      title="Interface API configuration"
+      title="Config API configuration"
       width={360}
       visible={visible}
       onClose={() => setVisible(false)}
