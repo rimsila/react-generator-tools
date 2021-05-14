@@ -27,11 +27,11 @@ export default function<T>({
     title: '',
     dataIndex: '',
     align: 'left',
-    ellipsis: false,
-    copyable: false,
+    ellipsis: undefined,
+    copyable: undefined,
     valueType: 'text',
-    hideInSearch: false,
-    hideInTable: false,
+    hideInSearch: undefined,
+    hideInTable: undefined,
     order: undefined,
   };
   useEffect(() => {
@@ -167,19 +167,19 @@ export default function<T>({
         <Form.Item label="value type" name="valueType">
           <Select showSearch>
             {[
-              { label: 'default value', value: 'text' },
-              { label: 'Conversion value is amount', value: 'money' },
+              { label: 'Text', value: 'text' },
+              { label: 'money', value: 'money' },
               { label: 'date', value: 'date' },
               { label: 'date range', value: 'dateRange' },
               { label: 'Date and time', value: 'dateTime' },
               { label: 'Date and time range', value: 'dateTimeRange' },
               { label: 'time', value: 'time' },
               { label: 'Operation item', value: 'option' },
-              { label: 'textarea component', value: 'textarea' },
-              { label: 'Serial number column', value: 'index' },
-              { label: 'With border serial number column', value: 'indexBorder' },
+              { label: 'textarea', value: 'textarea' },
+              { label: 'index', value: 'index' },
+              { label: 'indexBorder', value: 'indexBorder' },
               { label: 'Progress bar', value: 'progress' },
-              { label: 'Simple number', value: 'digit' },
+              { label: 'digit number', value: 'digit' },
               { label: 'percent', value: 'percent' },
               { label: 'Code block', value: 'code' },
               { label: 'avatar', value: 'avatar' },
@@ -211,7 +211,7 @@ export default function<T>({
           <InputNumber min={0} />
         </Form.Item>
         <Button type="primary" htmlType="submit">
-          determine
+          submit
         </Button>
       </Form>
     </Drawer>
