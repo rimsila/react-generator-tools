@@ -44,7 +44,10 @@ export default () => {
             </Tooltip>
             <div style={{ marginRight: 15 }} />
             <Tooltip title="View large image">
-              <Button type="primary" onClick={() => previewImage(template.image, template.name)}>
+              <Button
+                type="primary"
+                onClick={() => previewImage(template?.thumb || template?.image, template.name)}
+              >
                 <EyeOutlined />
               </Button>
             </Tooltip>

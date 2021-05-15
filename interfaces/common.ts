@@ -54,6 +54,7 @@ export type Template = {
   name: string;
   type: TemplateType;
   image: string;
+  thumb: string;
 };
 
 export type AjaxResponse<T> = {
