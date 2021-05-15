@@ -5,14 +5,14 @@
 
  * @LastEditTime: 2020-04-29 22:00:14
  */
-import React, { useState, useContext } from 'react';
-import { Button, Tooltip, Modal } from 'antd';
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Modal, Tooltip } from 'antd';
 import classnames from 'classnames';
-import Context from '../../Context';
-import templateList from './template.json';
-import styles from './index.module.less';
+import React, { useContext, useState } from 'react';
 import { Template } from '../../../../../interfaces/common';
+import Context from '../../Context';
+import styles from './index.module.less';
+import templateList from './template.json';
 
 export default () => {
   const [visible, setVisible] = useState(false);

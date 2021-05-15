@@ -11,16 +11,16 @@ const httpLink = new HttpLink({
   uri: graphBaseUrlTest,
   headers: {
     'api-key':
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoS2V5IjoiMmFlZTE0MmItMTg1My00MjYzLWEzYTMtYTRhMWQ5MTliOWRkLTE2MTMyMzU0Nzc0MjAiLCJkdCI6MTYyMTAxNjUyNjIxMCwiaWF0IjoxNjIxMDE2NTI2fQ.zcW4q2yJh0zql5ZwZrSte5UOHqcDxKZ5VQeReSlXlfs',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoS2V5IjoiMmFlZTE0MmItMTg1My00MjYzLWEzYTMtYTRhMWQ5MTliOWRkLTE2MTMyMzU0Nzc0MjAiLCJkdCI6MTYyMTA3MDg4OTU1MiwiaWF0IjoxNjIxMDcwODg5fQ.WxjcEtp_VMPK4ocECsCNx1ihJhBQKAmvelhorHlwAXA',
     Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJhY2stODMxZWQ0cGU2LTE2MjEwMTY2ODM5MTMiLCJpZCI6IjYwOWVjMDZiNWQ1ZTM2MzNlODA1OTU2NSIsImR0IjoxNjIxMDE2NzYxNDYyLCJpYXQiOjE2MjEwMTY3NjF9.XSR32P8BH0QolR1TsSS_aK4bzpE9X_FXBKrbUMYo4fU',
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJhY2stbHN5eXgxcmltLTE2MjEwNzAyNDA0OTEiLCJpZCI6IjYwOWY5MWEwYzU4YTY1MmQ0YzhiZjZhYyIsImR0IjoxNjIxMDcwODk0MTU1LCJpYXQiOjE2MjEwNzA4OTR9.wvx0ODMIRvpyEFqImxxcO6XGyN_b9ax2UFcHAXRbZZk',
   },
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
+  if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
-      if (isDev) {
+      if (false) {
         notification.error({
           message: (
             <>
@@ -35,8 +35,12 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
             </>
           ),
         });
+      } else {
+        notification.error({ description: 'Something Went wrong. please try again!', message });
       }
     });
+  }
+
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
@@ -46,6 +50,9 @@ const client = new ApolloClient({
   // into a link chain
   link: from([errorLink, httpLink]),
   connectToDevTools: true,
+  defaultOptions: {
+    mutate: { errorPolicy: 'ignore' },
+  },
 });
 
 export default client;

@@ -1,16 +1,15 @@
 import { FormLayout } from '@/components/NextLayout';
 import TableListCrud from '@/components/TableForm/TableListCrud';
-import { API } from '@/graphQl/API';
 import { ProColumns } from '@ant-design/pro-table';
 import React, { memo } from 'react';
-import { useIndex } from './useIndex';
+import { IJobType, useIndex } from './useIndex';
 
 export default memo(() => {
   const allTableProps = useIndex();
   const { isModifyMode } = allTableProps;
 
   //* ------------------ columns data ------------------------
-  const columns: ProColumns<API.Post>[] = [
+  const columns: ProColumns<IJobType['jobRecord']>[] = [
     {
       title: 'No',
       dataIndex: 'id',

@@ -1,22 +1,22 @@
-import React, { useContext, useEffect } from 'react';
-import { Form, Button, Card, message, Row, Col, Input } from 'antd';
-import Title from '../../../../../components/Title';
-import { AjaxResponse } from '../../../../../../interfaces/common';
-import Context from '../../../Context';
-import PathMenuAction from '../../PathMenuAction';
-import CardConfigDrawer from '../../drawers/CardConfigDrawer';
-import { transformFormItemLines } from '../../../../../utils';
-import produce from 'immer';
+import { Button, Card, Col, Form, Input, message, Row } from 'antd';
+import copy from 'copy-to-clipboard';
 import faker from 'faker';
-import styles from './index.module.less';
-import useConfigVisible from '../../../../../hooks/useConfigVisible';
-import useCard from '../../../../../hooks/useCard';
+import produce from 'immer';
+import React, { useContext, useEffect } from 'react';
+import { AjaxResponse } from '../../../../../../interfaces/common';
 import ConfigActions from '../../../../../components/ConfigActions';
 import FormItemConfigDrawer from '../../../../../components/FormItemConfigDrawer';
-import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
+import Title from '../../../../../components/Title';
+import useCard from '../../../../../hooks/useCard';
 import useConfig from '../../../../../hooks/useConfig';
-import copy from 'copy-to-clipboard';
+import useConfigVisible from '../../../../../hooks/useConfigVisible';
+import { transformFormItemLines } from '../../../../../utils';
+import Context from '../../../Context';
+import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
+import CardConfigDrawer from '../../drawers/CardConfigDrawer';
 import ExportActions from '../../ExportActions';
+import PathMenuAction from '../../PathMenuAction';
+import styles from './index.module.less';
 
 const formItemLayout = {
   labelCol: {
@@ -190,7 +190,7 @@ export default () => {
             >
               {formItemLines.map((line, index) => (
                 <Row key={index} gutter={16}>
-                  {line.map((formItem, itemIndex) => (
+                  {line?.map((formItem, itemIndex) => (
                     <Col key={formItem.name} {...colLayout}>
                       <div className={styles.formItemConfig}>
                         <ConfigActions
@@ -231,10 +231,10 @@ export default () => {
         Add Card
       </Button>
       <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
-        Page interface configuration
+        Generator GraphQl here
       </Button>
 
-      {/**Page interface configuration  */}
+      {/**Generator GraphQl here  */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}

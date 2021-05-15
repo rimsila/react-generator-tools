@@ -5,9 +5,9 @@
  * @LastEditors: Huang Shanshan
  * @LastEditTime: 2020-05-28 18:24:49
  */
-import { Button, Cascader, Drawer, Form } from 'antd';
+import { Button, Drawer, Form, Input } from 'antd';
 import { Store } from 'antd/lib/form/interface';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Context from '../../../Context';
 
 export default ({
@@ -26,19 +26,21 @@ export default ({
   const { databases = [] } = useContext(Context);
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    form.setFieldsValue({
-      initialFetch,
-    });
-  }, [initialFetch]);
+  // useEffect(() => {
+  //   form.setFieldsValue({
+  //     initialFetch,
+  //   });
+  // }, [initialFetch]);
 
-  useEffect(() => {
-    form.setFieldsValue({
-      submitFetch,
-    });
-  }, [submitFetch]);
+  // useEffect(() => {
+  //   form.setFieldsValue({
+  //     submitFetch,
+  //   });
+  // }, [submitFetch]);
 
   const handleFinish = (values: Store) => {
+    console.log('values', values);
+
     setVisible(false);
     const { initialFetch, submitFetch } = values;
     onSubmit(initialFetch, submitFetch);
@@ -46,17 +48,17 @@ export default ({
 
   return (
     <Drawer
-      title="Config API configuration"
-      width={360}
+      title="Config GraphQl and DataSource"
+      width={760}
       visible={visible}
       onClose={() => setVisible(false)}
     >
       <Form form={form} onFinish={handleFinish} layout="vertical">
-        <Form.Item label="Called when the page loads" name="initialFetch">
-          <Cascader options={databases} />
+        <Form.Item label="input GQL Operation " name="submitFetch">
+          <Input.TextArea rows={5} />
         </Form.Item>
-        <Form.Item label="Called when submitting" name="submitFetch">
-          <Cascader options={databases} />
+        <Form.Item label="Input Column Data" name="initialFetch">
+          <Input.TextArea rows={5} />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">

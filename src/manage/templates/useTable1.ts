@@ -16,163 +16,187 @@ export default function generateUseTable1<T>(payload: Payload<T>): string {
 
     const code = `
     import { ITableList } from '@/components/TableForm/TableListCrud';
+    import { ISuccessAction, successAction } from '@/components/TableForm/TableListCrud/successAction';
+    import { ICrudState } from '@/components/TableForm/TableListCrud/TableCrud';
     import { API } from '@/graphQl/API';
-    import { useCreate${pageNameCapitalize}Mutation, useDelete${pageNameCapitalize}Mutation, use${pageNameCapitalize}Query, useUpdate${pageNameCapitalize}Mutation } from '@/graphQl/hooks';
-    import { ${pageNameCapitalize}Filter } from '@/graphQl/schemas';
-    import  { ProSchemaComponentTypes } from '@ant-design/pro-utils';
+    import { useCreate${pageNameCapitalize}Mutation, useDelete${pageNameCapitalize}sMutation, useGet${pageNameCapitalize}sQuery, useUpdate${pageNameCapitalize}sMutation } from '@/graphQl/hooks';
+    import { getOnlyValue } from '@/utils/arrObj';
+    import { PageInfo } from '@ant-design/pro-table/lib/typing';
     import { useCreation } from 'ahooks';
-    import { useLocalStorageState, useLockFn, usePersistFn, useReactive } from 'ahooks/es';
-    import { Form, message } from 'antd';
-    import { omit } from 'lodash';
+    import { useLocalStorageState, usePersistFn, useReactive } from 'ahooks/es';
+    import { Form } from 'antd';
     import isEmpty from 'lodash/isEmpty';
+/**
+ * ----------------------- Interface ----------------------
+ */
+export type I${pageNameCapitalize}Type = {
+  filter: API.Get${pageNameCapitalize}sQueryVariables['filter'];
+  ${pageName}Input: API.Create${pageNameCapitalize}MutationVariables['input'];
+  ${pageName}Update: API.Update${pageNameCapitalize}sMutationVariables['input'];
+  ${pageName}Delete: API.Delete${pageNameCapitalize}sMutationVariables;
+  ${pageName}Record: API.Get${pageNameCapitalize}sQuery['get${pageNameCapitalize}s']['records'][0] & { status: any };
+  ${pageName}Metadata: API.Get${pageNameCapitalize}sQuery['get${pageNameCapitalize}s']['metadata'];
+};
 
-    type IState = Partial<{
-      isDelete: boolean;
-      add: boolean;
-      edit: boolean;
-      view: boolean;
-      record: API.${pageNameCapitalize};
-      type: ProSchemaComponentTypes;
-      id: string;
-      input: API.Update${pageNameCapitalize};
-    }>;
+type IState = Partial<ICrudState & { record: I${pageNameCapitalize}Type['${pageName}Record'] }>;
 
-    export const useHook = () => {
-      const [form] = Form.useForm();
-      const filterValue = useReactive<{filter:${pageNameCapitalize}Filter}>({});
-      const state = useReactive<IState>({
-        type: 'table',
-        add: true,
-      });
+export const use${pageNameCapitalize} = () => {
+  /**
+   * ----------------------- State and Function ----------------------
+   */
+  const [form] = Form.useForm();
 
-      const { type } = state;
-      const isModifyMode = type === 'form';
-      const [columnsStateMap, setColMap] = useLocalStorageState('${pageName}', {});
-      const resetForm = () => form.resetFields();
+  const [columnsStateMap, setColMap] = useLocalStorageState('${pageName}Column', {});
 
-      const defaultPaging = {
-        limit: 10,
-        page: 10,
-      };
-      const { data: data${pageNameCapitalize}, loading: loadingTable } = use${pageNameCapitalize}Query({
-        variables: {
-          filter: {
-            ...filterValue.filter,
-          },
-        },
-      });
+  const defaultFilter: I${pageNameCapitalize}Type['filter'] = {
+    limit: 10,
+    page: 1,
+  };
 
-      const [delete${pageNameCapitalize}Mutation, { loading: loadingDelete${pageNameCapitalize} }] = useDelete${pageNameCapitalize}Mutation({
-        onCompleted: () => {
-          message.success('Deleted Successfully!');
-          state.type = 'table';
-        },
-      });
-      const [update${pageNameCapitalize}Mutation, { loading: loadingUpdate${pageNameCapitalize} }] = useUpdate${pageNameCapitalize}Mutation({
-        onCompleted: () => {
-          message.success('Update Successfully!');
-          state.type = 'table';
-        },
-      });
-      const [create${pageNameCapitalize}Mutation, { loading: loadingCreate${pageNameCapitalize} }] = useCreate${pageNameCapitalize}Mutation({
-        onCompleted: () => {
-          // console.log('res', res);
-          message.success('Created Successfully!');
-          resetForm();
-        },
-      });
+  const filterValue = useReactive<{ filter?: I${pageNameCapitalize}Type['filter'] }>({
+    filter: defaultFilter,
+  });
 
-      /**
-       * crud mode
-       */
-      const setMode = usePersistFn(({ record }: IState) => {
-        if (state.isDelete) {
-          console.log('calla api delete', record);
-          delete${pageNameCapitalize}Mutation({ variables: { id: record?.id } });
+  const { filter } = filterValue || {};
+
+  const state = useReactive<IState>({
+    type: 'table',
+    add: true,
+  });
+
+  const { type } = state;
+  const isModifyMode = type === 'form';
+
+  const afterSuccessAction = (params?: ISuccessAction) => {
+    successAction({ form, state: state as any, refetch: refetch${pageNameCapitalize}s, ...params });
+  };
+
+  /**
+   * ----------------------- useGet${pageNameCapitalize}sQuery ----------------------
+   */
+  const { data: dataPosts, loading: loadingGet${pageNameCapitalize}, refetch: refetch${pageNameCapitalize}s } = useGet${pageNameCapitalize}sQuery({
+    variables: {
+      filter,
+    },
+  });
+
+  /**
+   * ----------------------- deletePostMutation ----------------------
+   */
+  const [deletePostMutation, { loading: loadingDeletePost }] = useDelete${pageNameCapitalize}sMutation({
+    onCompleted: (res) => {
+      res?.delete${pageNameCapitalize} && afterSuccessAction();
+    },
+  });
+  /**
+   * ----------------------- updatePostMutation ----------------------
+   */
+  const [updatePostMutation, { loading: loadingUpdatePost }] = useUpdate${pageNameCapitalize}sMutation({
+    onCompleted: () => {
+      afterSuccessAction();
+    },
+  });
+
+  /**
+   * ----------------------- createPostMutation ----------------------
+   */
+  const [createPostMutation, { loading: loadingCreatePost }] = useCreate${pageNameCapitalize}Mutation({
+    onCompleted: () => {
+      afterSuccessAction();
+    },
+  });
+
+  /**
+   *   ----------------------- Submit Part ----------------------
+   */
+  const setMode = usePersistFn(({ record }: IState) => {
+    if (state.isDelete) {
+      deletePostMutation({ variables: { id: record?.id } });
+    }
+  });
+
+  /**
+   * ----------------------- Return State& Props ----------------------
+   */
+  const dataSource = dataPosts?.get${pageNameCapitalize}s?.records;
+
+  const pageName = 'Book';
+  const tabTitleCrud = useCreation(() => (state.edit && 'Edit') || (state.view && 'View') || (state.add && 'Add'), [
+    state?.view,
+    state?.edit,
+    state?.add,
+  ]);
+
+  /**
+   * all custom props here
+   */
+  const customProps = {
+    setColMap,
+    setMode,
+    isModifyMode,
+    state,
+    tabTitleList: 'List ' + pageName,
+    tabTitleCrud: tabTitleCrud + ' ' + pageName,
+    pageName,
+    loadingSubmit: loadingGet${pageNameCapitalize} || loadingUpdatePost || loadingCreatePost,
+  };
+
+  console.log('lo', loadingGet${pageNameCapitalize});
+
+  return {
+    ...customProps,
+    dataSource,
+    columnsStateMap,
+    form,
+    loading: loadingGet${pageNameCapitalize} || loadingDeletePost || state.loadingRefetch,
+    options: {
+      // search: {
+      //   type: 'search',
+      //   onSearch: (v) => {
+      //     console.log('search', v);
+      //   },
+      // },
+      reload: () => {
+        afterSuccessAction({ isReload: true });
+      },
+    },
+    onSubmit: usePersistFn((record: I${pageNameCapitalize}Type['${pageName}Record']) => {
+      // console.log('submit', record);
+      if (!isEmpty(record)) {
+        const input = getOnlyValue(record) as typeof record;
+        if (state.edit) {
+          updatePostMutation({ variables: { input } });
         }
-      });
-
-      const dataSource = data${pageNameCapitalize}?.${pageName}?.data;
-
-      const pageName = '${pageNameCapitalize}';
-      const tabTitleCrud = useCreation(() => (state.edit && 'Edit') || (state.view && 'View') || (state.add && 'Add'), [
-        state?.view,
-        state?.edit,
-        state?.add,
-      ]);
-
-      /**
-       * all custom props here
-       */
-      const customProps = {
-        setColMap,
-        setMode,
-        loadingSubmit: loadingUpdate${pageNameCapitalize} || loadingCreate${pageNameCapitalize},
-        isModifyMode,
-        state,
-        tabTitleList: 'List ' + pageName,
-        tabTitleCrud: tabTitleCrud + ' ' + pageName,
-        pageName,
+        if (state.add) {
+          // console.log('add', record);
+          createPostMutation({ variables: { input } });
+        }
+      }
+    }),
+    beforeSearchSubmit: (params?: I${pageNameCapitalize}Type['${pageName}Record'] & PageInfo) => {
+      const newParam = getOnlyValue(params) as typeof params;
+      console.log('ss', params);
+      if (!isEmpty(params)) {
+        filterValue.filter = {
+          ...filterValue.filter,
+          limit: newParam?.pageSize,
+          page: newParam?.current,
+          title: newParam?.title,
+        };
+      }
+    },
+    onChange: (pagination) => {
+      const { pageSize, current } = pagination;
+      // console.log('dd', pagination);
+      filterValue.filter = {
+        ...filterValue.filter,
+        limit: pageSize,
+        page: current,
       };
-
-      return {
-        ...customProps,
-        dataSource,
-        columnsStateMap,
-        form,
-        loading: loadingTable || loadingDelete${pageNameCapitalize},
-        options: {
-          // search: {
-          //   type: 'search',
-          //   onSearch: (v) => {
-          //     console.log('search', v);
-          //   },
-          // },
-          reload: () => {
-            filterValue.filter = { metadata: defaultPaging };
-          },
-        },
-        onSubmit: usePersistFn(
-          useLockFn(async (record: API.${pageNameCapitalize}Type) => {
-            // console.log('submit', record);
-            if (!isEmpty(record)) {
-              const input = omit(record, 'id');
-              if (state.edit) {
-                await update${pageNameCapitalize}Mutation({ variables: { input, id: record?.id } });
-              }
-              if (state.add) {
-                console.log('add', record);
-                await create${pageNameCapitalize}Mutation({ variables: record });
-              }
-            }
-          }),
-        ),
-        beforeSearchSubmit: (params?: any) => {
-          console.log('ss', params);
-          if (!isEmpty(params)) {
-            filterValue.filter = {
-              ...filterValue,
-              metadata: {
-                limit: params?.pageSize,
-                page: params?.current,
-              },
-            };
-          }
-        },
-        onChange: (pagination) => {
-          const { pageSize, current } = pagination;
-          // console.log('dd', pagination);
-          filterValue.filter = {
-            ...filterValue.filter,
-            metadata: {
-              limit: pageSize,
-              page: current,
-            },
-          };
-        },
-      } as ITableList & typeof customProps;
-    };
-    `;
+    },
+  } as ITableList & typeof customProps;
+}
+ `;
     return code;
   }
   return'';

@@ -5,6 +5,7 @@
  */
 import { Store } from 'antd/lib/form/interface';
 import { ColumnType } from 'antd/lib/table';
+import { capitalize } from 'lodash';
 
 export interface Payload<T> {
   tableConfig: Store;
@@ -14,7 +15,8 @@ export interface Payload<T> {
 
 export default function generateTable1<T>(payload: Payload<T>): string {
   if (payload && payload.tableConfig && payload.columns) {
-    const { columns} = payload;
+    const { columns, pageName} = payload;
+    const pageNameCapitalize = capitalize(pageName)
 
     const columnsStrings = columns.map(config => JSON.stringify(config));
 
@@ -24,14 +26,13 @@ export default function generateTable1<T>(payload: Payload<T>): string {
     import { API } from '@/graphQl/API';
     import { ProColumns } from '@ant-design/pro-table';
     import React from 'react';
-    import { useHook} from './components/useHook';
-
+    import { use${pageNameCapitalize}, I${pageNameCapitalize}Type} from './use${pageNameCapitalize}';
 
     console.log('emptyline');
       export default () => {
-        const allTableProps = useHook();
+        const allTableProps = use${pageNameCapitalize}();
 
-        const columns: ProColumns<any>[] = [${[...columnsStrings, `
+        const columns: ProColumns<I${pageNameCapitalize}Type['${pageName}Record']>[] = [${[...columnsStrings, `
         `].join(',')}];
         return (
           <>

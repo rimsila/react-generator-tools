@@ -28,6 +28,8 @@ export default () => {
 
   const { initialFetch, setInitialFetch, submitFetch, setSubmitFetch } = useConfig();
 
+  console.log('setInitialFetch', submitFetch);
+
   const {
     pathModalVisible,
     setPathModalVisible,
@@ -78,7 +80,6 @@ export default () => {
           menu,
           initialFetch,
           submitFetch,
-          // gqlCode
         },
       });
       message.success({ content: (result as AjaxResponse<string>).message, key });
@@ -167,7 +168,7 @@ export default () => {
           style={{ margin: 24 }}
           onClick={() => setApiConfigDrawerVisible(true)}
         >
-          Page interface configuration
+          Generator GraphQl here
         </Button>
         <Button
           type="primary"
@@ -181,7 +182,7 @@ export default () => {
         </Button>
       </Card>
 
-      {/**Page interface configuration */}
+      {/**Generator GraphQl here */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}

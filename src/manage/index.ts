@@ -1,4 +1,5 @@
 import { appendFileSync, existsSync, mkdirSync, unlinkSync, writeFileSync } from 'fs';
+import { capitalize } from 'lodash';
 import prettier from 'prettier';
 import { IApi } from 'umi';
 import { TableVerificationRuleList } from '../../interfaces/common';
@@ -20,6 +21,7 @@ import {
   generateTableCode1,
   generateUseTable1,
 } from './templates';
+import generateUseTable1GQL from './templates/useTable1GQL';
 
 export default function(payload: any, type: string, api: IApi) {
   let code = '';
@@ -337,21 +339,27 @@ export default function(payload: any, type: string, api: IApi) {
       // Generate intermediate components for table use, only generated when the file does not exist, mainly generated through form configuration, here in order to prevent table page references from reporting errors
 
       pageName && mkdirSync(`${api.paths.absPagesPath}/${pageName}`, { recursive: true });
-      writeFileSync(`${api.paths.absPagesPath}/${pageName}/index.gql`, 'hello', 'utf-8');
       writeFileSync(
-        `${api.paths.absPagesPath}/${pageName}/useHook.tsx`,
+        `${api.paths.absPagesPath}/${pageName}/${pageName}.gql`,
+        generateUseTable1GQL({
+          submitFetch: payload.submitFetch,
+        }),
+        'utf-8',
+      );
+      writeFileSync(
+        `${api.paths.absPagesPath}/${pageName}/use${capitalize(pageName)}.tsx`,
         prettify(generateUseTable1({ pageName })),
         'utf-8',
       );
 
-      pageName &&
-        !existsSync(`${api.paths.absPagesPath}/${pageName}`) &&
-        generateComponent(
-          `/${pageName}`,
-          `useHook`,
-          prettify(generateUseTable1({ pageName })),
-          api,
-        );
+      // pageName &&
+      //   !existsSync(`${api.paths.absPagesPath}/${pageName}`) &&
+      //   generateComponent(
+      //     `/${pageName}`,
+      //     `useHook`,
+      //     prettify(generateUseTable1({ pageName })),
+      //     api,
+      //   );
 
       code = generateTableCode1({ ...payload, pageName });
       break;

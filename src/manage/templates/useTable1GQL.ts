@@ -5,14 +5,15 @@
  */
 
 export interface Payload<T> {
-  gqlCode: string;
+  submitFetch?: string;
 }
 
 export default function generateUseTable1GQL<T>(payload: Payload<T>): string {
   if (payload) {
-    const { gqlCode } = payload;
+    // console.log("payload",payload);
 
-    const code = `${gqlCode}`;
+    const { submitFetch } = payload;
+    const code = `${submitFetch}`;
     return code;
   }
   return'';

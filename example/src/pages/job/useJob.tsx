@@ -23,13 +23,13 @@ export type IJobType = {
 
 type IState = Partial<ICrudState & { record: IJobType['jobRecord'] }>;
 
-export const useIndex = () => {
+export const useJob = () => {
   /**
    * ----------------------- State and Function ----------------------
    */
   const [form] = Form.useForm();
 
-  const [columnsStateMap, setColMap] = useLocalStorageState('book', {});
+  const [columnsStateMap, setColMap] = useLocalStorageState('jobColumn', {});
 
   const defaultFilter: IJobType['filter'] = {
     limit: 10,
@@ -67,7 +67,7 @@ export const useIndex = () => {
    * ----------------------- deletePostMutation ----------------------
    */
   const [deletePostMutation, { loading: loadingDeletePost }] = useDeleteJobsMutation({
-    onCompleted: (res) => {
+    onCompleted: res => {
       res?.deleteJob && afterSuccessAction();
     },
   });
@@ -168,7 +168,7 @@ export const useIndex = () => {
         };
       }
     },
-    onChange: (pagination) => {
+    onChange: pagination => {
       const { pageSize, current } = pagination;
       // console.log('dd', pagination);
       filterValue.filter = {

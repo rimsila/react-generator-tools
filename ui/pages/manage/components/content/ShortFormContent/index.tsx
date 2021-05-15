@@ -1,21 +1,21 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Form, Button, Card, message, Switch } from 'antd';
-import Title from '../../../../../components/Title';
-import renderFormItem from '../../../../../components/FormItemConfig';
-import FormItemsDrawer from '../../../../../components/FormItemsDrawer';
-import { FormItemType, AjaxResponse } from '../../../../../../interfaces/common';
-import FormItemConfigDrawer from '../../../../../components/FormItemConfigDrawer';
-import Context from '../../../Context';
-import PathMenuAction from '../../PathMenuAction';
+import { Button, Card, Form, message, Switch } from 'antd';
 import { Store } from 'antd/lib/form/interface';
-import ShortFormConfigDrawer from '../../drawers/ShortFormConfigDrawer';
+import copy from 'copy-to-clipboard';
+import faker from 'faker';
+import React, { useContext, useEffect, useState } from 'react';
+import { AjaxResponse, FormItemType } from '../../../../../../interfaces/common';
+import renderFormItem from '../../../../../components/FormItemConfig';
+import FormItemConfigDrawer from '../../../../../components/FormItemConfigDrawer';
+import FormItemsDrawer from '../../../../../components/FormItemsDrawer';
+import Title from '../../../../../components/Title';
+import useConfig from '../../../../../hooks/useConfig';
 import useConfigVisible from '../../../../../hooks/useConfigVisible';
 import useFormItem from '../../../../../hooks/useFormItem';
-import faker from 'faker';
+import Context from '../../../Context';
 import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
-import useConfig from '../../../../../hooks/useConfig';
-import copy from 'copy-to-clipboard';
+import ShortFormConfigDrawer from '../../drawers/ShortFormConfigDrawer';
 import ExportActions from '../../ExportActions';
+import PathMenuAction from '../../PathMenuAction';
 
 const formItemLayout = {
   labelCol: {
@@ -208,7 +208,7 @@ export default () => {
         style={{ marginBottom: 28 }}
         onClick={() => setApiConfigDrawerVisible(true)}
       >
-        Page interface configuration
+        Generator GraphQl here
       </Button>
 
       {/**Form configuration */}
@@ -219,7 +219,7 @@ export default () => {
         formConfig={formConfig}
       />
 
-      {/**Page interface configuration  */}
+      {/**Generator GraphQl here  */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}

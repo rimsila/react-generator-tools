@@ -1,22 +1,22 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Form, Button, Card, message, Input } from 'antd';
-import Title from '../../../../../components/Title';
-import { AjaxResponse } from '../../../../../../interfaces/common';
-import FormItemConfigDrawer from '../../../../../components/FormItemConfigDrawer';
-import Context from '../../../Context';
-import PathMenuAction from '../../PathMenuAction';
+import { Button, Card, Form, Input, message } from 'antd';
 import { Store } from 'antd/lib/form/interface';
-import ShortFormConfigDrawer from '../../drawers/ShortFormConfigDrawer';
-import useFormItem from '../../../../../hooks/useFormItem';
-import produce from 'immer';
-import faker from 'faker';
-import styles from './index.module.less';
-import useConfigVisible from '../../../../../hooks/useConfigVisible';
-import ConfigActions from '../../../../../components/ConfigActions';
-import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
-import useConfig from '../../../../../hooks/useConfig';
 import copy from 'copy-to-clipboard';
+import faker from 'faker';
+import produce from 'immer';
+import React, { useContext, useEffect, useState } from 'react';
+import { AjaxResponse } from '../../../../../../interfaces/common';
+import ConfigActions from '../../../../../components/ConfigActions';
+import FormItemConfigDrawer from '../../../../../components/FormItemConfigDrawer';
+import Title from '../../../../../components/Title';
+import useConfig from '../../../../../hooks/useConfig';
+import useConfigVisible from '../../../../../hooks/useConfigVisible';
+import useFormItem from '../../../../../hooks/useFormItem';
+import Context from '../../../Context';
+import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
+import ShortFormConfigDrawer from '../../drawers/ShortFormConfigDrawer';
 import ExportActions from '../../ExportActions';
+import PathMenuAction from '../../PathMenuAction';
+import styles from './index.module.less';
 
 const formItemLayout = {
   labelCol: {
@@ -178,12 +178,12 @@ export default () => {
             Add display item
           </Button>
           <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
-            Page interface configuration
+            Generator GraphQl here
           </Button>
         </Form>
       </Card>
 
-      {/**Page interface configuration  */}
+      {/**Generator GraphQl here  */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}

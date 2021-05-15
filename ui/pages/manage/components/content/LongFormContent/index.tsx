@@ -1,21 +1,21 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Form, Button, Card, message, Row, Col, Switch } from 'antd';
-import Title from '../../../../../components/Title';
-import renderFormItem from '../../../../../components/FormItemConfig';
-import FormItemsDrawer from '../../../../../components/FormItemsDrawer';
-import { AjaxResponse } from '../../../../../../interfaces/common';
-import Context from '../../../Context';
-import PathMenuAction from '../../PathMenuAction';
-import CardConfigDrawer from '../../drawers/CardConfigDrawer';
-import { transformFormItemLines } from '../../../../../utils';
-import useConfigVisible from '../../../../../hooks/useConfigVisible';
-import useCard from '../../../../../hooks/useCard';
-import ConfigActions from '../../../../../components/ConfigActions';
-import FormItemConfigDrawer from '../../../../../components/FormItemConfigDrawer';
-import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
-import useConfig from '../../../../../hooks/useConfig';
+import { Button, Card, Col, Form, message, Row, Switch } from 'antd';
 import copy from 'copy-to-clipboard';
+import React, { useContext, useEffect, useState } from 'react';
+import { AjaxResponse } from '../../../../../../interfaces/common';
+import ConfigActions from '../../../../../components/ConfigActions';
+import renderFormItem from '../../../../../components/FormItemConfig';
+import FormItemConfigDrawer from '../../../../../components/FormItemConfigDrawer';
+import FormItemsDrawer from '../../../../../components/FormItemsDrawer';
+import Title from '../../../../../components/Title';
+import useCard from '../../../../../hooks/useCard';
+import useConfig from '../../../../../hooks/useConfig';
+import useConfigVisible from '../../../../../hooks/useConfigVisible';
+import { transformFormItemLines } from '../../../../../utils';
+import Context from '../../../Context';
+import ApiConfigDrawer from '../../drawers/ApiConfigDrawer';
+import CardConfigDrawer from '../../drawers/CardConfigDrawer';
 import ExportActions from '../../ExportActions';
+import PathMenuAction from '../../PathMenuAction';
 
 const formItemLayout = {
   labelCol: {
@@ -242,7 +242,7 @@ export default () => {
         Add Card
       </Button>
       <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
-        Page interface configuration
+        Generator GraphQl here
       </Button>
 
       {/**Card editor drawer */}
@@ -252,7 +252,7 @@ export default () => {
         onFinish={configCard}
       />
 
-      {/**Page interface configuration  */}
+      {/**Generator GraphQl here  */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}

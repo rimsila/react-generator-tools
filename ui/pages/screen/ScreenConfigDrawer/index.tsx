@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { Drawer, Form, Input, InputNumber, Divider, Button, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Button, Divider, Drawer, Form, Input, InputNumber, Tooltip } from 'antd';
 import { Store } from 'antd/lib/form/interface';
+import React, { useEffect } from 'react';
 import { ScreenConfig } from '../../../../interfaces/screen';
 
 const formLayout = {
