@@ -54,7 +54,7 @@ export default function<T>({
 
   const handleChange = (value: string) => {
     const matchClass = properties.find(item => item?.label === value);
-    console.log('e', value);
+    // console.log('e', value);
 
     form.setFieldsValue({
       title: matchClass?.label,

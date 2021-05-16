@@ -242,7 +242,7 @@ export default () => {
         Add Card
       </Button>
       <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
-        Generator GraphQl here
+        Add GraphQL Operation and DataSouce
       </Button>
 
       {/**Card editor drawer */}
@@ -252,7 +252,7 @@ export default () => {
         onFinish={configCard}
       />
 
-      {/**Generator GraphQl here  */}
+      {/**Add GraphQL Operation and DataSouce   */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}

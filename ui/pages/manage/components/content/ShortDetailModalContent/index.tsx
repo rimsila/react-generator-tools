@@ -183,7 +183,7 @@ export default () => {
         </Form>
       </Card>
 
-      {/**Generator GraphQl here */}
+      {/**Add GraphQL Operation and DataSouce  */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}

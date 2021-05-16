@@ -5,19 +5,19 @@
  * @LastEditors: Huang Shanshan
  * @LastEditTime: 2020-05-29 14:27:52
  */
-import React, { useState, useEffect } from 'react'; // -> Temporarily solve the error first, delete all later
-import { Layout, message } from 'antd';
 import { IUiApi } from '@umijs/ui-types';
-import Context from './Context';
-import './index.module.less';
+import { Layout, message } from 'antd';
 import { CascaderOptionType } from 'antd/lib/cascader';
 import { Store } from 'antd/lib/form/interface';
-import { TemplateType } from '../../../interfaces/common';
+import React, { useEffect, useState } from 'react'; // -> Temporarily solve the error first, delete all later
 import { BaseClass } from '../../../interfaces/api';
-import TemplateList from './components/TemplateList';
+import { TemplateType } from '../../../interfaces/common';
+import ConstantConfigAction from './components/ConstantConfigAction';
 import Dashboard from './components/Dashboard';
 import ImportAction from './components/ImportAction';
-import ConstantConfigAction from './components/ConstantConfigAction';
+import TemplateList from './components/TemplateList';
+import Context from './Context';
+import './index.module.less';
 
 const { Header, Content } = Layout;
 
@@ -82,15 +82,24 @@ export default ({ api }: { api: IUiApi }) => {
    */
   const saveConstantConfig = async (code: string) => {
     const key = 'message';
-    message.loading({ content: 'Save, please wait...', key });
+    message.loading({ content: 'Writing to file, pleas await ...', key });
 
-    await api.callRemote({
-      type: 'org.umi-plugin-page-creator.constantSave',
-      payload: {
-        code,
-      },
-    });
-    message.success({ content: 'Constant configuration saved successfully', key });
+    await api
+      .callRemote({
+        type: 'org.umi-plugin-page-creator.constantSave',
+        payload: {
+          code,
+        },
+      })
+      .then(() => {
+        message.loading({ content: 'Writing to file, pleas await ...', key, duration: 6500 });
+        setTimeout(() => {
+          message.success({ content: 'Constant configuration saved successfully', key });
+        }, 6000);
+      });
+    setTimeout(() => {
+      window.location.reload();
+    }, 7000);
   };
 
   return (

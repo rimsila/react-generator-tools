@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
 import { Button, Modal } from 'antd';
-import { UnControlled as CodeMirror } from 'react-codemirror2';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material-palenight.css';
 import classNames from 'classnames';
-import styles from './index.module.less';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/theme/material-palenight.css';
+import React, { useContext, useState } from 'react';
+import { UnControlled as CodeMirror } from 'react-codemirror2';
 import Context from '../../Context';
+import styles from './index.module.less';
 
 export default ({
   visible,

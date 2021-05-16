@@ -190,12 +190,12 @@ export default () => {
             Add display item
           </Button>
           <Button type="primary" onClick={() => setApiConfigDrawerVisible(true)}>
-            Generator GraphQl here
+            Add GraphQL Operation and DataSouce
           </Button>
         </Form>
       </Card>
 
-      {/**Generator GraphQl here */}
+      {/**Add GraphQL Operation and DataSouce  */}
       <ApiConfigDrawer
         visible={apiConfigDrawerVisible}
         setVisible={setApiConfigDrawerVisible}

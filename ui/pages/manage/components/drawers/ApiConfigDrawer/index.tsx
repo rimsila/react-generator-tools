@@ -1,11 +1,9 @@
 /*
  * @File description: Configuration content of interface API
 
- * @Date: 2020-04-29 17:56:31
- * @LastEditors: Huang Shanshan
- * @LastEditTime: 2020-05-28 18:24:49
  */
-import { Button, Drawer, Form, Input } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Drawer, Form, Input, notification, Space, Typography } from 'antd';
 import { Store } from 'antd/lib/form/interface';
 import React, { useContext } from 'react';
 import Context from '../../../Context';
@@ -39,7 +37,7 @@ export default ({
   // }, [submitFetch]);
 
   const handleFinish = (values: Store) => {
-    console.log('values', values);
+    console.log('values', JSON.parse(values.initialFetch));
 
     setVisible(false);
     const { initialFetch, submitFetch } = values;
@@ -54,12 +52,43 @@ export default ({
       onClose={() => setVisible(false)}
     >
       <Form form={form} onFinish={handleFinish} layout="vertical">
-        <Form.Item label="input GQL Operation " name="submitFetch">
-          <Input.TextArea rows={5} />
+        <Form.Item
+          label={
+            <Space>
+              Input GraphQL Operation
+              <InfoCircleOutlined
+                onClick={() =>
+                  notification.info({
+                    message:
+                      'it will save operation then after generate in will get xx.gql then gql codegen will watch and generate!',
+                    description: (
+                      <Typography.Paragraph
+                        style={{ background: 'white', padding: 20 }}
+                        type="danger"
+                      >
+                        {`
+                        query getCompanyQuery {
+                          getCompany(id: "") {
+                            createdAt
+                            id
+                            nameEn
+                            isExistedBranch
+                          }
+                        }
+                      `}
+                        ...
+                      </Typography.Paragraph>
+                    ),
+                  })
+                }
+              />
+            </Space>
+          }
+          name="submitFetch"
+        >
+          <Input.TextArea rows={7} allowClear />
         </Form.Item>
-        <Form.Item label="Input Column Data" name="initialFetch">
-          <Input.TextArea rows={5} />
-        </Form.Item>
+
         <Form.Item>
           <Button type="primary" htmlType="submit">
             submit

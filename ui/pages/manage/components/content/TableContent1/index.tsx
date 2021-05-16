@@ -125,7 +125,7 @@ export default () => {
     message.success('Configuration copied to clipboard');
   };
 
-  console.log('constantConfig', columns);
+  // console.log('constantConfig', columns);
 
   return (
     <>
