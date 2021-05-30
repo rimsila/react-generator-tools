@@ -207,7 +207,7 @@ export default () => {
             Add form elements
           </Button>
         </Form>
-        <Form.Item label="默认生成详情弹窗" style={{ marginBottom: 0 }}>
+        <Form.Item label="Generate detailed popups by default" style={{ marginBottom: 0 }}>
           <Switch checked={checked} onChange={setChecked} />
         </Form.Item>
         <Form.Item label="从Table页打开弹窗" style={{ marginBottom: 0 }}>
