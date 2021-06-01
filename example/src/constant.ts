@@ -1,9 +1,11 @@
 //column data for table
 export const mockData = () => {
-  return [{
-    grossSalary: 30,
-    id: '609fbbb17deade0015cf6eac',
-    status: 'ACTIVE',
-    title: 'sila'
-  }];
+  return [
+    {
+      id: '608e7e41ad9ea86b6e626391',
+      title: 'លេខគត់',
+      type: 1,
+      description: 'test',
+    },
+  ];
 }; //console.log("ddd");

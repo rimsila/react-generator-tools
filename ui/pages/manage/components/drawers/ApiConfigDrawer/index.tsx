@@ -37,7 +37,7 @@ export default ({
   // }, [submitFetch]);
 
   const handleFinish = (values: Store) => {
-    console.log('values', JSON.parse(values.initialFetch));
+    // console.log('values', JSON.parse(values.initialFetch));
 
     setVisible(false);
     const { initialFetch, submitFetch } = values;
