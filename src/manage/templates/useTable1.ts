@@ -74,35 +74,35 @@ export const use${pageNameCapitalize} = () => {
   /**
    * ----------------------- useGet${pageNameCapitalize}sQuery ----------------------
    */
-  const { data: dataPosts, loading: loadingGet${pageNameCapitalize}, refetch: refetch${pageNameCapitalize}s } = useGet${pageNameCapitalize}sQuery({
+  const { data: data${pageNameCapitalize}s, loading: loadingGet${pageNameCapitalize}, refetch: refetch${pageNameCapitalize}s } = useGet${pageNameCapitalize}sQuery({
     variables: {
       filter,
     },
   });
 
   /**
-   * ----------------------- deletePostMutation ----------------------
+   * ----------------------- delete${pageNameCapitalize}Mutation ----------------------
    */
-  const [deletePostMutation, { loading: loadingDeletePost }] = useDelete${pageNameCapitalize}sMutation({
+  const [delete${pageNameCapitalize}Mutation, { loading: loadingDelete${pageNameCapitalize} }] = useDelete${pageNameCapitalize}sMutation({
     onCompleted: (res) => {
       res?.delete${pageNameCapitalize} && afterSuccessAction();
     },
   });
   /**
-   * ----------------------- updatePostMutation ----------------------
+   * ----------------------- update${pageNameCapitalize}Mutation ----------------------
    */
-  const [updatePostMutation, { loading: loadingUpdatePost }] = useUpdate${pageNameCapitalize}sMutation({
-    onCompleted: () => {
-      afterSuccessAction();
+  const [update${pageNameCapitalize}Mutation, { loading: loadingUpdate${pageNameCapitalize} }] = useUpdate${pageNameCapitalize}sMutation({
+    onCompleted: (res) => {
+      res?.update${pageNameCapitalize} && afterSuccessAction();
     },
   });
 
   /**
-   * ----------------------- createPostMutation ----------------------
+   * ----------------------- create${pageNameCapitalize}Mutation ----------------------
    */
-  const [createPostMutation, { loading: loadingCreatePost }] = useCreate${pageNameCapitalize}Mutation({
-    onCompleted: () => {
-      afterSuccessAction();
+  const [create${pageNameCapitalize}Mutation, { loading: loadingCreate${pageNameCapitalize} }] = useCreate${pageNameCapitalize}Mutation({
+    onCompleted: (res) => {
+      res?.create${pageNameCapitalize} && afterSuccessAction();
     },
   });
 
@@ -111,16 +111,16 @@ export const use${pageNameCapitalize} = () => {
    */
   const setMode = usePersistFn(({ record }: IState) => {
     if (state.isDelete) {
-      deletePostMutation({ variables: { id: record?.id } });
+      delete${pageNameCapitalize}Mutation({ variables: { id: record?.id } });
     }
   });
 
   /**
    * ----------------------- Return State& Props ----------------------
    */
-  const dataSource = dataPosts?.get${pageNameCapitalize}s?.records;
+  const dataSource = data${pageNameCapitalize}s?.get${pageNameCapitalize}s?.records;
 
-  const pageName = 'Book';
+  const pageName = ${pageNameCapitalize};
   const tabTitleCrud = useCreation(() => (state.edit && 'Edit') || (state.view && 'View') || (state.add && 'Add'), [
     state?.view,
     state?.edit,
@@ -138,7 +138,7 @@ export const use${pageNameCapitalize} = () => {
     tabTitleList: 'List ' + pageName,
     tabTitleCrud: tabTitleCrud + ' ' + pageName,
     pageName,
-    loadingSubmit: loadingGet${pageNameCapitalize} || loadingUpdatePost || loadingCreatePost,
+    loadingSubmit: loadingGet${pageNameCapitalize} || loadingUpdate${pageNameCapitalize} || loadingCreate${pageNameCapitalize},
   };
 
   console.log('lo', loadingGet${pageNameCapitalize});
@@ -148,7 +148,7 @@ export const use${pageNameCapitalize} = () => {
     dataSource,
     columnsStateMap,
     form,
-    loading: loadingGet${pageNameCapitalize} || loadingDeletePost || state.loadingRefetch,
+    loading: loadingGet${pageNameCapitalize} || loadingDelete${pageNameCapitalize} || state.loadingRefetch,
     options: {
       // search: {
       //   type: 'search',
@@ -165,11 +165,11 @@ export const use${pageNameCapitalize} = () => {
       if (!isEmpty(record)) {
         const input = getOnlyValue(record) as typeof record;
         if (state.edit) {
-          updatePostMutation({ variables: { input } });
+          update${pageNameCapitalize}Mutation({ variables: { input } });
         }
         if (state.add) {
           // console.log('add', record);
-          createPostMutation({ variables: { input } });
+          create${pageNameCapitalize}Mutation({ variables: { input } });
         }
       }
     }),
