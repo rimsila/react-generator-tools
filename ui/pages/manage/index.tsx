@@ -92,14 +92,17 @@ export default ({ api }: { api: IUiApi }) => {
         },
       })
       .then(() => {
-        message.loading({ content: 'Writing to file, pleas await ...', key, duration: 6500 });
+        message.loading({ content: 'Writing to file, pleas await ...', key, duration: 8000 });
+        /**
+         * delay to make constant fully clean cache
+         */
         setTimeout(() => {
           message.success({ content: 'Constant configuration saved successfully', key });
-        }, 6000);
+        }, 8000);
       });
     setTimeout(() => {
       window.location.reload();
-    }, 7000);
+    }, 8000);
   };
 
   return (
