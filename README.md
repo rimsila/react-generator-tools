@@ -12,7 +12,10 @@
 ## Development
 
 ```bash
-$ yarn install; cd example; yarn install; cd ..
+// install
+$ yarn setup 
+
+// start project
 $ yarn watch
 $ yarn start
 ```
