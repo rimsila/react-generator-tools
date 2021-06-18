@@ -1,11 +1,10 @@
 //column data for table
 export const mockData = () => {
   return [{
- "code": "USD",
-          "decimal": 2,
-          "id": "60b22796964e53ecd0b63dbf",
-          "isDefault": false,
-          "status": true,
-          "name": "US Dollar"
+    "body1": "Terms and Condition in khmer",
+    "id": "60ca1c64e1d46e3880f48e45",
+    "isActivated": true,
+    "language": "KHMER",
+    "title": "Terms Khmer"
   }];
 }; //console.log("ddd");
