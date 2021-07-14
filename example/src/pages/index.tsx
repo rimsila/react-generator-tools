@@ -16,13 +16,33 @@ export default memo(() => {
       width: 90,
       valueType: 'index',
     },
+
     {
+      hideInSearch: true,
       title: 'Title',
       dataIndex: 'title',
       width: 150,
       valueType: 'text',
+      ellipsis: true,
       formItemProps: {
-        style: isModifyMode ? { display: 'inline-block', width: 'calc(50% - 0px)', paddingRight: 10 } : {},
+        style: isModifyMode ? { display: 'inline-block', width: '50%', paddingRight: 10 } : {},
+        rules: [
+          {
+            required: true,
+            whitespace: true,
+          },
+        ],
+      },
+    },
+    {
+      hideInSearch: true,
+      title: 'Body',
+      dataIndex: 'body',
+      width: 150,
+      valueType: 'text',
+      ellipsis: true,
+      formItemProps: {
+        style: isModifyMode ? { display: 'inline-block', width: '50%', paddingLeft: 10 } : {},
         rules: [
           {
             required: true,

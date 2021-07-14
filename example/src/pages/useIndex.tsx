@@ -2,9 +2,7 @@ import { ITableList } from '@/components/TableForm/TableListCrud';
 import { ISuccessAction, successAction } from '@/components/TableForm/TableListCrud/successAction';
 import { ICrudState } from '@/components/TableForm/TableListCrud/TableCrud';
 import { API } from '@/graphQl/API';
-import { useCreateJobMutation, useDeleteJobsMutation, useGetJobsQuery, useUpdateJobsMutation } from '@/graphQl/hooks';
-import { getOnlyValue } from '@/utils/arrObj';
-import { PageInfo } from '@ant-design/pro-table/lib/typing';
+import { useCreatePostMutation, useDeletePostMutation, useGetPostsQuery, useUpdatePostMutation } from '@/graphQl/hooks';
 import { useCreation } from 'ahooks';
 import { useLocalStorageState, usePersistFn, useReactive } from 'ahooks/es';
 import { Form } from 'antd';
@@ -13,12 +11,12 @@ import isEmpty from 'lodash/isEmpty';
  * ----------------------- Interface ----------------------
  */
 export type IJobType = {
-  filter: API.GetJobsQueryVariables['filter'];
-  jobInput: API.CreateJobMutationVariables['input'];
-  jobUpdate: API.UpdateJobsMutationVariables['input'];
-  jobDelete: API.DeleteJobsMutationVariables;
-  jobRecord: API.GetJobsQuery['getJobs']['records'][0] & { status: any };
-  jobMetadata: API.GetJobsQuery['getJobs']['metadata'];
+  filter: API.GetPostsQueryVariables['options'];
+  // jobInput: API.CreateJobMutationVariables['input'];
+  // jobUpdate: API.UpdateJobsMutationVariables['input'];
+  // jobDelete: API.DeleteJobsMutationVariables;
+  jobRecord: API.GetPostsQuery['posts']['data'][0];
+  // jobMetadata: API.GetJobsQuery['getJobs']['metadata'];
 };
 
 type IState = Partial<ICrudState & { record: IJobType['jobRecord'] }>;
@@ -27,14 +25,11 @@ export const useIndex = () => {
   /**
    * ----------------------- State and Function ----------------------
    */
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<IJobType['jobRecord']>();
 
   const [columnsStateMap, setColMap] = useLocalStorageState('book', {});
 
-  const defaultFilter: IJobType['filter'] = {
-    limit: 10,
-    page: 1,
-  };
+  const defaultFilter: IJobType['filter'] = {};
 
   const filterValue = useReactive<{ filter?: IJobType['filter'] }>({
     filter: defaultFilter,
@@ -50,60 +45,61 @@ export const useIndex = () => {
   const { type } = state;
   const isModifyMode = type === 'form';
 
-  const afterSuccessAction = (params?: ISuccessAction) => {
-    successAction({ form, state: state as any, refetch: refetchJobs, ...params });
-  };
-
   /**
    * ----------------------- useGetJobsQuery ----------------------
    */
-  const { data: dataPosts, loading: loadingGetJob, refetch: refetchJobs } = useGetJobsQuery({
+  const { data: dataPosts, loading: loadingGetPosts, refetch: refetchPosts } = useGetPostsQuery({
     variables: {
-      filter,
+      options: filter,
     },
   });
+
+  const afterSuccessAction = (params?: ISuccessAction) => {
+    successAction({ form, state: state as any, refetch: refetchPosts, ...params });
+  };
 
   /**
    * ----------------------- deletePostMutation ----------------------
    */
-  const [deletePostMutation, { loading: loadingDeletePost }] = useDeleteJobsMutation({
+  const [deletePostMutation, { loading: loadingDeletePost }] = useDeletePostMutation({
     onCompleted: (res) => {
-      res?.deleteJob && afterSuccessAction();
+      res?.deletePost && afterSuccessAction({ msg: 'Delete post successfully' });
     },
   });
+
   /**
    * ----------------------- updatePostMutation ----------------------
    */
-  const [updatePostMutation, { loading: loadingUpdatePost }] = useUpdateJobsMutation({
-    onCompleted: () => {
-      afterSuccessAction();
+  const [updatePostMutation, { loading: loadingUpdatePost }] = useUpdatePostMutation({
+    onCompleted: (res) => {
+      res?.updatePost && afterSuccessAction({ msg: 'Update post successfully' });
     },
   });
 
   /**
    * ----------------------- createPostMutation ----------------------
    */
-  const [createPostMutation, { loading: loadingCreatePost }] = useCreateJobMutation({
-    onCompleted: () => {
-      afterSuccessAction();
+  const [createPostMutation, { loading: loadingCreatePost }] = useCreatePostMutation({
+    onCompleted: (res) => {
+      res.createPost && afterSuccessAction({ msg: 'Create post successfully' });
     },
   });
 
   /**
    *   ----------------------- Submit Part ----------------------
    */
-  const setMode = usePersistFn(({ record }: IState) => {
+  const setMode = ({ record }: { record: IState['record'] }) => {
     if (state.isDelete) {
       deletePostMutation({ variables: { id: record?.id } });
     }
-  });
+  };
 
   /**
    * ----------------------- Return State& Props ----------------------
    */
-  const dataSource = dataPosts?.getJobs?.records;
+  const dataSource = dataPosts?.posts?.data;
 
-  const pageName = 'Book';
+  const pageName = 'Posts';
   const tabTitleCrud = useCreation(() => (state.edit && 'Edit') || (state.view && 'View') || (state.add && 'Add'), [
     state?.view,
     state?.edit,
@@ -121,60 +117,63 @@ export const useIndex = () => {
     tabTitleList: 'List ' + pageName,
     tabTitleCrud: tabTitleCrud + ' ' + pageName,
     pageName,
-    loadingSubmit: loadingGetJob || loadingUpdatePost || loadingCreatePost,
   };
 
-  console.log('lo', loadingGetJob);
-
+  // @ts-ignore
   return {
     ...customProps,
     dataSource,
     columnsStateMap,
     form,
-    loading: loadingGetJob || loadingDeletePost || state.loadingRefetch,
+    loadingSubmit: loadingUpdatePost || loadingCreatePost,
+    loading: state.loadingRefetch || loadingGetPosts || loadingDeletePost,
+    search: { filterType: 'light' },
     options: {
-      // search: {
-      //   type: 'search',
-      //   onSearch: (v) => {
-      //     console.log('search', v);
-      //   },
-      // },
       reload: () => {
         afterSuccessAction({ isReload: true });
       },
+      search: {
+        type: 'search',
+        onSearch: (q) => {
+          filterValue.filter = {
+            ...filterValue.filter,
+            search: { q },
+          };
+        },
+      },
     },
+    /**
+     * submit
+     */
     onSubmit: usePersistFn((record: IJobType['jobRecord']) => {
       // console.log('submit', record);
       if (!isEmpty(record)) {
-        const input = getOnlyValue(record) as typeof record;
+        const { body, id, title } = record || {};
         if (state.edit) {
-          updatePostMutation({ variables: { input } });
+          updatePostMutation({ variables: { id, input: { body, title } } });
         }
         if (state.add) {
-          // console.log('add', record);
-          createPostMutation({ variables: { input } });
+          createPostMutation({ variables: { input: { body, title } } });
         }
       }
     }),
-    beforeSearchSubmit: (params?: IJobType['jobRecord'] & PageInfo) => {
-      const newParam = getOnlyValue(params) as typeof params;
-      console.log('ss', params);
-      if (!isEmpty(params)) {
-        filterValue.filter = {
-          ...filterValue.filter,
-          limit: newParam?.pageSize,
-          page: newParam?.current,
-          title: newParam?.title,
-        };
-      }
-    },
+
+    // beforeSearchSubmit: (params?: IJobType['jobRecord'] & PageInfo) => {
+    //   // const newParam = getOnlyValue(params) as typeof params;
+    //   console.log('ss', params);
+    //   if (!isEmpty(params)) {
+    //     filterValue.filter = {
+    //       ...filterValue.filter,
+    //       search:{q: }
+    //     };
+    //   }
+    // },
     onChange: (pagination) => {
       const { pageSize, current } = pagination;
       // console.log('dd', pagination);
       filterValue.filter = {
         ...filterValue.filter,
-        limit: pageSize,
-        page: current,
+        paginate: { limit: pageSize, page: current },
       };
     },
   } as ITableList & typeof customProps;

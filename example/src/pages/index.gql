@@ -1,32 +1,29 @@
-query getJobs($filter: JobFilter = {}) {
-  getJobs(filter: $filter) {
-    metadata {
-      limit
-      page
-      total
-    }
-    records {
-      grossSalary
+query getPosts($options: PageQueryOptions) {
+  posts(options: $options) {
+    data {
       id
-      status
       title
+      body
+    }
+    meta {
+      totalCount
     }
   }
 }
 
-mutation deleteJobs($id: String = "") {
-  deleteJob(id: $id)
-}
-
-mutation createJob($input: JobInput!) {
-  createJob(input: $input) {
-    grossSalary
+mutation updatePost($id: ID!, $input: UpdatePostInput!) {
+  updatePost(id: $id, input: $input) {
     id
-    status
-    title
+    body
+  }
+}
+mutation createPost($input: CreatePostInput!) {
+  createPost(input: $input) {
+    id
+    body
   }
 }
 
-mutation updateJobs($input: JobUpdate = { id: "" }) {
-  updateJob(input: $input)
+mutation deletePost($id: ID!) {
+  deletePost(id: $id)
 }

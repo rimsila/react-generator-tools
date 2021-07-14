@@ -1,43 +1,37 @@
 import * as Types from './schemas';
 
-export type LoginMutationVariables = Types.Exact<{
-  password: Types.Scalars['String'];
-  username: Types.Scalars['String'];
+export type GetPostsQueryVariables = Types.Exact<{
+  options?: Types.Maybe<Types.PageQueryOptions>;
 }>;
 
-export type LoginMutation = { __typename?: 'Mutation' } & {
-  login: { __typename?: 'LoginType' } & Pick<Types.LoginType, 'id'>;
+export type GetPostsQuery = { __typename?: 'Query' } & {
+  posts?: Types.Maybe<
+    { __typename?: 'PostsPage' } & {
+      data?: Types.Maybe<Array<Types.Maybe<{ __typename?: 'Post' } & Pick<Types.Post, 'id' | 'title' | 'body'>>>>;
+      meta?: Types.Maybe<{ __typename?: 'PageMetadata' } & Pick<Types.PageMetadata, 'totalCount'>>;
+    }
+  >;
 };
 
-export type GetJobsQueryVariables = Types.Exact<{
-  filter?: Types.Maybe<Types.JobFilter>;
+export type UpdatePostMutationVariables = Types.Exact<{
+  id: Types.Scalars['ID'];
+  input: Types.UpdatePostInput;
 }>;
 
-export type GetJobsQuery = { __typename?: 'Query' } & {
-  getJobs: { __typename?: 'PaginatedJobType' } & {
-    metadata?: Types.Maybe<{ __typename?: 'Metadata' } & Pick<Types.Metadata, 'limit' | 'page' | 'total'>>;
-    records?: Types.Maybe<
-      Array<{ __typename?: 'JobType' } & Pick<Types.JobType, 'grossSalary' | 'id' | 'status' | 'title'>>
-    >;
-  };
+export type UpdatePostMutation = { __typename?: 'Mutation' } & {
+  updatePost?: Types.Maybe<{ __typename?: 'Post' } & Pick<Types.Post, 'id' | 'body'>>;
 };
 
-export type DeleteJobsMutationVariables = Types.Exact<{
-  id?: Types.Maybe<Types.Scalars['String']>;
+export type CreatePostMutationVariables = Types.Exact<{
+  input: Types.CreatePostInput;
 }>;
 
-export type DeleteJobsMutation = { __typename?: 'Mutation' } & Pick<Types.Mutation, 'deleteJob'>;
-
-export type CreateJobMutationVariables = Types.Exact<{
-  input: Types.JobInput;
-}>;
-
-export type CreateJobMutation = { __typename?: 'Mutation' } & {
-  createJob: { __typename?: 'JobType' } & Pick<Types.JobType, 'grossSalary' | 'id' | 'status' | 'title'>;
+export type CreatePostMutation = { __typename?: 'Mutation' } & {
+  createPost?: Types.Maybe<{ __typename?: 'Post' } & Pick<Types.Post, 'id' | 'body'>>;
 };
 
-export type UpdateJobsMutationVariables = Types.Exact<{
-  input?: Types.Maybe<Types.JobUpdate>;
+export type DeletePostMutationVariables = Types.Exact<{
+  id: Types.Scalars['ID'];
 }>;
 
-export type UpdateJobsMutation = { __typename?: 'Mutation' } & Pick<Types.Mutation, 'updateJob'>;
+export type DeletePostMutation = { __typename?: 'Mutation' } & Pick<Types.Mutation, 'deletePost'>;

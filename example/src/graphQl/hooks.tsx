@@ -4,216 +4,180 @@ import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 
-export const LoginDocument = gql`
-  mutation Login($password: String!, $username: String!) {
-    login(password: $password, username: $username) {
-      id
-    }
-  }
-`;
-export type LoginMutationFn = ApolloReactCommon.MutationFunction<Types.LoginMutation, Types.LoginMutationVariables>;
-
-/**
- * __useLoginMutation__
- *
- * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useLoginMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [loginMutation, { data, loading, error }] = useLoginMutation({
- *   variables: {
- *      password: // value for 'password'
- *      username: // value for 'username'
- *   },
- * });
- */
-export function useLoginMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<Types.LoginMutation, Types.LoginMutationVariables>,
-) {
-  return ApolloReactHooks.useMutation<Types.LoginMutation, Types.LoginMutationVariables>(LoginDocument, baseOptions);
-}
-export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = ApolloReactCommon.MutationResult<Types.LoginMutation>;
-export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  Types.LoginMutation,
-  Types.LoginMutationVariables
->;
-export const GetJobsDocument = gql`
-  query getJobs($filter: JobFilter = {}) {
-    getJobs(filter: $filter) {
-      metadata {
-        limit
-        page
-        total
-      }
-      records {
-        grossSalary
+export const GetPostsDocument = gql`
+  query getPosts($options: PageQueryOptions) {
+    posts(options: $options) {
+      data {
         id
-        status
         title
+        body
+      }
+      meta {
+        totalCount
       }
     }
   }
 `;
 
 /**
- * __useGetJobsQuery__
+ * __useGetPostsQuery__
  *
- * To run a query within a React component, call `useGetJobsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetJobsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetJobsQuery({
+ * const { data, loading, error } = useGetPostsQuery({
  *   variables: {
- *      filter: // value for 'filter'
+ *      options: // value for 'options'
  *   },
  * });
  */
-export function useGetJobsQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GetJobsQuery, Types.GetJobsQueryVariables>,
+export function useGetPostsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GetPostsQuery, Types.GetPostsQueryVariables>,
 ) {
-  return ApolloReactHooks.useQuery<Types.GetJobsQuery, Types.GetJobsQueryVariables>(GetJobsDocument, baseOptions);
+  return ApolloReactHooks.useQuery<Types.GetPostsQuery, Types.GetPostsQueryVariables>(GetPostsDocument, baseOptions);
 }
-export function useGetJobsLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GetJobsQuery, Types.GetJobsQueryVariables>,
+export function useGetPostsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GetPostsQuery, Types.GetPostsQueryVariables>,
 ) {
-  return ApolloReactHooks.useLazyQuery<Types.GetJobsQuery, Types.GetJobsQueryVariables>(GetJobsDocument, baseOptions);
+  return ApolloReactHooks.useLazyQuery<Types.GetPostsQuery, Types.GetPostsQueryVariables>(
+    GetPostsDocument,
+    baseOptions,
+  );
 }
-export type GetJobsQueryHookResult = ReturnType<typeof useGetJobsQuery>;
-export type GetJobsLazyQueryHookResult = ReturnType<typeof useGetJobsLazyQuery>;
-export type GetJobsQueryResult = ApolloReactCommon.QueryResult<Types.GetJobsQuery, Types.GetJobsQueryVariables>;
-export const DeleteJobsDocument = gql`
-  mutation deleteJobs($id: String = "") {
-    deleteJob(id: $id)
+export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
+export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
+export type GetPostsQueryResult = ApolloReactCommon.QueryResult<Types.GetPostsQuery, Types.GetPostsQueryVariables>;
+export const UpdatePostDocument = gql`
+  mutation updatePost($id: ID!, $input: UpdatePostInput!) {
+    updatePost(id: $id, input: $input) {
+      id
+      body
+    }
   }
 `;
-export type DeleteJobsMutationFn = ApolloReactCommon.MutationFunction<
-  Types.DeleteJobsMutation,
-  Types.DeleteJobsMutationVariables
+export type UpdatePostMutationFn = ApolloReactCommon.MutationFunction<
+  Types.UpdatePostMutation,
+  Types.UpdatePostMutationVariables
 >;
 
 /**
- * __useDeleteJobsMutation__
+ * __useUpdatePostMutation__
  *
- * To run a mutation, you first call `useDeleteJobsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteJobsMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePostMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [deleteJobsMutation, { data, loading, error }] = useDeleteJobsMutation({
+ * const [updatePostMutation, { data, loading, error }] = useUpdatePostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdatePostMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdatePostMutation, Types.UpdatePostMutationVariables>,
+) {
+  return ApolloReactHooks.useMutation<Types.UpdatePostMutation, Types.UpdatePostMutationVariables>(
+    UpdatePostDocument,
+    baseOptions,
+  );
+}
+export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
+export type UpdatePostMutationResult = ApolloReactCommon.MutationResult<Types.UpdatePostMutation>;
+export type UpdatePostMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  Types.UpdatePostMutation,
+  Types.UpdatePostMutationVariables
+>;
+export const CreatePostDocument = gql`
+  mutation createPost($input: CreatePostInput!) {
+    createPost(input: $input) {
+      id
+      body
+    }
+  }
+`;
+export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<
+  Types.CreatePostMutation,
+  Types.CreatePostMutationVariables
+>;
+
+/**
+ * __useCreatePostMutation__
+ *
+ * To run a mutation, you first call `useCreatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreatePostMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreatePostMutation, Types.CreatePostMutationVariables>,
+) {
+  return ApolloReactHooks.useMutation<Types.CreatePostMutation, Types.CreatePostMutationVariables>(
+    CreatePostDocument,
+    baseOptions,
+  );
+}
+export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
+export type CreatePostMutationResult = ApolloReactCommon.MutationResult<Types.CreatePostMutation>;
+export type CreatePostMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  Types.CreatePostMutation,
+  Types.CreatePostMutationVariables
+>;
+export const DeletePostDocument = gql`
+  mutation deletePost($id: ID!) {
+    deletePost(id: $id)
+  }
+`;
+export type DeletePostMutationFn = ApolloReactCommon.MutationFunction<
+  Types.DeletePostMutation,
+  Types.DeletePostMutationVariables
+>;
+
+/**
+ * __useDeletePostMutation__
+ *
+ * To run a mutation, you first call `useDeletePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePostMutation, { data, loading, error }] = useDeletePostMutation({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useDeleteJobsMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<Types.DeleteJobsMutation, Types.DeleteJobsMutationVariables>,
+export function useDeletePostMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<Types.DeletePostMutation, Types.DeletePostMutationVariables>,
 ) {
-  return ApolloReactHooks.useMutation<Types.DeleteJobsMutation, Types.DeleteJobsMutationVariables>(
-    DeleteJobsDocument,
+  return ApolloReactHooks.useMutation<Types.DeletePostMutation, Types.DeletePostMutationVariables>(
+    DeletePostDocument,
     baseOptions,
   );
 }
-export type DeleteJobsMutationHookResult = ReturnType<typeof useDeleteJobsMutation>;
-export type DeleteJobsMutationResult = ApolloReactCommon.MutationResult<Types.DeleteJobsMutation>;
-export type DeleteJobsMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  Types.DeleteJobsMutation,
-  Types.DeleteJobsMutationVariables
->;
-export const CreateJobDocument = gql`
-  mutation createJob($input: JobInput!) {
-    createJob(input: $input) {
-      grossSalary
-      id
-      status
-      title
-    }
-  }
-`;
-export type CreateJobMutationFn = ApolloReactCommon.MutationFunction<
-  Types.CreateJobMutation,
-  Types.CreateJobMutationVariables
->;
-
-/**
- * __useCreateJobMutation__
- *
- * To run a mutation, you first call `useCreateJobMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateJobMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createJobMutation, { data, loading, error }] = useCreateJobMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateJobMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateJobMutation, Types.CreateJobMutationVariables>,
-) {
-  return ApolloReactHooks.useMutation<Types.CreateJobMutation, Types.CreateJobMutationVariables>(
-    CreateJobDocument,
-    baseOptions,
-  );
-}
-export type CreateJobMutationHookResult = ReturnType<typeof useCreateJobMutation>;
-export type CreateJobMutationResult = ApolloReactCommon.MutationResult<Types.CreateJobMutation>;
-export type CreateJobMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  Types.CreateJobMutation,
-  Types.CreateJobMutationVariables
->;
-export const UpdateJobsDocument = gql`
-  mutation updateJobs($input: JobUpdate = { id: "" }) {
-    updateJob(input: $input)
-  }
-`;
-export type UpdateJobsMutationFn = ApolloReactCommon.MutationFunction<
-  Types.UpdateJobsMutation,
-  Types.UpdateJobsMutationVariables
->;
-
-/**
- * __useUpdateJobsMutation__
- *
- * To run a mutation, you first call `useUpdateJobsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateJobsMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateJobsMutation, { data, loading, error }] = useUpdateJobsMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateJobsMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateJobsMutation, Types.UpdateJobsMutationVariables>,
-) {
-  return ApolloReactHooks.useMutation<Types.UpdateJobsMutation, Types.UpdateJobsMutationVariables>(
-    UpdateJobsDocument,
-    baseOptions,
-  );
-}
-export type UpdateJobsMutationHookResult = ReturnType<typeof useUpdateJobsMutation>;
-export type UpdateJobsMutationResult = ApolloReactCommon.MutationResult<Types.UpdateJobsMutation>;
-export type UpdateJobsMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  Types.UpdateJobsMutation,
-  Types.UpdateJobsMutationVariables
+export type DeletePostMutationHookResult = ReturnType<typeof useDeletePostMutation>;
+export type DeletePostMutationResult = ApolloReactCommon.MutationResult<Types.DeletePostMutation>;
+export type DeletePostMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  Types.DeletePostMutation,
+  Types.DeletePostMutationVariables
 >;

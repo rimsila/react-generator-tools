@@ -4,7 +4,8 @@
     "description": "",
     "license": "MIT",
     "scripts": {
-        "start": "umi dev && yarn schemas:watch",
+        "start:watch": "umi dev",
+        "start": "umi dev",
         "build": "umi build",
         "eslint:fix": "eslint --fix --ext .ts,.tsx src/",
         "dp-build": "yarn build &&  yarn fixedSurge404 && surge --project ./dist --domain https://sila-test.surge.sh",
