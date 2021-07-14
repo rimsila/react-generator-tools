@@ -127,7 +127,6 @@ export const useIndex = () => {
     form,
     loadingSubmit: loadingUpdatePost || loadingCreatePost,
     loading: state.loadingRefetch || loadingGetPosts || loadingDeletePost,
-    search: { filterType: 'light' },
     options: {
       reload: () => {
         afterSuccessAction({ isReload: true });
