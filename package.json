@@ -8,7 +8,7 @@
     "main": "lib/index.js",
     "scripts": {
         "setup": "yarn install; cd example; yarn install; cd ..",
-        "start": "cross-env UMI_UI=1 APP_ROOT=example umi dev",
+        "start": "cross-env UMI_UI=1 && UMI_ENV=dev APP_ROOT=example umi dev",
         "watch": "father-build --watch",
         "build": "rm -rf dist lib && cross-env NODE_ENV=prod father-build",
         "ui:build": "ui-build",
