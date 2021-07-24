@@ -1,19 +1,17 @@
-import { Button } from 'antd';
 import { IUiApi } from '@umijs/ui-types';
+import { Layout } from 'antd';
+import TemplateList from './TemplateList/index';
+
+const { Header, Content } = Layout;
 
 export default ({ api }: { api: IUiApi }) => {
   const { callRemote } = api;
+
   return (
-    <Button
-      type="primary"
-      onClick={async () => {
-        const { data } = await callRemote({
-          type: 'org.umi-plugin-page-creator.test',
-        });
-        alert(data);
-      }}
-    >
-      Test
-    </Button>
+    <Layout style={{ overflowY: 'auto' }}>
+      <Header>
+        <TemplateList />
+      </Header>
+    </Layout>
   );
 };
