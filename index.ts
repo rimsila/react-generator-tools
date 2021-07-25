@@ -1,18 +1,13 @@
-/*
 
- * @Date: 2020-04-29 10:38:23
- * @LastEditors: 黄姗姗
- * @LastEditTime: 2020-05-22 17:21:04
- */
 // ref:
 // - https://umijs.org/plugin/develop.html
 import { IApi } from '@umijs/types';
 import { join } from 'path';
-
-import generatePage from './manage';
 import generateApi from './api';
-import generateScreen from './screen';
 import { getConstantConfig, saveConstantConfig } from './constantConfig';
+import generatePage from './manage';
+import generateScreen from './screen';
+
 
 export default function(api: IApi) {
   let mods = [];
