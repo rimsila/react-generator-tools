@@ -9,6 +9,7 @@
     "scripts": {
         "setup": "yarn install; cd example; yarn install; cd ..",
         "start": "cross-env UMI_UI=1 && UMI_ENV=dev APP_ROOT=example umi dev",
+        "dev": "concurrently --kill-others \"yarn watch\" \"yarn start\"",
         "watch": "father-build --watch",
         "build": "rm -rf dist lib && cross-env NODE_ENV=prod father-build",
         "ui:build": "ui-build",
@@ -47,6 +48,7 @@
         "body-parser": "^1.18.2",
         "classnames": "^2.2.6",
         "codemirror": "^5.54.0",
+        "concurrently": "^6.2.0",
         "copy-to-clipboard": "^3.3.1",
         "cross-env": "^6.0.3",
         "express": "^4.15.3",
@@ -75,7 +77,6 @@
     },
     "files": [
         "dist",
-
         "lib"
     ],
     "dependencies": {}

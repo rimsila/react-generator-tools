@@ -13,9 +13,13 @@
 
 ```bash
 // install
-$ yarn setup 
+$ yarn setup
 
 // start project
+$ yarn dev
+
+or
+
 $ yarn watch
 $ yarn start
 ```
